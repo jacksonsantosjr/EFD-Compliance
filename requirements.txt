@@ -1,0 +1,23 @@
+# EFD Compliance - Backend Dependencies
+# Core
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+python-multipart==0.0.18
+pydantic==2.10.4
+
+# Report Generation
+python-docx==1.1.2
+weasyprint==63.1
+
+# Database
+supabase==2.11.0
+aiosqlite==0.20.0
+
+# Utilities
+python-dotenv==1.0.1
+uuid6==2024.7.10
+
+# Testing
+pytest==8.3.4
+pytest-asyncio==0.24.0
+httpx==0.28.1

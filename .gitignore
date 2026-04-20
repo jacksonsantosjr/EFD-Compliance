@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environment
+venv/
+.venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Environment
+.env
+
+# Uploads e relatórios gerados
+uploads/*
+!uploads/.gitkeep
+reports/output/*
+!reports/output/.gitkeep
+
+# Database local
+database/*.db
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Node (frontend)
+frontend/node_modules/
+frontend/dist/
