@@ -16,6 +16,13 @@ function ReportsPage() {
     }
   }, [])
 
+  const formatDate = (dateStr) => {
+    if (!dateStr) return 'N/D'
+    const parts = String(dateStr).split('-')
+    if (parts.length === 3) return `${parts[2]}/${parts[1]}/${parts[0]}`
+    return dateStr
+  }
+
   if (!result) {
     return (
       <div className="text-center" style={{ padding: 'var(--space-12)' }}>
@@ -104,7 +111,7 @@ function ReportsPage() {
                         <tr><th style={{ border: '1px solid var(--color-border)', padding: '10px 12px', textAlign: 'left', backgroundColor: '#6C5CE7', color: 'white', fontWeight: '600', width: '30%' }}>Razão Social</th><td style={{ border: '1px solid var(--color-border)', padding: '10px 12px', textAlign: 'left' }}>{info.razao_social}</td></tr>
                         <tr style={{ backgroundColor: 'var(--color-bg-tertiary)' }}><th style={{ border: '1px solid var(--color-border)', padding: '10px 12px', textAlign: 'left', backgroundColor: '#6C5CE7', color: 'white', fontWeight: '600' }}>CNPJ</th><td style={{ border: '1px solid var(--color-border)', padding: '10px 12px', textAlign: 'left' }}>{info.cnpj}</td></tr>
                         <tr><th style={{ border: '1px solid var(--color-border)', padding: '10px 12px', textAlign: 'left', backgroundColor: '#6C5CE7', color: 'white', fontWeight: '600' }}>Inscrição Estadual</th><td style={{ border: '1px solid var(--color-border)', padding: '10px 12px', textAlign: 'left' }}>{info.ie}</td></tr>
-                        <tr style={{ backgroundColor: 'var(--color-bg-tertiary)' }}><th style={{ border: '1px solid var(--color-border)', padding: '10px 12px', textAlign: 'left', backgroundColor: '#6C5CE7', color: 'white', fontWeight: '600' }}>Período</th><td style={{ border: '1px solid var(--color-border)', padding: '10px 12px', textAlign: 'left' }}>{info.periodo_ini} a {info.periodo_fin}</td></tr>
+                        <tr style={{ backgroundColor: 'var(--color-bg-tertiary)' }}><th style={{ border: '1px solid var(--color-border)', padding: '10px 12px', textAlign: 'left', backgroundColor: '#6C5CE7', color: 'white', fontWeight: '600' }}>Período</th><td style={{ border: '1px solid var(--color-border)', padding: '10px 12px', textAlign: 'left' }}>{formatDate(info.periodo_ini)} a {formatDate(info.periodo_fin)}</td></tr>
                         <tr><th style={{ border: '1px solid var(--color-border)', padding: '10px 12px', textAlign: 'left', backgroundColor: '#6C5CE7', color: 'white', fontWeight: '600' }}>Versão Layout</th><td style={{ border: '1px solid var(--color-border)', padding: '10px 12px', textAlign: 'left' }}>v{info.cod_ver} (Perfil {info.perfil})</td></tr>
                     </tbody>
                 </table>

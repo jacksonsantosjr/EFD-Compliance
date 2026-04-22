@@ -77,6 +77,13 @@ function DashboardPage() {
     return cnpj
   }
 
+  const formatDate = (dateStr) => {
+    if (!dateStr) return 'N/D'
+    const parts = String(dateStr).split('-')
+    if (parts.length === 3) return `${parts[2]}/${parts[1]}/${parts[0]}`
+    return dateStr
+  }
+
   return (
     <div>
       {/* Cabeçalho do Contribuinte */}
@@ -90,7 +97,7 @@ function DashboardPage() {
               CNPJ: {formatCnpj(info.cnpj)} &nbsp;|&nbsp; IE: {info.ie} &nbsp;|&nbsp; UF: {info.uf}
             </div>
             <div style={{ color: 'var(--color-text-tertiary)', fontSize: 'var(--font-size-xs)', marginTop: 'var(--space-1)' }}>
-              Período: {info.periodo_ini} a {info.periodo_fin} &nbsp;|&nbsp; Perfil {info.perfil} &nbsp;|&nbsp; Layout v{info.cod_ver}
+              Período: {formatDate(info.periodo_ini)} a {formatDate(info.periodo_fin)} &nbsp;|&nbsp; Perfil {info.perfil} &nbsp;|&nbsp; Layout v{info.cod_ver}
             </div>
           </div>
         </div>

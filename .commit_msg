@@ -1,11 +1,4 @@
-feat: Expansão das classificações de score de 3 para 6 faixas
+style: Formatação de período de AAAA-MM-DD para DD/MM/AAAA
 
-Nova tabela de classificação:
-- 91-100%: EXCELENTE (esmeralda #047857)
-- 71-90%: BOM (verde #059669)
-- 51-70%: RAZOÁVEL (âmbar #CA8A04)
-- 41-50%: ATENÇÃO (laranja #d97706)
-- 21-40%: CRÍTICO (vermelho #dc2626)
-- 0-20%: INADEQUADO (carmesim #991B1B)
-
-Alteração aplicada nos 5 locais: index.css, ScoreGauge.jsx, ReportsPage.jsx, docx_builder.py e pdf_builder.py.
+- Adicionada função helper `formatDate` no DashboardPage e ReportsPage.
+- Período agora é exibido no formato brasileiro (DD/MM/AAAA) em ambas as telas.
