@@ -11,8 +11,8 @@
 ## 1. Clonar o repositório
 
 ```bash
-git clone <URL_DO_REPOSITORIO>
-cd efd-compliance
+git clone https://github.com/jacksonsantosjr/EFD-Compliance.git
+cd EFD-Compliance
 ```
 
 ## 2. Backend — Instalar dependências Python

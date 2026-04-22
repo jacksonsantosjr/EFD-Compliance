@@ -1,0 +1,10 @@
+feat: Fases 3-5 - Relatorios DOCX/PDF, API integrada, Frontend React
+
+- Gerador de dossie DOCX profissional com 8 secoes
+- Gerador de dossie PDF via HTML+CSS com Design System
+- Rotas upload e export integradas com parser e validador
+- Comparador de periodos com deteccao de variacoes
+- Frontend React completo com Design System Antigravity
+- Upload com drag and drop, Dashboard com ScoreGauge SVG
+- Dark/Light mode, filtro de achados por severidade
+- Corrigido BASE_DIR no config.py

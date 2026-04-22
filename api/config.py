@@ -9,8 +9,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Diretórios
-BASE_DIR = Path(__file__).resolve().parent
+# Diretórios — BASE_DIR aponta para a raiz do projeto (efd-compliance/)
+BASE_DIR = Path(__file__).resolve().parent.parent
 KNOWLEDGE_BASE_DIR = BASE_DIR / "knowledge_base"
 UPLOADS_DIR = BASE_DIR / "uploads"
 REPORTS_OUTPUT_DIR = BASE_DIR / "reports" / "output"

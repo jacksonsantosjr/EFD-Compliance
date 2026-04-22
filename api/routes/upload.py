@@ -9,7 +9,7 @@ from typing import List
 from fastapi import APIRouter, UploadFile, File, HTTPException
 
 from api.config import UPLOADS_DIR, MAX_FILE_SIZE_BYTES
-from api.models.sped_file import AnalysisResult, SpedFileInfo
+from api.models.sped_file import AnalysisResult
 
 router = APIRouter()
 
@@ -18,7 +18,7 @@ router = APIRouter()
 async def upload_sped_file(file: UploadFile = File(...)):
     """
     Upload e análise de um arquivo SPED EFD ICMS/IPI.
-    Recebe o arquivo .txt validado pelo PVA, processa e retorna o resultado.
+    Recebe o arquivo .txt validado pelo PVA, processa e retorna o resultado completo.
     """
     # Validar tipo de arquivo
     if not file.filename.endswith(".txt"):
@@ -40,22 +40,41 @@ async def upload_sped_file(file: UploadFile = File(...)):
     # Calcular hash do arquivo
     file_hash = hashlib.sha256(content).hexdigest()
 
-    # Salvar arquivo temporariamente
+    # Salvar arquivo
     file_path = UPLOADS_DIR / f"{file_hash}_{file.filename}"
     with open(file_path, "wb") as f:
         f.write(content)
 
-    # TODO: Integrar com parser e validadores (Tasks 1.2, 1.3, 2.x)
-    # Por enquanto, retorna resultado stub
-    result = AnalysisResult(
-        filename=file.filename,
-        file_hash=file_hash,
-        file_info=SpedFileInfo(total_linhas=content.count(b"\n")),
-        total_registros=content.count(b"\n"),
-        score=0.0,
-    )
+    try:
+        # Parser
+        from parser.sped_parser import parse_sped_file
+        parsed = parse_sped_file(file_path)
 
-    return result
+        # Verificar se é um arquivo SPED válido
+        if not parsed.get_registro_unico("0000"):
+            raise HTTPException(
+                status_code=400,
+                detail="Arquivo não reconhecido como SPED EFD ICMS/IPI. Registro 0000 ausente."
+            )
+
+        # Validação completa
+        from validators.base_validator import BaseValidator
+        validator = BaseValidator(parsed)
+        result = validator.validate()
+
+        # Atualizar com nome original do arquivo
+        result.filename = file.filename
+        result.file_hash = file_hash
+
+        return result
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Erro ao processar arquivo: {str(e)}"
+        )
 
 
 @router.post("/upload/compare")
@@ -75,8 +94,41 @@ async def upload_multiple_files(files: List[UploadFile] = File(...)):
             detail="Máximo de 12 arquivos por comparação (1 ano)."
         )
 
-    # TODO: Processar cada arquivo e executar comparação (Tasks 4.2, 6.6)
+    results = []
+    for file in files:
+        if not file.filename.endswith(".txt"):
+            raise HTTPException(
+                status_code=400,
+                detail=f"Arquivo '{file.filename}' não é .txt."
+            )
+
+        content = await file.read()
+        file_hash = hashlib.sha256(content).hexdigest()
+        file_path = UPLOADS_DIR / f"{file_hash}_{file.filename}"
+        with open(file_path, "wb") as f:
+            f.write(content)
+
+        try:
+            from parser.sped_parser import parse_sped_file
+            from validators.base_validator import BaseValidator
+
+            parsed = parse_sped_file(file_path)
+            validator = BaseValidator(parsed)
+            result = validator.validate()
+            result.filename = file.filename
+            result.file_hash = file_hash
+            results.append(result)
+        except Exception as e:
+            raise HTTPException(
+                status_code=500,
+                detail=f"Erro ao processar '{file.filename}': {str(e)}"
+            )
+
+    # Ordenar por período
+    results.sort(key=lambda r: r.file_info.periodo_ini or "")
+
     return {
-        "message": f"{len(files)} arquivos recebidos para comparação.",
-        "status": "processing"
+        "message": f"{len(results)} arquivos processados.",
+        "analyses": [r.model_dump() for r in results],
+        "total_files": len(results),
     }
