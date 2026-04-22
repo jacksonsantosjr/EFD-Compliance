@@ -1,5 +1,4 @@
-feat: Refatoração visual do ReportsPage
+style: Adaptação do preview de relatório para o Dark Mode
 
-- Substituição da visualização em texto simples (`<pre>`) por uma renderização rica em React.
-- Implementação do design system utilizado no PDF (cores, espaçamentos, tabelas e cards).
-- Adicionada formatação visual clara para o Score de Conformidade e lista de Achados Detalhados.
+- Cores hardcoded (hex) foram substituídas por variáveis CSS globais do tema (ex: `--color-bg-secondary`, `--color-text-primary`, `--color-border`).
+- Com isso, a visualização prévia do dossiê interativo se adapta automaticamente quando o usuário alterna entre modo claro e escuro, mantendo as cores institucionais do Score de Conformidade e Alertas.
