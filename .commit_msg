@@ -1,4 +1,5 @@
-style: Adaptação do preview de relatório para o Dark Mode
+feat: Adição de Modal Interativo para Blocos no Dashboard
 
-- Cores hardcoded (hex) foram substituídas por variáveis CSS globais do tema (ex: `--color-bg-secondary`, `--color-text-primary`, `--color-border`).
-- Com isso, a visualização prévia do dossiê interativo se adapta automaticamente quando o usuário alterna entre modo claro e escuro, mantendo as cores institucionais do Score de Conformidade e Alertas.
+- O componente `BlockCard` agora recebe um evento `onClick` e exibe cursor apropriado (interativo) somente se o status do bloco for 'critical' ou 'warning'.
+- O `DashboardPage` gerencia o estado de um novo Modal de visualização rápida.
+- Ao clicar em um bloco com inconformidades, um modal é aberto exibindo apenas os achados (`FindingCard`) específicos daquele bloco, filtrados em tempo de execução pela letra/código do bloco.

@@ -1,8 +1,21 @@
-function BlockCard({ code, summary }) {
+function BlockCard({ code, summary, onClick }) {
   const statusIcons = { ok: '✅', warning: '⚠️', critical: '❌' }
 
+  const handleClick = () => {
+    if (onClick && (summary.status === 'critical' || summary.status === 'warning')) {
+      onClick(code)
+    }
+  }
+
+  const isClickable = summary.status === 'critical' || summary.status === 'warning'
+
   return (
-    <div className={`block-card status-${summary.status}`}>
+    <div 
+      className={`block-card status-${summary.status}`} 
+      onClick={handleClick}
+      style={{ cursor: isClickable ? 'pointer' : 'default', opacity: isClickable ? 1 : 0.8 }}
+      title={isClickable ? "Clique para ver detalhes" : "Nenhum alerta crítico ou atenção"}
+    >
       <div className="block-code">
         {statusIcons[summary.status]} {code}
       </div>

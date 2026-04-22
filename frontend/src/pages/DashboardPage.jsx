@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import ScoreGauge from '../components/ScoreGauge'
 import FindingCard from '../components/FindingCard'
 import BlockCard from '../components/BlockCard'
+import Modal from '../components/Modal'
 import { exportReport } from '../services/api'
 
 function DashboardPage() {
@@ -10,6 +11,7 @@ function DashboardPage() {
   const [activeTab, setActiveTab] = useState('overview')
   const [severityFilter, setSeverityFilter] = useState('all')
   const [exporting, setExporting] = useState(false)
+  const [modalData, setModalData] = useState({ isOpen: false, block: null, blockName: null })
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -55,6 +57,17 @@ function DashboardPage() {
       alert('Erro ao gerar relatório: ' + err.message)
     } finally {
       setExporting(false)
+    }
+  }
+
+  const handleBlockClick = (blockCode) => {
+    const summary = blockSummaries[blockCode]
+    if (summary && (summary.status === 'critical' || summary.status === 'warning')) {
+      setModalData({
+        isOpen: true,
+        block: blockCode,
+        blockName: summary.block_name
+      })
     }
   }
 
@@ -144,7 +157,7 @@ function DashboardPage() {
           {Object.entries(blockSummaries)
             .sort(([a], [b]) => a.localeCompare(b))
             .map(([code, summary]) => (
-              <BlockCard key={code} code={code} summary={summary} />
+              <BlockCard key={code} code={code} summary={summary} onClick={handleBlockClick} />
             ))
           }
         </div>
@@ -186,6 +199,24 @@ function DashboardPage() {
           )}
         </div>
       )}
+
+      {/* Modal de Detalhes do Bloco */}
+      <Modal 
+        isOpen={modalData.isOpen} 
+        title={`Achados do Bloco ${modalData.block} - ${modalData.blockName}`}
+        onClose={() => setModalData({ isOpen: false, block: null, blockName: null })}
+      >
+        <div style={{ maxHeight: '60vh', overflowY: 'auto', paddingRight: 'var(--space-2)' }}>
+          {modalData.block && findings
+            .filter(f => f.code.startsWith(modalData.block) || (f.code.startsWith('[') && f.code.substring(1).startsWith(modalData.block)))
+            .map(finding => (
+              <FindingCard key={finding.id} finding={finding} />
+          ))}
+          {modalData.block && findings.filter(f => f.code.startsWith(modalData.block) || (f.code.startsWith('[') && f.code.substring(1).startsWith(modalData.block))).length === 0 && (
+            <p style={{ textAlign: 'center', color: 'var(--color-text-tertiary)', marginTop: 'var(--space-4)' }}>Nenhum achado encontrado para este bloco específico.</p>
+          )}
+        </div>
+      </Modal>
     </div>
   )
 }
