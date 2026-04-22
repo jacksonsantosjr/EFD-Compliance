@@ -1,10 +1,7 @@
-feat: Fases 3-5 - Relatorios DOCX/PDF, API integrada, Frontend React
+test: Fase 7 - Testes unitarios com arquivo real KAWAPOLPA mar/2026
 
-- Gerador de dossie DOCX profissional com 8 secoes
-- Gerador de dossie PDF via HTML+CSS com Design System
-- Rotas upload e export integradas com parser e validador
-- Comparador de periodos com deteccao de variacoes
-- Frontend React completo com Design System Antigravity
-- Upload com drag and drop, Dashboard com ScoreGauge SVG
-- Dark/Light mode, filtro de achados por severidade
-- Corrigido BASE_DIR no config.py
+- 49 testes do parser (Registro, LayoutDetector, SpedParser)
+- 39 testes dos validadores (Math, CrossBlock, SP Rules, BaseValidator)
+- Total: 88 testes passando com dados reais
+- Fixture do arquivo SPED KAWAPOLPA
+- Runners com output ASCII para compatibilidade Windows cp1252
