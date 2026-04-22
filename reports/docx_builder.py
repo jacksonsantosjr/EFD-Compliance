@@ -25,9 +25,12 @@ except ImportError:
 
 # Cores do Design System
 COLOR_PRIMARY = RGBColor(0x6C, 0x5C, 0xE7) if HAS_DOCX else None  # Roxo
+COLOR_EXCELLENT = RGBColor(0x04, 0x78, 0x57) if HAS_DOCX else None # Esmeralda
 COLOR_SUCCESS = RGBColor(0x00, 0xB8, 0x94) if HAS_DOCX else None  # Verde
+COLOR_REASONABLE = RGBColor(0xCA, 0x8A, 0x04) if HAS_DOCX else None # Âmbar
 COLOR_WARNING = RGBColor(0xFD, 0xCB, 0x6E) if HAS_DOCX else None  # Amarelo
 COLOR_DANGER = RGBColor(0xE1, 0x7C, 0x80) if HAS_DOCX else None   # Vermelho
+COLOR_INADEQUATE = RGBColor(0x99, 0x1B, 0x1B) if HAS_DOCX else None # Carmesim
 COLOR_INFO = RGBColor(0x74, 0xB9, 0xFF) if HAS_DOCX else None     # Azul
 COLOR_DARK = RGBColor(0x2D, 0x3A, 0x4A) if HAS_DOCX else None     # Escuro
 COLOR_LIGHT = RGBColor(0xF8, 0xF9, 0xFA) if HAS_DOCX else None    # Claro
@@ -145,15 +148,24 @@ class DocxBuilder:
         self.doc.add_heading('2. Score de Conformidade', level=1)
 
         score = self.analysis.score
-        if score >= 80:
+        if score >= 91:
+            label = "EXCELENTE"
+            color = COLOR_EXCELLENT
+        elif score >= 71:
             label = "BOM"
             color = COLOR_SUCCESS
-        elif score >= 50:
+        elif score >= 51:
+            label = "RAZOÁVEL"
+            color = COLOR_REASONABLE
+        elif score >= 41:
             label = "ATENÇÃO"
             color = COLOR_WARNING
-        else:
+        elif score >= 21:
             label = "CRÍTICO"
             color = COLOR_DANGER
+        else:
+            label = "INADEQUADO"
+            color = COLOR_INADEQUATE
 
         p = self.doc.add_paragraph()
         p.alignment = WD_ALIGN_PARAGRAPH.CENTER

@@ -1,5 +1,11 @@
-feat: Melhorias de UX — Modal, Progress Bar e Nova Análise
+feat: Expansão das classificações de score de 3 para 6 faixas
 
-- Modal global: largura aumentada de 450px para 600px e blur de 3px para 6px.
-- UploadPage: barra de progresso movida para um modal overlay centralizado.
-- DashboardPage: botão "Nova Análise" adicionado à barra de tabs com funcionalidade de limpar a sessão e redirecionar para Upload.
+Nova tabela de classificação:
+- 91-100%: EXCELENTE (esmeralda #047857)
+- 71-90%: BOM (verde #059669)
+- 51-70%: RAZOÁVEL (âmbar #CA8A04)
+- 41-50%: ATENÇÃO (laranja #d97706)
+- 21-40%: CRÍTICO (vermelho #dc2626)
+- 0-20%: INADEQUADO (carmesim #991B1B)
+
+Alteração aplicada nos 5 locais: index.css, ScoreGauge.jsx, ReportsPage.jsx, docx_builder.py e pdf_builder.py.

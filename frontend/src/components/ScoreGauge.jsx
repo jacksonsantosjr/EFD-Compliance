@@ -4,15 +4,24 @@ function ScoreGauge({ score }) {
   const offset = circumference - (score / 100) * circumference
 
   let color, label
-  if (score >= 80) {
+  if (score >= 91) {
+    color = 'var(--color-score-excellent)'
+    label = 'EXCELENTE'
+  } else if (score >= 71) {
     color = 'var(--color-score-good)'
     label = 'BOM'
-  } else if (score >= 50) {
+  } else if (score >= 51) {
+    color = 'var(--color-score-reasonable)'
+    label = 'RAZOÁVEL'
+  } else if (score >= 41) {
     color = 'var(--color-score-medium)'
     label = 'ATENÇÃO'
-  } else {
+  } else if (score >= 21) {
     color = 'var(--color-score-bad)'
     label = 'CRÍTICO'
+  } else {
+    color = 'var(--color-score-inadequate)'
+    label = 'INADEQUADO'
   }
 
   return (

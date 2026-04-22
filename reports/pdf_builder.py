@@ -114,9 +114,12 @@ class PdfBuilder:
         border-radius: 8px; background: #F8F9FA;
     }
     .score-value { font-size: 32pt; font-weight: 700; }
+    .score-excellent { color: #047857; }
     .score-good { color: #00B894; }
+    .score-reasonable { color: #CA8A04; }
     .score-warn { color: #FDCB6E; }
     .score-bad { color: #E17C80; }
+    .score-inadequate { color: #991B1B; }
     .totals { font-size: 11pt; margin-top: 8px; }
     table {
         width: 100%; border-collapse: collapse; margin: 12px 0;
@@ -170,15 +173,24 @@ class PdfBuilder:
 
     def _score_section(self) -> str:
         score = self.analysis.score
-        if score >= 80:
+        if score >= 91:
+            cls = "score-excellent"
+            label = "EXCELENTE"
+        elif score >= 71:
             cls = "score-good"
             label = "BOM"
-        elif score >= 50:
+        elif score >= 51:
+            cls = "score-reasonable"
+            label = "RAZOÁVEL"
+        elif score >= 41:
             cls = "score-warn"
             label = "ATENÇÃO"
-        else:
+        elif score >= 21:
             cls = "score-bad"
             label = "CRÍTICO"
+        else:
+            cls = "score-inadequate"
+            label = "INADEQUADO"
 
         tc = self.analysis.total_critical
         tw = self.analysis.total_warnings

@@ -111,8 +111,8 @@ function ReportsPage() {
 
                 <h2 style={{ color: 'var(--color-text-primary)', fontSize: '18px', fontWeight: '600', marginTop: '32px', marginBottom: '16px', borderBottom: '2px solid #6C5CE7', paddingBottom: '4px' }}>2. Score de Conformidade</h2>
                 <div style={{ textAlign: 'center', margin: '24px 0', padding: '32px 24px', borderRadius: '8px', backgroundColor: 'var(--color-bg-tertiary)', border: '1px solid var(--color-border)' }}>
-                    <div style={{ fontSize: '42px', fontWeight: 'bold', marginBottom: '16px', color: score >= 80 ? 'var(--color-score-good)' : score >= 50 ? 'var(--color-score-medium)' : 'var(--color-score-bad)' }}>
-                        {score.toFixed(1)}% — {score >= 80 ? 'BOM' : score >= 50 ? 'ATENÇÃO' : 'CRÍTICO'}
+                    <div style={{ fontSize: '42px', fontWeight: 'bold', marginBottom: '16px', color: score >= 91 ? 'var(--color-score-excellent)' : score >= 71 ? 'var(--color-score-good)' : score >= 51 ? 'var(--color-score-reasonable)' : score >= 41 ? 'var(--color-score-medium)' : score >= 21 ? 'var(--color-score-bad)' : 'var(--color-score-inadequate)' }}>
+                        {score.toFixed(1)}% — {score >= 91 ? 'EXCELENTE' : score >= 71 ? 'BOM' : score >= 51 ? 'RAZOÁVEL' : score >= 41 ? 'ATENÇÃO' : score >= 21 ? 'CRÍTICO' : 'INADEQUADO'}
                     </div>
                     <div style={{ fontSize: '15px', color: 'var(--color-text-secondary)' }}>
                         ❌ <span style={{fontWeight: 'bold', color: 'var(--color-score-bad)'}}>{critical.length}</span> Críticos &nbsp;&nbsp; 
