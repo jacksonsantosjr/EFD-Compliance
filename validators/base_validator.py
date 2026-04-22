@@ -12,6 +12,7 @@ from api.models.sped_file import AnalysisResult, SpedFileInfo as PydanticSpedFil
 from parser.sped_parser import SpedParseResult
 from validators.math_validator import MathValidator
 from validators.cross_block_validator import CrossBlockValidator
+from validators.semantic_validator import SemanticValidator
 from validators.cadastral_validator import CadastralValidator
 from validators.uf_rules import get_uf_rules, has_uf_rules
 from knowledge_base.loader import get_loader
@@ -54,13 +55,17 @@ class BaseValidator:
         # 2. Cruzamentos entre blocos
         cross_val = CrossBlockValidator(self.parsed)
         self.findings.extend(cross_val.validate_all())
+
+        # 3. Validação Semântica (CFOP × CST × NCM)
+        semantic_val = SemanticValidator(self.parsed)
+        self.findings.extend(semantic_val.validate_all())
         
-        # 3. Validação Cadastral (Fornecedores 0150)
+        # 4. Validação Cadastral (Fornecedores 0150)
         cadastral_val = CadastralValidator(self.parsed)
         cadastral_findings = await cadastral_val.validate_async()
         self.findings.extend(cadastral_findings)
 
-        # 4. Regras específicas da UF
+        # 5. Regras específicas da UF
         uf = self.parsed.file_info.uf
         if uf:
             uf_rules = get_uf_rules(uf)
@@ -82,13 +87,13 @@ class BaseValidator:
                         recommendation="Validações específicas da UF serão implementadas em versões futuras."
                     ))
 
-        # 5. Montar resumos por bloco
+        # 6. Montar resumos por bloco
         self._build_block_summaries()
 
-        # 6. Calcular score
+        # 7. Calcular score
         score = self._calculate_score()
 
-        # 7. Montar resultado
+        # 8. Montar resultado
         info = self.parsed.file_info
         result = AnalysisResult(
             filename=self.parsed.filename,
