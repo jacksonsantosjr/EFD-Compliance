@@ -95,12 +95,15 @@ class PdfBuilder:
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
+    @page {
+        margin: 1.5cm;
+        size: A4;
+    }
     body {
         font-family: 'Inter', 'Calibri', 'Noto Color Emoji', 'Segoe UI Emoji', sans-serif;
         font-size: 10pt;
         color: #2D3A4A;
-        line-height: 1.5;
-        padding: 1.2cm 1.5cm;
+        line-height: 1.4;
     }
     h1 { color: #6C5CE7; font-size: 20pt; margin-bottom: 8px; text-align: center; }
     h2 { color: #2D3A4A; font-size: 14pt; margin-top: 20px; margin-bottom: 10px;
@@ -122,7 +125,6 @@ class PdfBuilder:
     }
     th, td {
         border: 1px solid #DEE2E6; padding: 6px 8px; text-align: left;
-        word-wrap: break-word; overflow-wrap: break-word;
     }
     th { background: #6C5CE7; color: white; font-weight: 600; }
     tr:nth-child(even) { background: #F8F9FA; }

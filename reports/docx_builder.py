@@ -109,6 +109,11 @@ class DocxBuilder:
         run.font.size = Pt(12)
         run.font.color.rgb = COLOR_DARK
         run.font.italic = True
+        
+        # Linha separadora amigável
+        line = self.doc.add_paragraph('―' * 70)
+        line.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        line.runs[0].font.color.rgb = RGBColor(0xCC, 0xCC, 0xCC)
 
         self.doc.add_paragraph()  # Espaço
 
