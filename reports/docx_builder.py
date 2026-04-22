@@ -109,11 +109,6 @@ class DocxBuilder:
         run.font.size = Pt(12)
         run.font.color.rgb = COLOR_DARK
         run.font.italic = True
-        
-        # Linha separadora amigável
-        line = self.doc.add_paragraph('―' * 70)
-        line.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        line.runs[0].font.color.rgb = RGBColor(0xCC, 0xCC, 0xCC)
 
         self.doc.add_paragraph()  # Espaço
 
@@ -303,6 +298,12 @@ class DocxBuilder:
     def _add_footer(self):
         """Adiciona rodapé com metadados."""
         self.doc.add_paragraph()
+        
+        # Linha separadora sólida e profissional no rodapé
+        p_line = self.doc.add_paragraph()
+        p_line.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        run_line = p_line.add_run('―' * 80)
+        run_line.font.color.rgb = RGBColor(0xDE, 0xE2, 0xE6) # Cinza claro sólido
 
         p = self.doc.add_paragraph()
         p.alignment = WD_ALIGN_PARAGRAPH.CENTER

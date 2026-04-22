@@ -1,7 +1,4 @@
-fix: Melhorias no fluxo de interface, DOCX e renderização do PDF
+fix: Ajuste de linha separadora no dossiê DOCX
 
-- Upload: Adicionada animação progressiva na barra de carregamento durante a validação do SPED.
-- Exportação: A nomenclatura automática dos dossiês agora segue o padrão dossie_NOME_DA_EMPRESA_PERIODO (ex. dossie_KAWAPOLPA_EMBALAGENS_LTDA_01032026_31032026.pdf).
-- Exportação (UI): Botões de DOCX e PDF receberam textos explícitos de "Gerando DOCX..." e "Gerando PDF..." para estourar o cache na ponta do usuário.
-- DOCX: A linha decorativa foi realocada definitivamente para o rodapé em formato sólido e profissional.
-- PDF: Removida a fonte `Noto Color Emoji` do seletor principal do body. O WeasyPrint Linux estava repassando a métrica dessa fonte de emojis para caracteres normais, causando um distanciamento exagerado das letras (kerning quebrado). Agora renderiza usando sans-serif nativo e deixa emojis a cargo do fontconfig de fallback.
+- Removida linha de traços do cabeçalho.
+- Adicionada linha sólida no rodapé, conforme referências visuais do usuário.
