@@ -1,3 +1,3 @@
-fix: Redução adicional do comprimento da linha no DOCX para 40 caracteres.
+test: Ajuste experimental da linha do DOCX para 55 caracteres.
 
-- A linha separadora no rodapé foi reduzida para 40 caracteres para garantir que não haja quebra de linha em nenhum visualizador padrão.
+- Aumentado o comprimento da linha para 55 caracteres para teste visual do usuário.
