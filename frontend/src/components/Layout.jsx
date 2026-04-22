@@ -18,6 +18,7 @@ function Layout() {
     switch (location.pathname) {
       case '/': return 'Upload de Arquivo'
       case '/dashboard': return 'Dashboard de Análise'
+      case '/reports': return 'Relatórios e Dossiês'
       default: return 'EFD Compliance'
     }
   }
@@ -46,6 +47,13 @@ function Layout() {
           >
             <span className="nav-icon">📊</span>
             Dashboard
+          </NavLink>
+          <NavLink
+            to="/reports"
+            className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+          >
+            <span className="nav-icon">📑</span>
+            Relatórios
           </NavLink>
         </nav>
 

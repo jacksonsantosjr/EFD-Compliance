@@ -58,7 +58,11 @@ async def export_report(analysis_id: str, format: ExportFormat):
             detail=f"Dependência não instalada: {str(e)}"
         )
     except Exception as e:
+        msg = str(e)
+        if "weasyprint" in msg.lower() or "cairo" in msg.lower() or "pango" in msg.lower():
+            msg = "ATENÇÃO: Este servidor de desenvolvimento (Windows) carece das bibliotecas nativas GTK+ necessárias para exportar PDF. Por favor, exporte o relatório em formato DOCX ou execute a aplicação em um contêiner Docker/Linux."
+        
         raise HTTPException(
             status_code=500,
-            detail=f"Erro ao gerar relatório: {str(e)}"
+            detail=msg
         )

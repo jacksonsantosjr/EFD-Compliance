@@ -38,7 +38,14 @@ export async function uploadMultipleFiles(files) {
 
 export async function exportReport(analysisId, format) {
   const response = await fetch(`${API_BASE}/export/${analysisId}/${format}`)
-  if (!response.ok) throw new Error('Erro ao gerar relatório.')
+  if (!response.ok) {
+    let errorMsg = 'Erro ao gerar relatório.'
+    try {
+      const errData = await response.json()
+      errorMsg = errData.detail || errorMsg
+    } catch(e) {}
+    throw new Error(errorMsg)
+  }
 
   const blob = await response.blob()
   const url = window.URL.createObjectURL(blob)

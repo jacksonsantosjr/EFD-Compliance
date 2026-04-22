@@ -1,5 +1,8 @@
-docs: Fase 8 - Documentacao Tecnica Enterprise e Integracao Supabase Finalizada
+feat: Módulo Relatórios, Exportação Centralizada e Custom Modal
 
-- API agora realiza insert oficial na tabela sped_analyses (jsonb) ao validar arquivo.
-- Criada client auth de Supabase na pasta database com failover passivo.
-- Adicionada Documentacao Tecnica Completa em DOCUMENTACAO.md com Mermaid Arch flow, Roadmap e Tech stack detalhado.
+- Criada rota /reports para concentrar geração de DOCX e PDF.
+- Preview dinâmico de texto do dossiê adicionado na própria tela de relatórios.
+- Botões de exportação removidos do cabeçalho da DashboardPage.
+- Custom Component `Modal` criado e substituindo chamadas antigas `window.alert`.
+- Backend emite erro mais legível relacionado a bibliotecas C ausentes no Windows (Weasyprint).
+- api.js refatorada para ler error.detail corretamente do FastAPI.

@@ -80,14 +80,6 @@ function DashboardPage() {
               Período: {info.periodo_ini} a {info.periodo_fin} &nbsp;|&nbsp; Perfil {info.perfil} &nbsp;|&nbsp; Layout v{info.cod_ver}
             </div>
           </div>
-          <div style={{ display: 'flex', gap: 'var(--space-2)' }}>
-            <button className="btn btn-secondary" onClick={() => handleExport('docx')} disabled={exporting}>
-              📄 DOCX
-            </button>
-            <button className="btn btn-secondary" onClick={() => handleExport('pdf')} disabled={exporting}>
-              📑 PDF
-            </button>
-          </div>
         </div>
       </div>
 

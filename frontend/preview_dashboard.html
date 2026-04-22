@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Preview Visual - EFD Compliance Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="src/index.css">
+  <style>
+    /* Correções p/ Preview standalone */
+    body { background: var(--color-bg-primary); }
+    .theme-toggle-btn { position: absolute; right: 20px; top: 20px; cursor: pointer; font-size: 24px; background: none; border: none; }
+  </style>
+</head>
+<body data-theme="light">
+  <div class="app-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <span class="logo-icon">🛡️</span>
+        <span>EFD Compliance</span>
+      </div>
+      <nav class="sidebar-nav">
+        <a class="nav-item"><span class="nav-icon">📤</span>Upload</a>
+        <a class="nav-item active"><span class="nav-icon">📊</span>Dashboard</a>
+      </nav>
+      <div style="border-top: 1px solid var(--color-border); padding-top: var(--space-4);">
+        <div class="nav-item" onclick="document.body.setAttribute('data-theme', document.body.getAttribute('data-theme') === 'light' ? 'dark' : 'light')">
+            <span class="nav-icon">🌓</span>Alternar Tema
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="main-area">
+      <header class="header">
+        <h1 class="header-title">Dashboard de Análise (Preview Visual)</h1>
+        <div class="header-actions">
+          <span style="font-size: var(--font-size-xs); color: var(--color-text-tertiary);">v1.0.0</span>
+        </div>
+      </header>
+
+      <div class="content">
+        <!-- Contribuinte Info -->
+        <div class="card mb-6">
+          <div class="card-body" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--space-4);">
+            <div>
+              <h2 style="font-weight: var(--font-weight-bold); font-size: var(--font-size-lg);">KAWAPOLPA EMBALAGENS LTDA</h2>
+              <div style="color: var(--color-text-secondary); font-size: var(--font-size-sm); margin-top: var(--space-1);">
+                CNPJ: 58.274.111/0001-76 &nbsp;|&nbsp; IE: 151751101115 &nbsp;|&nbsp; UF: SP
+              </div>
+              <div style="color: var(--color-text-tertiary); font-size: var(--font-size-xs); margin-top: var(--space-1);">
+                Período: 01/03/2026 a 31/03/2026 &nbsp;|&nbsp; Perfil A &nbsp;|&nbsp; Layout v020
+              </div>
+            </div>
+            <div style="display: flex; gap: var(--space-2);">
+              <button class="btn btn-secondary">📄 DOCX</button>
+              <button class="btn btn-secondary">📑 PDF</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Score e Stats -->
+        <div class="grid-2 mb-6">
+          <div class="card">
+            <div class="card-body text-center">
+              <h3 style="font-weight: var(--font-weight-semibold); margin-bottom: var(--space-4); color: var(--color-text-secondary);">
+                Score de Conformidade
+              </h3>
+              
+              <div class="score-gauge">
+                <div class="score-circle">
+                  <svg width="160" height="160">
+                    <circle class="score-bg" cx="80" cy="80" r="65" fill="none" stroke-width="10"></circle>
+                    <circle class="score-fill" cx="80" cy="80" r="65" fill="none" stroke-width="10" stroke="var(--color-score-good)" stroke-dasharray="408.4" stroke-dashoffset="40.8" stroke-linecap="round"></circle>
+                  </svg>
+                  <div class="score-value" style="color: var(--color-score-good);">90.0%</div>
+                </div>
+                <div class="score-label" style="color: var(--color-score-good);">BOM</div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-body">
+              <h3 style="font-weight: var(--font-weight-semibold); margin-bottom: var(--space-4); color: var(--color-text-secondary);">Resumo</h3>
+              <div class="stats-grid">
+                <div class="stat-card stat-critical">
+                  <div class="stat-value">0</div>
+                  <div class="stat-label">Críticos</div>
+                </div>
+                <div class="stat-card stat-warning">
+                  <div class="stat-value">3</div>
+                  <div class="stat-label">Atenção</div>
+                </div>
+                <div class="stat-card stat-info">
+                  <div class="stat-value">2</div>
+                  <div class="stat-label">Informativos</div>
+                </div>
+                <div class="stat-card stat-success">
+                  <div class="stat-value">555</div>
+                  <div class="stat-label">Registros</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Filtros -->
+        <div style="display: flex; gap: var(--space-1); margin-bottom: var(--space-4);">
+          <button class="btn btn-secondary">📊 Blocos</button>
+          <button class="btn btn-primary">🔍 Achados</button>
+        </div>
+        
+        <div style="display: flex; gap: var(--space-2); margin-bottom: var(--space-4);">
+          <button class="btn btn-primary" style="font-size: var(--font-size-sm);">Todos (5)</button>
+          <button class="btn btn-secondary" style="font-size: var(--font-size-sm);">❌ Críticos (0)</button>
+          <button class="btn btn-secondary" style="font-size: var(--font-size-sm);">⚠️ Atenção (3)</button>
+          <button class="btn btn-secondary" style="font-size: var(--font-size-sm);">ℹ️ Info (2)</button>
+        </div>
+
+        <!-- Lista de Findings -->
+        <div class="finding-item finding-warning">
+          <div class="finding-header">
+            <div style="display: flex; align-items: center; gap: var(--space-2);">
+              <span>⚠️</span>
+              <span class="finding-title">Cruzar G125 Saldo Inicial x G110 SOM_PARC</span>
+            </div>
+            <span class="finding-code">CxE-CROSS-001</span>
+          </div>
+          <div class="finding-description">Soma dos G125 SI diverge de SOM_PARC do G110</div>
+          <div class="finding-meta">
+            <span>✅ Esperado: <strong>2445,15</strong></span>
+            <span>❌ Encontrado: <strong>2445,18</strong></span>
+          </div>
+        </div>
+
+        <div class="finding-item finding-warning">
+          <div class="finding-header">
+            <div style="display: flex; align-items: center; gap: var(--space-2);">
+              <span>⚠️</span>
+              <span class="finding-title">Industrial ausente no Bloco K</span>
+            </div>
+            <span class="finding-code">K-SP-001</span>
+          </div>
+          <div class="finding-description">Estabelecimento Industrial declarou K001 = 1 (Sem Movimento). Verificar se houve de fato industrialização.</div>
+        </div>
+        
+      </div>
+    </main>
+  </div>
+</body>
+</html>
