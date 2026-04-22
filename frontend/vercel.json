@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "https://SEU-SPACE-AQUI.hf.space/api/$1"
+      "destination": "https://jacksonsantosjr-efd-compliance.hf.space/api/$1"
     },
     {
       "source": "/(.*)",

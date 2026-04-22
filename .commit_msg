@@ -1,5 +1,4 @@
-chore: Dockerfile e Vercel Configuration para Deploy Continuo
+chore: Github Actions e correção Vercel Rewrite
 
-- Adicionado `frontend/vercel.json` com regra de reescrita /api (CORS bypass).
-- Adicionado `Dockerfile` otimizado para o Backend na plataforma Hugging Face com WeasyPrint (libcairo2 e pango instalados nivamente via apt-get).
-- Adicionado `.dockerignore` limitando peso do deploy no HF Spaces.
+- .github/workflows/sync_hf.yml adicionado para espelhamento automático com o Hugging Face Spaces.
+- Restaurou-se o parâmetro dinâmico '/api/$1' no arquivo vercel.json para evitar o truncamento das rotas pelo proxy reverso.
