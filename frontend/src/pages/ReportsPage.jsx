@@ -92,40 +92,65 @@ function ReportsPage() {
                 Visualização Prévia do Dossiê Interativo
             </h3>
             
-            <div style={{ fontFamily: 'monospace', whiteSpace: 'pre-wrap', lineHeight: 1.6, color: 'var(--color-text-secondary)', backgroundColor: 'var(--color-bg-primary)', padding: 'var(--space-4)', borderRadius: 'var(--radius)', border: '1px solid var(--color-border)' }}>
-{`============================================================
-DOSSIÊ TÉCNICO DE AUDITORIA SPED - EFD ICMS/IPI
-============================================================
+            <div style={{ fontFamily: 'Inter, Arial, sans-serif', color: '#2D3A4A', backgroundColor: '#fff', padding: '32px', borderRadius: '8px', border: '1px solid var(--color-border)', overflowX: 'auto' }}>
+                <div style={{ textAlign: 'center', marginBottom: '24px' }}>
+                    <h1 style={{ color: '#6C5CE7', fontSize: '24px', fontWeight: 'bold', marginBottom: '8px' }}>DOSSIÊ TÉCNICO — EFD Compliance</h1>
+                    <p style={{ color: '#666', fontStyle: 'italic', fontSize: '14px', borderBottom: '1px solid #DEE2E6', paddingBottom: '16px' }}>Validação Expert de SPED EFD ICMS/IPI — Análise Pós-PVA</p>
+                </div>
 
-Razão Social  : ${info.razao_social}
-CNPJ          : ${info.cnpj}
-Inscrição Est.: ${info.ie}
-Período       : ${info.periodo_ini} a ${info.periodo_fin}
-Layout        : v${info.cod_ver} (Perfil ${info.perfil})
+                <h2 style={{ color: '#2D3A4A', fontSize: '18px', fontWeight: '600', marginTop: '32px', marginBottom: '16px', borderBottom: '2px solid #6C5CE7', paddingBottom: '4px' }}>1. Dados do Contribuinte</h2>
+                <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px', marginBottom: '24px' }}>
+                    <tbody>
+                        <tr><th style={{ border: '1px solid #DEE2E6', padding: '10px 12px', textAlign: 'left', backgroundColor: '#6C5CE7', color: 'white', fontWeight: '600', width: '30%' }}>Razão Social</th><td style={{ border: '1px solid #DEE2E6', padding: '10px 12px', textAlign: 'left' }}>{info.razao_social}</td></tr>
+                        <tr style={{ backgroundColor: '#F8F9FA' }}><th style={{ border: '1px solid #DEE2E6', padding: '10px 12px', textAlign: 'left', backgroundColor: '#6C5CE7', color: 'white', fontWeight: '600' }}>CNPJ</th><td style={{ border: '1px solid #DEE2E6', padding: '10px 12px', textAlign: 'left' }}>{info.cnpj}</td></tr>
+                        <tr><th style={{ border: '1px solid #DEE2E6', padding: '10px 12px', textAlign: 'left', backgroundColor: '#6C5CE7', color: 'white', fontWeight: '600' }}>Inscrição Estadual</th><td style={{ border: '1px solid #DEE2E6', padding: '10px 12px', textAlign: 'left' }}>{info.ie}</td></tr>
+                        <tr style={{ backgroundColor: '#F8F9FA' }}><th style={{ border: '1px solid #DEE2E6', padding: '10px 12px', textAlign: 'left', backgroundColor: '#6C5CE7', color: 'white', fontWeight: '600' }}>Período</th><td style={{ border: '1px solid #DEE2E6', padding: '10px 12px', textAlign: 'left' }}>{info.periodo_ini} a {info.periodo_fin}</td></tr>
+                        <tr><th style={{ border: '1px solid #DEE2E6', padding: '10px 12px', textAlign: 'left', backgroundColor: '#6C5CE7', color: 'white', fontWeight: '600' }}>Versão Layout</th><td style={{ border: '1px solid #DEE2E6', padding: '10px 12px', textAlign: 'left' }}>v{info.cod_ver} (Perfil {info.perfil})</td></tr>
+                    </tbody>
+                </table>
 
-============================================================
-1. RESULTADO GERAL DA AVALIAÇÃO
-============================================================
->> SCORE DE CONFORMIDADE: ${score.toFixed(1)} / 100
->> STATUS GERAL: ${score >= 90 ? 'ALTO NÍVEL DE CONFORMIDADE' : score >= 70 ? 'ATENÇÃO REQUERIDA' : 'RISCO FISCAL ALTO'}
+                <h2 style={{ color: '#2D3A4A', fontSize: '18px', fontWeight: '600', marginTop: '32px', marginBottom: '16px', borderBottom: '2px solid #6C5CE7', paddingBottom: '4px' }}>2. Score de Conformidade</h2>
+                <div style={{ textAlign: 'center', margin: '24px 0', padding: '32px 24px', borderRadius: '8px', backgroundColor: '#F8F9FA', border: '1px solid #DEE2E6' }}>
+                    <div style={{ fontSize: '42px', fontWeight: 'bold', marginBottom: '16px', color: score >= 80 ? '#00B894' : score >= 50 ? '#FDCB6E' : '#E17C80' }}>
+                        {score.toFixed(1)}% — {score >= 80 ? 'BOM' : score >= 50 ? 'ATENÇÃO' : 'CRÍTICO'}
+                    </div>
+                    <div style={{ fontSize: '15px', color: '#666' }}>
+                        ❌ <span style={{fontWeight: 'bold', color: '#E17C80'}}>{critical.length}</span> Críticos &nbsp;&nbsp; 
+                        ⚠️ <span style={{fontWeight: 'bold', color: '#FDCB6E'}}>{findings.filter(f => f.severity === 'warning').length}</span> Atenção &nbsp;&nbsp; 
+                        ℹ️ <span style={{fontWeight: 'bold', color: '#74B9FF'}}>{findings.filter(f => f.severity === 'info').length}</span> Informativos
+                    </div>
+                </div>
 
-Resumo de Ocorrências:
-- Críticas : ${critical.length} itens (Impacto direto em apuração)
-- Alertas  : ${findings.filter(f => f.severity === 'warning').length} itens (Risco secundário)
-- Info     : ${findings.filter(f => f.severity === 'info').length} itens (Melhorias sugeridas)
-
-============================================================
-2. DESTAQUE DOS ACHADOS CRÍTICOS
-============================================================
-${critical.length > 0 
-  ? critical.map(f => `[${f.code}] ${f.title}\n  -> ${f.description}\n`).join('\n')
-  : '✅ Nenhum achado estrutural ou matemático severo foi encontrado.\n'}
-============================================================
-* Observação: Extraia o relatório em DOCX/PDF para ver 
-todas as seções detalhadas, incluindo os testes de 
-Obrigações Acessórias e Consistência Tributária (CIAP, DIFAL).
-============================================================
-`}
+                <h2 style={{ color: '#2D3A4A', fontSize: '18px', fontWeight: '600', marginTop: '32px', marginBottom: '16px', borderBottom: '2px solid #6C5CE7', paddingBottom: '4px' }}>3. Achados Detalhados</h2>
+                {findings.length === 0 ? (
+                    <p style={{ color: '#00B894', fontWeight: 'bold' }}>✅ Nenhum achado estrutural ou matemático severo foi encontrado.</p>
+                ) : (
+                    findings.slice(0, 10).map((f, idx) => {
+                        const isCritical = f.severity === 'critical';
+                        const isWarn = f.severity === 'warning';
+                        const color = isCritical ? '#E17C80' : isWarn ? '#FDCB6E' : '#74B9FF';
+                        const icon = isCritical ? '❌' : isWarn ? '⚠️' : 'ℹ️';
+                        
+                        return (
+                            <div key={idx} style={{ margin: '16px 0', padding: '16px', borderLeft: `4px solid ${color}`, backgroundColor: '#FAFAFA', borderRadius: '0 8px 8px 0', border: '1px solid #DEE2E6', borderLeftWidth: '4px' }}>
+                                <p style={{ fontWeight: 'bold', fontSize: '15px', color: '#2D3A4A', marginBottom: '8px' }}>
+                                    {icon} {f.title} <span style={{ color: '#999', fontSize: '13px' }}>[{f.code}]</span>
+                                </p>
+                                <p style={{ fontSize: '14px', marginBottom: '8px', color: '#444' }}>{f.description}</p>
+                                {(f.expected_value || f.actual_value) && (
+                                    <div style={{ fontSize: '13px', backgroundColor: '#fff', padding: '8px', borderRadius: '4px', border: '1px dashed #ccc', color: '#666' }}>
+                                        <strong>Esperado:</strong> {f.expected_value || "N/D"} | <strong>Encontrado:</strong> {f.actual_value || "N/D"}
+                                    </div>
+                                )}
+                            </div>
+                        )
+                    })
+                )}
+                {findings.length > 10 && (
+                    <p style={{ textAlign: 'center', color: '#666', fontStyle: 'italic', marginTop: '16px' }}>
+                        * Exibindo apenas os primeiros 10 achados. Exporte em DOCX/PDF para visualizar a lista completa.
+                    </p>
+                )}
             </div>
          </div>
       </div>

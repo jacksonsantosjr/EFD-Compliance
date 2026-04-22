@@ -1,3 +1,5 @@
-ux: Aumento do delay do modal de exportação para 3 segundos
+feat: Refatoração visual do ReportsPage
 
-- Ajustado o tempo de espera para 3000ms para garantir total compatibilidade com o tempo de resposta do diálogo de salvamento do SO.
+- Substituição da visualização em texto simples (`<pre>`) por uma renderização rica em React.
+- Implementação do design system utilizado no PDF (cores, espaçamentos, tabelas e cards).
+- Adicionada formatação visual clara para o Score de Conformidade e lista de Achados Detalhados.
