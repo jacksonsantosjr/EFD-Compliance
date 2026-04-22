@@ -1,14 +1,31 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { uploadSpedFile } from '../services/api'
 
 function UploadPage() {
   const [file, setFile] = useState(null)
   const [loading, setLoading] = useState(false)
+  const [progress, setProgress] = useState(0)
   const [error, setError] = useState(null)
   const [dragging, setDragging] = useState(false)
   const inputRef = useRef()
   const navigate = useNavigate()
+
+  useEffect(() => {
+    let interval;
+    if (loading) {
+      setProgress(0)
+      interval = setInterval(() => {
+        setProgress(prev => {
+          if (prev >= 90) return prev + 0.5 // Slow down at the end
+          return prev + 5 // Fast at the beginning
+        })
+      }, 500)
+    } else {
+      setProgress(0)
+    }
+    return () => clearInterval(interval)
+  }, [loading])
 
   const handleDragOver = (e) => {
     e.preventDefault()
@@ -160,9 +177,9 @@ function UploadPage() {
               <div
                 className="progress-fill"
                 style={{
-                  width: '70%',
+                  width: `${Math.min(progress, 98)}%`,
                   background: 'var(--color-bg-accent)',
-                  animation: 'progressPulse 2s ease-in-out infinite',
+                  transition: 'width 0.5s ease-out',
                 }}
               />
             </div>

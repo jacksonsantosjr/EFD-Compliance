@@ -35,7 +35,11 @@ function ReportsPage() {
   const handleExport = async (format) => {
     setExportingType(format)
     try {
-      await exportReport(result.id, format)
+      const razao = result.file_info.razao_social.replace(/[^a-zA-Z0-9]/g, '_').toUpperCase()
+      const perIni = result.file_info.periodo_ini.replace(/\//g, '')
+      const perFin = result.file_info.periodo_fin.replace(/\//g, '')
+      const fileName = `dossie_${razao}_${perIni}_${perFin}`
+      await exportReport(result.id, format, fileName)
       setModalData({
         isOpen: true,
         title: '✅ Sucesso',
@@ -69,10 +73,10 @@ function ReportsPage() {
           </div>
           <div style={{ display: 'flex', gap: 'var(--space-2)' }}>
             <button className="btn" style={{backgroundColor: '#1E88E5', color: '#fff'}} onClick={() => handleExport('docx')} disabled={exportingType !== null}>
-              📄 {exportingType === 'docx' ? 'Aguarde...' : 'Exportar em DOCX'}
+              📄 {exportingType === 'docx' ? 'Gerando DOCX...' : 'Exportar em DOCX'}
             </button>
             <button className="btn" style={{backgroundColor: '#E53935', color: '#fff'}} onClick={() => handleExport('pdf')} disabled={exportingType !== null}>
-              📑 {exportingType === 'pdf' ? 'Aguarde...' : 'Exportar em PDF'}
+              📑 {exportingType === 'pdf' ? 'Gerando PDF...' : 'Exportar em PDF'}
             </button>
           </div>
         </div>
