@@ -1,8 +1,5 @@
-feat: Módulo Relatórios, Exportação Centralizada e Custom Modal
+chore: Dockerfile e Vercel Configuration para Deploy Continuo
 
-- Criada rota /reports para concentrar geração de DOCX e PDF.
-- Preview dinâmico de texto do dossiê adicionado na própria tela de relatórios.
-- Botões de exportação removidos do cabeçalho da DashboardPage.
-- Custom Component `Modal` criado e substituindo chamadas antigas `window.alert`.
-- Backend emite erro mais legível relacionado a bibliotecas C ausentes no Windows (Weasyprint).
-- api.js refatorada para ler error.detail corretamente do FastAPI.
+- Adicionado `frontend/vercel.json` com regra de reescrita /api (CORS bypass).
+- Adicionado `Dockerfile` otimizado para o Backend na plataforma Hugging Face com WeasyPrint (libcairo2 e pango instalados nivamente via apt-get).
+- Adicionado `.dockerignore` limitando peso do deploy no HF Spaces.

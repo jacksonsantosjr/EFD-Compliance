@@ -71,7 +71,7 @@ function ReportsPage() {
             <button className="btn" style={{backgroundColor: '#1E88E5', color: '#fff'}} onClick={() => handleExport('docx')} disabled={exporting}>
               📄 {exporting ? 'Aguarde...' : 'Exportar em DOCX'}
             </button>
-            <button className="btn btn-secondary" onClick={() => handleExport('pdf')} disabled={exporting}>
+            <button className="btn" style={{backgroundColor: '#E53935', color: '#fff'}} onClick={() => handleExport('pdf')} disabled={exporting}>
               📑 {exporting ? 'Aguarde...' : 'Exportar em PDF'}
             </button>
           </div>
