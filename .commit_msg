@@ -1,6 +1,3 @@
-fix: Ajustes críticos de renderização no PDF
+ux: Ajuste no timing do modal de sucesso na exportação
 
-- Corrigido o espaçamento entre caracteres (kerning) removendo fontes externas problemáticas e utilizando fontes padrão seguras (Helvetica/Arial).
-- Adicionado ajuste de letter-spacing para evitar o espalhamento indesejado de letras no WeasyPrint.
-- Corrigida a largura e limites das tabelas, garantindo que o campo "Arquivo" (hash longo) sofra quebra de linha correta e não extrapole as margens do documento.
-- Padronizada a formatação da primeira tabela para alinhar com o restante do dossiê.
+- Adicionado um delay de 1.5 segundos na exibição do modal de sucesso. Isso evita que o modal apareça instantaneamente e fique "atrás" ou sobreponha o diálogo nativo de "Salvar Como" do sistema operacional, melhorando a experiência do usuário.

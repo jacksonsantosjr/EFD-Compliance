@@ -40,11 +40,15 @@ function ReportsPage() {
       const perFin = result.file_info.periodo_fin.replace(/\//g, '')
       const fileName = `dossie_${razao}_${perIni}_${perFin}`
       await exportReport(result.id, format, fileName)
-      setModalData({
-        isOpen: true,
-        title: '✅ Sucesso',
-        message: `O relatório no formato ${format.toUpperCase()} foi gerado e baixado com sucesso.`
-      })
+      
+      // Delay de 1.5s para que o modal não apareça antes do diálogo de "Salvar Como" do navegador
+      setTimeout(() => {
+        setModalData({
+          isOpen: true,
+          title: '✅ Sucesso',
+          message: `O relatório no formato ${format.toUpperCase()} foi gerado e o download iniciado.`
+        })
+      }, 1500)
     } catch (err) {
       setModalData({
         isOpen: true,
