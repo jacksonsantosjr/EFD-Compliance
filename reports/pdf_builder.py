@@ -92,18 +92,17 @@ class PdfBuilder:
     def _css(self) -> str:
         """CSS do relatório."""
         return """<style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-
     * { margin: 0; padding: 0; box-sizing: border-box; }
     @page {
         margin: 1.5cm;
         size: A4;
     }
     body {
-        font-family: 'Inter', 'Calibri', 'Noto Color Emoji', 'Segoe UI Emoji', sans-serif;
+        font-family: Helvetica, Arial, sans-serif;
         font-size: 10pt;
         color: #2D3A4A;
-        line-height: 1.4;
+        line-height: 1.3;
+        letter-spacing: -0.01em; /* Ajuste fino para evitar espalhamento */
     }
     h1 { color: #6C5CE7; font-size: 20pt; margin-bottom: 8px; text-align: center; }
     h2 { color: #2D3A4A; font-size: 14pt; margin-top: 20px; margin-bottom: 10px;
@@ -120,11 +119,14 @@ class PdfBuilder:
     .score-bad { color: #E17C80; }
     .totals { font-size: 11pt; margin-top: 8px; }
     table {
-        width: 100%; border-collapse: collapse; margin: 10px 0;
+        width: 100%; border-collapse: collapse; margin: 12px 0;
         font-size: 9pt;
+        table-layout: auto;
     }
     th, td {
-        border: 1px solid #DEE2E6; padding: 6px 8px; text-align: left;
+        border: 1px solid #DEE2E6; padding: 8px 10px; text-align: left;
+        word-wrap: break-word;
+        word-break: break-word; /* Suporte melhor para wrap natural */
     }
     th { background: #6C5CE7; color: white; font-weight: 600; }
     tr:nth-child(even) { background: #F8F9FA; }
@@ -163,7 +165,7 @@ class PdfBuilder:
     <tr><th>Período</th><td>{periodo_ini} a {periodo_fin}</td></tr>
     <tr><th>Perfil</th><td>Perfil {info.perfil}</td></tr>
     <tr><th>Versão Layout</th><td>{info.cod_ver}</td></tr>
-    <tr><th>Arquivo</th><td>{self.analysis.filename}</td></tr>
+    <tr><th>Arquivo</th><td style="word-break: break-all; font-size: 8pt; color: #666;">{self.analysis.filename}</td></tr>
 </table>"""
 
     def _score_section(self) -> str:
