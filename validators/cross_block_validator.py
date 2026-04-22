@@ -86,6 +86,8 @@ class CrossBlockValidator:
         for c197 in c197_list:
             cod_aj = c197.get_campo("COD_AJ")
             campo = self.loader.get_campo_e110_for_code(cod_aj)
+            if campo in ("NAO_APLICAVEL_E110", "DESCONHECIDO"):
+                continue
             vl_icms = c197.get_campo_decimal("VL_ICMS")
             vl_outros = c197.get_campo_decimal("VL_OUTROS")
             valor = vl_icms if vl_icms else vl_outros
@@ -129,6 +131,8 @@ class CrossBlockValidator:
         for e111 in e111_list:
             cod_aj = e111.get_campo("COD_AJ_APUR")
             campo = self.loader.get_campo_e110_for_code(cod_aj)
+            if campo in ("NAO_APLICAVEL_E110", "DESCONHECIDO"):
+                continue
             valor = e111.get_campo_decimal("VL_AJ_APUR")
             somas[campo] = somas.get(campo, Decimal("0")) + valor
 
@@ -189,8 +193,7 @@ class CrossBlockValidator:
 
         soma_parc = Decimal("0")
         for g125 in g125_list:
-            if g125.get_campo("TIPO_MOV") == "SI":
-                soma_parc += g125.get_campo_decimal("VL_PARC_PASS")
+            soma_parc += g125.get_campo_decimal("VL_PARC_PASS")
 
         som_parc_g110 = g110.get_campo_decimal("SOM_PARC")
         diff = abs(soma_parc - som_parc_g110)
@@ -199,9 +202,9 @@ class CrossBlockValidator:
             self.findings.append(Finding(
                 block="G", register="G125×G110", severity=Severity.CRITICAL,
                 code="GxG-CROSS-001",
-                title="Soma dos G125 SI diverge de SOM_PARC do G110",
+                title="Soma dos G125 diverge de SOM_PARC do G110",
                 description=(
-                    f"Soma VL_PARC_PASS dos G125 tipo SI: R$ {soma_parc:,.2f}\n"
+                    f"Soma VL_PARC_PASS de todos os G125: R$ {soma_parc:,.2f}\n"
                     f"SOM_PARC do G110 (campo 05): R$ {som_parc_g110:,.2f}"
                 ),
                 expected_value=f"R$ {som_parc_g110:,.2f}",

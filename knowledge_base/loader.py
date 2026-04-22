@@ -102,10 +102,15 @@ class KnowledgeBaseLoader:
     def _get_campo_e110(codigo_ajuste: str) -> str:
         """
         Determina qual campo do E110 é alimentado pelo código de ajuste.
-        Baseado no 4º caractere do código (ex: SP020207 → 4º char = '2' = crédito).
+        Baseado no 3º (tipo de imposto) e 4º caractere (tipo de ajuste).
+        Se o 3º caractere não for '0' (ICMS Normal), não deve ir para o E110.
         """
         if len(codigo_ajuste) < 4:
             return "DESCONHECIDO"
+
+        terceiro_char = codigo_ajuste[2]
+        if terceiro_char != '0':
+            return "NAO_APLICAVEL_E110"
 
         quarto_char = codigo_ajuste[3]
         mapa = {
