@@ -1,7 +1,5 @@
-test: Fase 7 - Testes unitarios com arquivo real KAWAPOLPA mar/2026
+docs: Fase 8 - Documentacao Tecnica Enterprise e Integracao Supabase Finalizada
 
-- 49 testes do parser (Registro, LayoutDetector, SpedParser)
-- 39 testes dos validadores (Math, CrossBlock, SP Rules, BaseValidator)
-- Total: 88 testes passando com dados reais
-- Fixture do arquivo SPED KAWAPOLPA
-- Runners com output ASCII para compatibilidade Windows cp1252
+- API agora realiza insert oficial na tabela sped_analyses (jsonb) ao validar arquivo.
+- Criada client auth de Supabase na pasta database com failover passivo.
+- Adicionada Documentacao Tecnica Completa em DOCUMENTACAO.md com Mermaid Arch flow, Roadmap e Tech stack detalhado.

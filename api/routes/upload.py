@@ -66,6 +66,31 @@ async def upload_sped_file(file: UploadFile = File(...)):
         result.filename = file.filename
         result.file_hash = file_hash
 
+        # Salvar no Supabase (se configurado)
+        from database.client import supabase
+        if supabase:
+            try:
+                dt_ini = result.file_info.periodo_ini.isoformat() if result.file_info.periodo_ini else None
+                dt_fin = result.file_info.periodo_fin.isoformat() if result.file_info.periodo_fin else None
+                
+                payload = {
+                    "id": result.id,
+                    "filename": result.filename,
+                    "file_hash": result.file_hash,
+                    "cnpj": result.file_info.cnpj,
+                    "razao_social": result.file_info.nome,
+                    "uf": result.file_info.uf,
+                    "periodo_ini": dt_ini,
+                    "periodo_fin": dt_fin,
+                    "score": result.score,
+                    "total_registros": result.total_registros,
+                    "result_json": result.model_dump(mode="json")
+                }
+                supabase.table("sped_analyses").insert(payload).execute()
+                print(f"Análise salva no Supabase (ID: {result.id})")
+            except Exception as db_err:
+                print(f"Erro ao salvar no Supabase: {db_err}")
+
         return result
 
     except HTTPException:
