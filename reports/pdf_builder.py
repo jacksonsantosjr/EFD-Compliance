@@ -100,7 +100,7 @@ class PdfBuilder:
         font-size: 10pt;
         color: #2D3A4A;
         line-height: 1.5;
-        padding: 2cm;
+        padding: 1.2cm 1.5cm;
     }
     h1 { color: #6C5CE7; font-size: 20pt; margin-bottom: 8px; text-align: center; }
     h2 { color: #2D3A4A; font-size: 14pt; margin-top: 20px; margin-bottom: 10px;
@@ -118,7 +118,7 @@ class PdfBuilder:
     .totals { font-size: 11pt; margin-top: 8px; }
     table {
         width: 100%; border-collapse: collapse; margin: 10px 0;
-        font-size: 9pt; table-layout: fixed;
+        font-size: 9pt;
     }
     th, td {
         border: 1px solid #DEE2E6; padding: 6px 8px; text-align: left;

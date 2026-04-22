@@ -1,5 +1,5 @@
-fix: Ajustes visuais em PDF e DOCX export reports
+fix: Ajustes finais UI/UX e PDF Layout
 
-- PDF: Corrigido problema do nome de arquivo muito longo transbordando o layout da tabela adicionando propriedades table-layout: fixed e word-wrap no CSS interno.
-- PDF: Adicionada a fonte fonts-noto-color-emoji no Dockerfile para garantir a renderização fiel dos ícones de status no WeasyPrint Linux.
-- DOCX: O código de geração da tabela de Visão por Bloco foi aprimorado para injetar as cores exatas do Design System em cada tipo de Status da auditoria (Sucesso, Atenção, Crítico) nos ícones.
+- Remove linha tracejada do rodapé no DOCX para maior limpeza visual.
+- Implementa rastreamento individual do botão de exportação no frontend (React state exportingType), prevenindo que botões não clicados mostrem o texto de 'Aguarde...'.
+- Aumenta o respiro lateral do PDF removendo table-layout: fixed e ajustando padding do body para 1.2cm 1.5cm (evita impressão de dados espremidos).

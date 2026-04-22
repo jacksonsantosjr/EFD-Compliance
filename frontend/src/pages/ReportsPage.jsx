@@ -5,7 +5,7 @@ import Modal from '../components/Modal'
 
 function ReportsPage() {
   const [result, setResult] = useState(null)
-  const [exporting, setExporting] = useState(false)
+  const [exportingType, setExportingType] = useState(null)
   const [modalData, setModalData] = useState({ isOpen: false, title: '', message: '' })
   const navigate = useNavigate()
 
@@ -33,7 +33,7 @@ function ReportsPage() {
   }
 
   const handleExport = async (format) => {
-    setExporting(true)
+    setExportingType(format)
     try {
       await exportReport(result.id, format)
       setModalData({
@@ -48,7 +48,7 @@ function ReportsPage() {
         message: err.message
       })
     } finally {
-      setExporting(false)
+      setExportingType(null)
     }
   }
 
@@ -68,11 +68,11 @@ function ReportsPage() {
             </div>
           </div>
           <div style={{ display: 'flex', gap: 'var(--space-2)' }}>
-            <button className="btn" style={{backgroundColor: '#1E88E5', color: '#fff'}} onClick={() => handleExport('docx')} disabled={exporting}>
-              📄 {exporting ? 'Aguarde...' : 'Exportar em DOCX'}
+            <button className="btn" style={{backgroundColor: '#1E88E5', color: '#fff'}} onClick={() => handleExport('docx')} disabled={exportingType !== null}>
+              📄 {exportingType === 'docx' ? 'Aguarde...' : 'Exportar em DOCX'}
             </button>
-            <button className="btn" style={{backgroundColor: '#E53935', color: '#fff'}} onClick={() => handleExport('pdf')} disabled={exporting}>
-              📑 {exporting ? 'Aguarde...' : 'Exportar em PDF'}
+            <button className="btn" style={{backgroundColor: '#E53935', color: '#fff'}} onClick={() => handleExport('pdf')} disabled={exportingType !== null}>
+              📑 {exportingType === 'pdf' ? 'Aguarde...' : 'Exportar em PDF'}
             </button>
           </div>
         </div>

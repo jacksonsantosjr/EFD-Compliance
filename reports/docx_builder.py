@@ -298,7 +298,6 @@ class DocxBuilder:
     def _add_footer(self):
         """Adiciona rodapé com metadados."""
         self.doc.add_paragraph()
-        self.doc.add_paragraph('―' * 60)
 
         p = self.doc.add_paragraph()
         p.alignment = WD_ALIGN_PARAGRAPH.CENTER
