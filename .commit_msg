@@ -1,4 +1,0 @@
-fix(validators): Correção na lógica de cruzamento de C197 e G125
-
-1. C197/E111 x E110: Adicionada verificação do 3º caractere do código de ajuste. Apenas ajustes com o 3º caractere '0' (ICMS Normal) devem ser cruzados contra os campos do bloco E110. Isso evita falsos positivos com valores de ST, DIFAL, etc.
-2. G125 x G110: Removido filtro restritivo de TIPO_MOV == "SI". O campo SOM_PARC (05) do G110 deve corresponder ao somatório de TODAS as parcelas de ICMS passível de apropriação dos registros G125, independentemente do tipo de movimentação.

@@ -60,7 +60,7 @@ async def upload_sped_file(file: UploadFile = File(...)):
         # Validação completa
         from validators.base_validator import BaseValidator
         validator = BaseValidator(parsed)
-        result = validator.validate()
+        result = await validator.validate()
 
         # Atualizar com nome original do arquivo
         result.filename = file.filename
@@ -139,7 +139,7 @@ async def upload_multiple_files(files: List[UploadFile] = File(...)):
 
             parsed = parse_sped_file(file_path)
             validator = BaseValidator(parsed)
-            result = validator.validate()
+            result = await validator.validate()
             result.filename = file.filename
             result.file_hash = file_hash
             results.append(result)

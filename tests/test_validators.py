@@ -6,6 +6,7 @@ Valida a engine de regras matemáticas, cruzamentos e regras SP.
 import sys
 from pathlib import Path
 from decimal import Decimal
+import asyncio
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
@@ -233,7 +234,7 @@ class TestBaseValidator:
         assert FIXTURE_FILE.exists()
         cls.parsed = parse_sped_file(FIXTURE_FILE)
         cls.validator = BaseValidator(cls.parsed)
-        cls.result = cls.validator.validate()
+        cls.result = asyncio.run(cls.validator.validate())
 
     def test_result_has_score(self):
         assert 0 <= self.result.score <= 100
