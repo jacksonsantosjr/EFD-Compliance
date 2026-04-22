@@ -41,14 +41,14 @@ function ReportsPage() {
       const fileName = `dossie_${razao}_${perIni}_${perFin}`
       await exportReport(result.id, format, fileName)
       
-      // Delay de 1.5s para que o modal não apareça antes do diálogo de "Salvar Como" do navegador
+      // Delay de 3s para que o modal não apareça antes do diálogo de "Salvar Como" do navegador
       setTimeout(() => {
         setModalData({
           isOpen: true,
           title: '✅ Sucesso',
           message: `O relatório no formato ${format.toUpperCase()} foi gerado e o download iniciado.`
         })
-      }, 1500)
+      }, 3000)
     } catch (err) {
       setModalData({
         isOpen: true,
