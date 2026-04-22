@@ -1,4 +1,3 @@
-fix: Ajuste de linha separadora no dossiê DOCX
+fix: Ajuste de comprimento da linha separadora no DOCX
 
-- Removida linha de traços do cabeçalho.
-- Adicionada linha sólida no rodapé, conforme referências visuais do usuário.
+- Reduzido o número de caracteres da linha separadora no rodapé de 80 para 65 para evitar quebras de linha indesejadas em visualizadores padrão.
