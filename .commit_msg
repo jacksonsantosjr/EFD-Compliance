@@ -1,4 +1,3 @@
-chore: Github Actions e correção Vercel Rewrite
+fix: Adicionando README com Frontmatter obrigatório do Hugging Face
 
-- .github/workflows/sync_hf.yml adicionado para espelhamento automático com o Hugging Face Spaces.
-- Restaurou-se o parâmetro dinâmico '/api/$1' no arquivo vercel.json para evitar o truncamento das rotas pelo proxy reverso.
+- A plataforma requer um bloco YAML na raiz do README.md para reconhecer a intenção de uso do Docker SDK no Space.
