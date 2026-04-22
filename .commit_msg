@@ -1,3 +1,3 @@
-fix: Ajuste de comprimento da linha separadora no DOCX
+fix: Redução adicional do comprimento da linha no DOCX para 40 caracteres.
 
-- Reduzido o número de caracteres da linha separadora no rodapé de 80 para 65 para evitar quebras de linha indesejadas em visualizadores padrão.
+- A linha separadora no rodapé foi reduzida para 40 caracteres para garantir que não haja quebra de linha em nenhum visualizador padrão.

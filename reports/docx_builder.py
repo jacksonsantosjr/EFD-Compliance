@@ -302,7 +302,7 @@ class DocxBuilder:
         # Linha separadora sólida e profissional no rodapé
         p_line = self.doc.add_paragraph()
         p_line.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        run_line = p_line.add_run('―' * 65)
+        run_line = p_line.add_run('―' * 40)
         run_line.font.color.rgb = RGBColor(0xDE, 0xE2, 0xE6) # Cinza claro sólido
 
         p = self.doc.add_paragraph()
