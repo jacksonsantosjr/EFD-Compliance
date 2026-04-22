@@ -1,5 +1,5 @@
-feat: Adição de Modal Interativo para Blocos no Dashboard
+feat: Melhorias de UX — Modal, Progress Bar e Nova Análise
 
-- O componente `BlockCard` agora recebe um evento `onClick` e exibe cursor apropriado (interativo) somente se o status do bloco for 'critical' ou 'warning'.
-- O `DashboardPage` gerencia o estado de um novo Modal de visualização rápida.
-- Ao clicar em um bloco com inconformidades, um modal é aberto exibindo apenas os achados (`FindingCard`) específicos daquele bloco, filtrados em tempo de execução pela letra/código do bloco.
+- Modal global: largura aumentada de 450px para 600px e blur de 3px para 6px.
+- UploadPage: barra de progresso movida para um modal overlay centralizado.
+- DashboardPage: botão "Nova Análise" adicionado à barra de tabs com funcionalidade de limpar a sessão e redirecionar para Upload.

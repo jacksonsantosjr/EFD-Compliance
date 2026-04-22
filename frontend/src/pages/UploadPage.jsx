@@ -169,23 +169,41 @@ function UploadPage() {
         </div>
       )}
 
-      {/* Loading Overlay */}
+      {/* Modal de Progresso */}
       {loading && (
-        <div className="card mt-4">
-          <div className="card-body">
-            <div className="progress-bar" style={{ marginBottom: 'var(--space-3)' }}>
-              <div
-                className="progress-fill"
-                style={{
-                  width: `${Math.min(progress, 98)}%`,
-                  background: 'var(--color-bg-accent)',
-                  transition: 'width 0.5s ease-out',
-                }}
-              />
+        <div style={{
+          position: 'fixed',
+          top: 0, left: 0, right: 0, bottom: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.4)',
+          backdropFilter: 'blur(6px)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 9999
+        }}>
+          <div className="card" style={{ 
+            width: '500px', 
+            maxWidth: '90%', 
+            boxShadow: '0 10px 25px rgba(0,0,0,0.2)' 
+          }}>
+            <div className="card-body" style={{ padding: 'var(--space-8)' }}>
+              <h3 style={{ textAlign: 'center', marginBottom: 'var(--space-6)', color: 'var(--color-text-primary)', fontSize: 'var(--font-size-lg)' }}>
+                🔍 Analisando Arquivo...
+              </h3>
+              <div className="progress-bar" style={{ marginBottom: 'var(--space-4)', height: '8px' }}>
+                <div
+                  className="progress-fill"
+                  style={{
+                    width: `${Math.min(progress, 98)}%`,
+                    background: 'var(--color-bg-accent)',
+                    transition: 'width 0.5s ease-out',
+                  }}
+                />
+              </div>
+              <p className="text-center" style={{ color: 'var(--color-text-secondary)', fontSize: 'var(--font-size-sm)' }}>
+                Processando arquivo SPED... Aplicando validações matemáticas, cruzamentos e regras da UF.
+              </p>
             </div>
-            <p className="text-center" style={{ color: 'var(--color-text-secondary)' }}>
-              Processando arquivo SPED... Aplicando validações matemáticas, cruzamentos e regras da UF.
-            </p>
           </div>
         </div>
       )}

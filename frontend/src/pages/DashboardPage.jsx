@@ -135,7 +135,7 @@ function DashboardPage() {
       </div>
 
       {/* Tabs */}
-      <div style={{ display: 'flex', gap: 'var(--space-1)', marginBottom: 'var(--space-4)' }}>
+      <div style={{ display: 'flex', gap: 'var(--space-1)', marginBottom: 'var(--space-4)', alignItems: 'center' }}>
         {[
           { key: 'overview', label: '📊 Blocos', id: 'tab-blocks' },
           { key: 'findings', label: '🔍 Achados', id: 'tab-findings' },
@@ -149,6 +149,18 @@ function DashboardPage() {
             {tab.label}
           </button>
         ))}
+
+        <button
+          className="btn btn-secondary"
+          id="btn-new-analysis"
+          onClick={() => {
+            sessionStorage.removeItem('analysisResult')
+            navigate('/')
+          }}
+          style={{ marginLeft: 'auto' }}
+        >
+          🔄 Nova Análise
+        </button>
       </div>
 
       {/* Tab: Blocos */}
