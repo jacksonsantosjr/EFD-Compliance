@@ -14,6 +14,7 @@ RUN apt-get update && apt-get install -y \
     libffi-dev \
     shared-mime-info \
     fontconfig \
+    fonts-noto-color-emoji \
     && rm -rf /var/lib/apt/lists/*
 
 # Definindo o diretório principal do container

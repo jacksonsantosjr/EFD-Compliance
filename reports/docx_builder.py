@@ -195,7 +195,15 @@ class DocxBuilder:
             row.cells[1].text = summary.block_name
             row.cells[2].text = str(summary.total_records)
             row.cells[3].text = str(summary.total_findings)
-            row.cells[4].text = STATUS_ICONS.get(summary.status, "")
+            
+            p_status = row.cells[4].paragraphs[0]
+            run_status = p_status.add_run(STATUS_ICONS.get(summary.status, ""))
+            if summary.status == "ok":
+                run_status.font.color.rgb = COLOR_SUCCESS
+            elif summary.status == "warning":
+                run_status.font.color.rgb = COLOR_WARNING
+            elif summary.status == "critical":
+                run_status.font.color.rgb = COLOR_DANGER
 
     def _add_findings_section(self):
         """Adiciona seção detalhada de achados."""

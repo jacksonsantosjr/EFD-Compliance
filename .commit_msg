@@ -1,3 +1,5 @@
-fix: Adicionando README com Frontmatter obrigatório do Hugging Face
+fix: Ajustes visuais em PDF e DOCX export reports
 
-- A plataforma requer um bloco YAML na raiz do README.md para reconhecer a intenção de uso do Docker SDK no Space.
+- PDF: Corrigido problema do nome de arquivo muito longo transbordando o layout da tabela adicionando propriedades table-layout: fixed e word-wrap no CSS interno.
+- PDF: Adicionada a fonte fonts-noto-color-emoji no Dockerfile para garantir a renderização fiel dos ícones de status no WeasyPrint Linux.
+- DOCX: O código de geração da tabela de Visão por Bloco foi aprimorado para injetar as cores exatas do Design System em cada tipo de Status da auditoria (Sucesso, Atenção, Crítico) nos ícones.

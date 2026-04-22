@@ -96,7 +96,7 @@ class PdfBuilder:
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-        font-family: 'Inter', 'Calibri', sans-serif;
+        font-family: 'Inter', 'Calibri', 'Noto Color Emoji', 'Segoe UI Emoji', sans-serif;
         font-size: 10pt;
         color: #2D3A4A;
         line-height: 1.5;
@@ -118,10 +118,11 @@ class PdfBuilder:
     .totals { font-size: 11pt; margin-top: 8px; }
     table {
         width: 100%; border-collapse: collapse; margin: 10px 0;
-        font-size: 9pt;
+        font-size: 9pt; table-layout: fixed;
     }
     th, td {
         border: 1px solid #DEE2E6; padding: 6px 8px; text-align: left;
+        word-wrap: break-word; overflow-wrap: break-word;
     }
     th { background: #6C5CE7; color: white; font-weight: 600; }
     tr:nth-child(even) { background: #F8F9FA; }
