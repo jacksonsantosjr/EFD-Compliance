@@ -9,6 +9,7 @@ from api.models.finding import Finding, Severity, Category
 from parser.ecf_parser import EcfParseResult
 from validators.ecf.referencial_validator_ecf import ReferencialValidatorECF
 from validators.ecf.lalur_validator_ecf import LalurValidatorECF
+from validators.ecf.quality_validator_ecf import QualityValidatorECF
 
 class ECFValidator:
     """Orquestrador das validações da Escrituração Contábil Fiscal (ECF)."""
@@ -35,8 +36,9 @@ class ECFValidator:
             severity=severity_map.get(level, Severity.INFO),
             category=Category.COMPLIANCE if category == "Compliance" else Category.MATH,
             registro=registro,
-            impact="Compromete a integridade fiscal do arquivo ECF.",
-            recomendation="Ajuste as informações contábeis/fiscais declaradas."
+            block=registro[0] if registro else "0",
+            impact="Compromete a integridade fiscal e o mérito da apuração do IRPJ/CSLL.",
+            recommendation="Revise a classificação contábil e as regras de apuração do Lucro Real/Presumido."
         )
         self.findings.append(issue)
         
@@ -48,13 +50,17 @@ class ECFValidator:
     async def validate(self) -> AnalysisResult:
         """Executa todas as esteiras de validação da ECF."""
         
-        # Etapa 5.2: Validação do Plano de Contas Referencial (Blocos J e K)
+        # 1. Validação do Plano de Contas Referencial (Blocos J e K)
         ref_validator = ReferencialValidatorECF(self)
         ref_validator.validate_all()
         
-        # Etapa 5.3: Validação do LALUR/LACS (Blocos M e N)
+        # 2. Validação do LALUR/LACS (Blocos M e N)
         lalur_validator = LalurValidatorECF(self)
         lalur_validator.validate_all()
+        
+        # 3. Validação de Qualidade e Compliance (Fase 9)
+        quality_validator = QualityValidatorECF(self)
+        quality_validator.validate_all()
         
         # Garantir limite do score
         self.score = max(0.0, min(100.0, self.score))

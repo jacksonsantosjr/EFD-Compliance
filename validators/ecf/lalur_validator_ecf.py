@@ -12,6 +12,7 @@ class LalurValidatorECF:
     def validate_all(self):
         self._validate_parte_b_m010()
         self._validate_parte_a_m300_m350()
+        self._validate_trava_30_percent()
 
     def _validate_parte_b_m010(self):
         """
@@ -82,3 +83,50 @@ class LalurValidatorECF:
                         )
                 except Exception:
                     pass
+
+    def _validate_trava_30_percent(self):
+        """
+        Regra ECF-LALUR-004: Limite de 30% na compensação de Prejuízo Fiscal / Base Negativa.
+        Aplicável apenas para Lucro Real (Registro 0010, campo 6 (FOR_APUR) in ['1', '2']).
+        """
+        reg0010 = self.parsed.get_registro_unico("0010")
+        if not reg0010: 
+            return
+            
+        forma_apur = reg0010.campos_raw[6] if len(reg0010.campos_raw) > 6 else ""
+        if forma_apur not in ["1", "2"]: 
+            return
+            
+        for tipo_reg in ["M300", "M350"]:
+            regs = self.parsed.get_registros(tipo_reg)
+            
+            lucro_antes = 0.0
+            compensacao = 0.0
+            
+            for reg in regs:
+                try:
+                    codigo = reg.campos_raw[1] if len(reg.campos_raw) > 1 else ""
+                    # VL_LANCAMENTO está no campo 5
+                    valor = float(reg.campos_raw[5].replace(",", ".")) if len(reg.campos_raw) > 5 and reg.campos_raw[5] else 0.0
+                    
+                    # No e-Lalur/e-Lacs, o código 166 é o lucro antes da compensação (Base de Cálculo antes da Compensação)
+                    # O código 172 é a Compensação de Prejuízo de Períodos Anteriores
+                    if codigo == "166":
+                        lucro_antes = valor
+                    elif codigo == "172":
+                        compensacao = valor
+                except:
+                    pass
+            
+            if lucro_antes > 0 and compensacao > 0:
+                limite = lucro_antes * 0.30
+                if compensacao > (limite + 0.05):
+                    self.base.add_issue(
+                        code="ECF-LALUR-004",
+                        title=f"Limite de Compensação de 30% Excedido ({tipo_reg})",
+                        description=f"O Lucro/Base antes da compensação é R$ {lucro_antes:.2f}, permitindo compensar no máximo R$ {limite:.2f}. A empresa declarou R$ {compensacao:.2f}.",
+                        level="error",
+                        category="Compliance",
+                        registro=tipo_reg,
+                        details="A legislação tributária limita o uso de prejuízos fiscais a 30% do lucro real do período."
+                    )

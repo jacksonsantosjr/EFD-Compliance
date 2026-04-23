@@ -13,6 +13,7 @@ class ReferencialValidatorECF:
         self._validate_mapeamento_j050_j051()
         self._validate_saldos_k155()
         self._validate_saldos_k355()
+        self._validate_regime_e_atividade()
 
     def _validate_mapeamento_j050_j051(self):
         """
@@ -149,6 +150,64 @@ class ReferencialValidatorECF:
                         category="Compliance",
                         registro="K355",
                         details=f"Linha {reg.numero_linha}. Isso pode impactar o mapeamento para o LALUR."
+                    )
+            except Exception:
+                pass
+
+    def _validate_regime_e_atividade(self):
+        """
+        Regras ECF-REF-004 e ECF-REF-005.
+        Valida se o Plano Referencial usado (J051) é compatível com o Regime e Atividade.
+        """
+        reg0010 = self.parsed.get_registro_unico("0010")
+        reg0020 = self.parsed.get_registro_unico("0020")
+        if not reg0010: 
+            return
+        
+        # 1. Checar Regime (0010 campo 6: FOR_APUR)
+        # 1=Real, 2=Real Estimativa, 3=Presumido, 4=Arbitrado...
+        forma_apur = reg0010.campos_raw[6] if len(reg0010.campos_raw) > 6 else ""
+        
+        # 2. Checar Atividade (0020 campo 3: IND_ATIV_ECON)
+        # 1=Geral, 2=Rural, 3=Geral e Rural
+        ativ_econ = reg0020.campos_raw[3] if reg0020 and len(reg0020.campos_raw) > 3 else "1"
+        
+        j051_regs = self.parsed.get_registros("J051")
+        for reg in j051_regs:
+            try:
+                cod_ref = reg.campos_raw[2] if len(reg.campos_raw) > 2 else ""
+                if not cod_ref: 
+                    continue
+                
+                # Validação de Regime (9000=Real, 9001=Presumido)
+                if forma_apur in ["1", "2"] and cod_ref.startswith("9001"):
+                    self.base.add_issue(
+                        code="ECF-REF-004",
+                        title="Plano Referencial Incompatível com o Regime (Lucro Real)",
+                        description=f"A empresa está no Lucro Real, mas utilizou a conta referencial '{cod_ref}' do plano de Lucro Presumido (9001).",
+                        level="error",
+                        category="Compliance",
+                        registro="J051"
+                    )
+                elif forma_apur == "3" and cod_ref.startswith("9000"):
+                    self.base.add_issue(
+                        code="ECF-REF-004",
+                        title="Plano Referencial Incompatível com o Regime (Lucro Presumido)",
+                        description=f"A empresa está no Lucro Presumido, mas utilizou a conta referencial '{cod_ref}' do plano de Lucro Real (9000).",
+                        level="error",
+                        category="Compliance",
+                        registro="J051"
+                    )
+                    
+                # Validação de Atividade Rural (Contas 3.11 são rurais)
+                if ativ_econ == "1" and cod_ref.startswith("3.11"):
+                    self.base.add_issue(
+                        code="ECF-REF-005",
+                        title="Uso de Conta Rural para Empresa com Atividade Geral",
+                        description=f"A conta referencial '{cod_ref}' é exclusiva para Atividade Rural, mas a empresa está classificada com Atividade Geral no registro 0020.",
+                        level="error",
+                        category="Compliance",
+                        registro="J051"
                     )
             except Exception:
                 pass
