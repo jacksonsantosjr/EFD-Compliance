@@ -8,6 +8,7 @@ from api.models.finding import Finding, Severity, Category
 
 from parser.ecf_parser import EcfParseResult
 from validators.ecf.referencial_validator_ecf import ReferencialValidatorECF
+from validators.ecf.lalur_validator_ecf import LalurValidatorECF
 
 class ECFValidator:
     """Orquestrador das validações da Escrituração Contábil Fiscal (ECF)."""
@@ -51,7 +52,9 @@ class ECFValidator:
         ref_validator = ReferencialValidatorECF(self)
         ref_validator.validate_all()
         
-        # Etapas futuras (LALUR/LACS) serão chamadas aqui
+        # Etapa 5.3: Validação do LALUR/LACS (Blocos M e N)
+        lalur_validator = LalurValidatorECF(self)
+        lalur_validator.validate_all()
         
         # Garantir limite do score
         self.score = max(0.0, min(100.0, self.score))

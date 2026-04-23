@@ -52,8 +52,8 @@ O **EFD Compliance** evoluiu para um **Hub de Auditoria Integrada**, abrangendo 
 
 ---
 
-### 🔄 FASE 5 — Auditoria ECF (IRPJ / CSLL)
-**Status: EM ANDAMENTO** | Progresso: 66%
+### ✅ FASE 5 — Auditoria ECF (IRPJ / CSLL)
+**Status: CONCLUÍDO** | Progresso: 100%
 
 **Etapa 5.1: Infraestrutura e Parser ECF** → ✅ **CONCLUÍDO** (Commit `8170a8f`)
 - Parser nativo (`ecf_parser.py`) construído.
@@ -63,8 +63,9 @@ O **EFD Compliance** evoluiu para um **Hub de Auditoria Integrada**, abrangendo 
 - Verificação se as contas analíticas (J050) possuem mapeamento (J051).
 - Regra matemática verificando K155 (Saldos Patrimoniais) e K355 (Resultado).
 
-**Etapa 5.3: Validador LALUR / LACS** → 🔲 PENDENTE
-- Verificação da Parte A (adições/exclusões) e Parte B (prejuízos).
+**Etapa 5.3: Validador LALUR / LACS** → ✅ **CONCLUÍDO**
+- Identificação da Parte B (M010): validando controle de prejuízo fiscal.
+- Verificação da Parte A (M300/M350): coerência matemática dos lançamentos de adição/exclusão.
 
 ---
 
@@ -91,8 +92,7 @@ O **EFD Compliance** evoluiu para um **Hub de Auditoria Integrada**, abrangendo 
 
 ## Próximos Passos (quando retomar)
 
-1. **Fase 5.2: Plano de Contas Referencial (ECF)** — Validar o mapeamento de contas J050/J051 e saldos K155/K355.
-2. **Fase 5.3: LALUR/LACS (ECF)** — Implementar lógica para Blocos M e N.
-3. **Profundidade ECD** — Adicionar validação de Saldos Iniciais vs Finais (I155/I157) e Plano de Contas Referencial.
-4. **Teste com arquivos reais** — Validar o batimento de Débito/Crédito com uma ECD de grande porte.
-5. **Dashboard Consolidado** — Visualização de indicadores específicos por tipo de obrigação.
+1. **Cruzamento ECD x ECF** — Desenvolver o importador que lê a ECD validada no banco de dados e cruza com a ECF atual (verificando se o J050/K155 bate).
+2. **Profundidade ECD** — Adicionar validação de Saldos Iniciais vs Finais (I155/I157).
+3. **Teste com arquivos reais** — Validar toda a esteira (EFD, ECD, ECF) com dados de produção anonimizados.
+4. **Dashboard Consolidado** — Visualização de indicadores de "Compliance Tributário Integrado" (malha fina automática).
