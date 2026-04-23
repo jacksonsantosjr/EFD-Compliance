@@ -23,6 +23,7 @@ class SpedFileInfo(BaseModel):
     cod_ver: str = ""  # Versão do layout
     ind_ativ: str = ""  # Indicador de atividade (0=Industrial, 1=Outros)
     total_linhas: int = 0
+    tipo_arquivo: str = "EFD"  # EFD, ECD, ECF
 
 
 class AnalysisResult(BaseModel):

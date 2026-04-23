@@ -1,8 +1,9 @@
 import { useState, useRef, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { uploadSpedFile } from '../services/api'
 
 function UploadPage() {
+  const { obrigacao } = useParams()
   const [file, setFile] = useState(null)
   const [loading, setLoading] = useState(false)
   const [progress, setProgress] = useState(0)
@@ -10,6 +11,48 @@ function UploadPage() {
   const [dragging, setDragging] = useState(false)
   const inputRef = useRef()
   const navigate = useNavigate()
+
+  // Configuração Dinâmica por Obrigação
+  const config = {
+    efd: {
+      title: "Validação Expert EFD",
+      subtitle: "Envie o arquivo SPED EFD ICMS/IPI validado no PVA para análise técnica profunda.",
+      placeholderText: "Arraste o arquivo .txt do SPED aqui",
+      loadingText: "Processando arquivo SPED... Aplicando validações matemáticas, cruzamentos e regras da UF.",
+      themeColor: "var(--color-primary)",
+      cards: [
+        { icon: "🧮", title: "Validação Matemática", desc: "Fórmulas do E110, G110, G125, E210 e E520 verificadas automaticamente." },
+        { icon: "🔗", title: "Cruzamento de Blocos", desc: "C190×E110, E111×E110, G125×G110, H010×0200 e mais." },
+        { icon: "📜", title: "Regras por UF", desc: "Tabela 5.1.1, DIFAL, CIAP, obrigatoriedade de Bloco K e H." }
+      ]
+    },
+    ecd: {
+      title: "Auditoria Contábil ECD",
+      subtitle: "Envie o arquivo da Escrituração Contábil Digital para auditoria das partidas dobradas.",
+      placeholderText: "Arraste o arquivo .txt da ECD aqui",
+      loadingText: "Processando arquivo ECD... Validando balancetes, lançamentos e método das partidas dobradas.",
+      themeColor: "#059669",
+      cards: [
+        { icon: "⚖️", title: "Partidas Dobradas", desc: "Validação matemática rigorosa entre Débitos e Créditos (I200, I250)." },
+        { icon: "📊", title: "Saldos e Balancetes", desc: "Auditoria de saldos anteriores e atuais nos registros I150 e I155." },
+        { icon: "📑", title: "Plano de Contas", desc: "Análise da consistência do plano de contas e centros de custos." }
+      ]
+    },
+    ecf: {
+      title: "Compliance Fiscal ECF",
+      subtitle: "Envie o arquivo da ECF validado no PVA para cruzamentos de IRPJ, CSLL e blocos M.",
+      placeholderText: "Arraste o arquivo .txt da ECF aqui",
+      loadingText: "Processando arquivo ECF... Aplicando cruzamentos avançados LALUR e LACS.",
+      themeColor: "#6C5CE7",
+      cards: [
+        { icon: "🏢", title: "IRPJ e CSLL", desc: "Cálculo e conciliação do lucro real, presumido ou arbitrado." },
+        { icon: "📈", title: "Blocos M e N", desc: "Auditoria detalhada do e-LALUR e e-LACS (Parte A e Parte B)." },
+        { icon: "🔗", title: "Recuperação ECD", desc: "Verificação da correta amarração com a contabilidade recuperada." }
+      ]
+    }
+  }
+
+  const currentConfig = config[obrigacao] || config.efd;
 
   useEffect(() => {
     let interval;
@@ -42,7 +85,7 @@ function UploadPage() {
       setFile(droppedFile)
       setError(null)
     } else {
-      setError('Formato inválido. Envie um arquivo .txt do SPED EFD.')
+      setError('Formato inválido. Envie um arquivo .txt.')
     }
   }
 
@@ -60,7 +103,8 @@ function UploadPage() {
     setError(null)
 
     try {
-      const result = await uploadSpedFile(file)
+      // Repassa a obrigação para a API
+      const result = await uploadSpedFile(file, obrigacao)
       // Armazenar resultado e navegar para o dashboard
       sessionStorage.setItem('analysisResult', JSON.stringify(result))
       navigate('/dashboard')
@@ -78,14 +122,19 @@ function UploadPage() {
   }
 
   return (
-    <div style={{ maxWidth: '700px', margin: '0 auto' }}>
+    <div style={{ maxWidth: '800px', margin: '0 auto' }}>
       {/* Hero */}
       <div className="text-center mb-6">
-        <h2 style={{ fontSize: 'var(--font-size-2xl)', fontWeight: 'var(--font-weight-bold)', marginBottom: 'var(--space-2)' }}>
-          🛡️ Validação Expert
+        <h2 style={{ 
+          fontSize: 'var(--font-size-2xl)', 
+          fontWeight: 'var(--font-weight-bold)', 
+          marginBottom: 'var(--space-2)',
+          color: currentConfig.themeColor 
+        }}>
+          🛡️ {currentConfig.title}
         </h2>
         <p style={{ color: 'var(--color-text-secondary)', fontSize: 'var(--font-size-md)' }}>
-          Envie o arquivo SPED EFD ICMS/IPI validado no PVA para análise técnica profunda.
+          {currentConfig.subtitle}
         </p>
       </div>
 
@@ -96,6 +145,7 @@ function UploadPage() {
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
         onClick={() => !file && inputRef.current?.click()}
+        style={dragging ? { borderColor: currentConfig.themeColor } : {}}
       >
         <input
           ref={inputRef}
@@ -108,7 +158,7 @@ function UploadPage() {
 
         {file ? (
           <>
-            <span className="upload-icon">✅</span>
+            <span className="upload-icon" style={{ color: currentConfig.themeColor }}>✅</span>
             <div>
               <div style={{ fontWeight: 'var(--font-weight-semibold)', fontSize: 'var(--font-size-md)' }}>
                 {file.name}
@@ -127,9 +177,11 @@ function UploadPage() {
           </>
         ) : (
           <>
-            <span className="upload-icon">📂</span>
+            <span className="upload-icon" style={{ color: currentConfig.themeColor }}>📂</span>
             <div className="upload-text">
-              Arraste o arquivo <strong>.txt</strong> do SPED aqui
+              {currentConfig.placeholderText.split('.txt').map((part, i, arr) => 
+                i === arr.length - 1 ? part : <span key={i}>{part}<strong>.txt</strong></span>
+              )}
             </div>
             <div style={{ color: 'var(--color-text-tertiary)', fontSize: 'var(--font-size-sm)' }}>
               ou clique para selecionar
@@ -155,7 +207,12 @@ function UploadPage() {
             onClick={handleUpload}
             disabled={loading}
             id="btn-analyze"
-            style={{ padding: 'var(--space-4) var(--space-8)', fontSize: 'var(--font-size-md)' }}
+            style={{ 
+              padding: 'var(--space-4) var(--space-8)', 
+              fontSize: 'var(--font-size-md)',
+              backgroundColor: currentConfig.themeColor,
+              borderColor: currentConfig.themeColor 
+            }}
           >
             {loading ? (
               <>
@@ -195,13 +252,13 @@ function UploadPage() {
                   className="progress-fill"
                   style={{
                     width: `${Math.min(progress, 98)}%`,
-                    background: 'var(--color-bg-accent)',
+                    background: currentConfig.themeColor,
                     transition: 'width 0.5s ease-out',
                   }}
                 />
               </div>
               <p className="text-center" style={{ color: 'var(--color-text-secondary)', fontSize: 'var(--font-size-sm)' }}>
-                Processando arquivo SPED... Aplicando validações matemáticas, cruzamentos e regras da UF.
+                {currentConfig.loadingText}
               </p>
             </div>
           </div>
@@ -210,33 +267,17 @@ function UploadPage() {
 
       {/* Info Cards */}
       <div className="stats-grid mt-6">
-        <div className="card">
-          <div className="card-body">
-            <div style={{ fontSize: 'var(--font-size-xl)', marginBottom: 'var(--space-2)' }}>🧮</div>
-            <h4 style={{ fontWeight: 'var(--font-weight-semibold)', marginBottom: 'var(--space-1)' }}>Validação Matemática</h4>
-            <p style={{ color: 'var(--color-text-tertiary)', fontSize: 'var(--font-size-sm)' }}>
-              Fórmulas do E110, G110, G125, E210 e E520 são verificadas automaticamente.
-            </p>
+        {currentConfig.cards.map((card, index) => (
+          <div className="card" key={index} style={{ borderTop: `3px solid ${currentConfig.themeColor}` }}>
+            <div className="card-body">
+              <div style={{ fontSize: 'var(--font-size-xl)', marginBottom: 'var(--space-2)' }}>{card.icon}</div>
+              <h4 style={{ fontWeight: 'var(--font-weight-semibold)', marginBottom: 'var(--space-1)' }}>{card.title}</h4>
+              <p style={{ color: 'var(--color-text-tertiary)', fontSize: 'var(--font-size-sm)' }}>
+                {card.desc}
+              </p>
+            </div>
           </div>
-        </div>
-        <div className="card">
-          <div className="card-body">
-            <div style={{ fontSize: 'var(--font-size-xl)', marginBottom: 'var(--space-2)' }}>🔗</div>
-            <h4 style={{ fontWeight: 'var(--font-weight-semibold)', marginBottom: 'var(--space-1)' }}>Cruzamento de Blocos</h4>
-            <p style={{ color: 'var(--color-text-tertiary)', fontSize: 'var(--font-size-sm)' }}>
-              C190×E110, E111×E110, G125×G110, H010×0200 e mais.
-            </p>
-          </div>
-        </div>
-        <div className="card">
-          <div className="card-body">
-            <div style={{ fontSize: 'var(--font-size-xl)', marginBottom: 'var(--space-2)' }}>📜</div>
-            <h4 style={{ fontWeight: 'var(--font-weight-semibold)', marginBottom: 'var(--space-1)' }}>Regras por UF</h4>
-            <p style={{ color: 'var(--color-text-tertiary)', fontSize: 'var(--font-size-sm)' }}>
-              Tabela 5.1.1, DIFAL, CIAP, obrigatoriedade de Bloco K e H.
-            </p>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   )

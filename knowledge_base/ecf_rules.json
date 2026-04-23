@@ -1,0 +1,1278 @@
+{
+    "registros": {
+        "0000": {
+            "codigo": "0000",
+            "descricao": "ABERTURA DO ARQUIVO DIGITAL E IDENTIFICAÇÃO DA PESSOA JURÍDICA",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "0001": {
+            "codigo": "0001",
+            "descricao": "ABERTURA DO BLOCO 0",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "0010": {
+            "codigo": "0010",
+            "descricao": "PARÂMETROS DE TRIBUTAÇÃO",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "0020": {
+            "codigo": "0020",
+            "descricao": "PARÂMETROS COMPLEMENTARES",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "0021": {
+            "codigo": "0021",
+            "descricao": "PARÂMETROS DE IDENTIFICAÇÃO DOS TIPOS DE PROGRAMA",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "0030": {
+            "codigo": "0030",
+            "descricao": "DADOS CADASTRAIS",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "0035": {
+            "codigo": "0035",
+            "descricao": "IDENTIFICAÇÃO DAS SCP",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "0930": {
+            "codigo": "0930",
+            "descricao": "IDENTIFICAÇÃO DOS SIGNATÁRIOS DA ECF",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "0990": {
+            "codigo": "0990",
+            "descricao": "ENCERRAMENTO DO BLOCO 0",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "C001": {
+            "codigo": "C001",
+            "descricao": "ABERTURA DO BLOCO C",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "C040": {
+            "codigo": "C040",
+            "descricao": "IDENTIFICADOR DA ECD",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "C050": {
+            "codigo": "C050",
+            "descricao": "PLANO DE CONTAS DA ECD",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "C051": {
+            "codigo": "C051",
+            "descricao": "PLANO DE CONTAS REFERENCIAL",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "C053": {
+            "codigo": "C053",
+            "descricao": "SUBCONTAS CORRELATAS",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "C100": {
+            "codigo": "C100",
+            "descricao": "CENTRO DE CUSTOS",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "C150": {
+            "codigo": "C150",
+            "descricao": "SALDOS PERIÓDICOS – IDENTIFICAÇÃO DO PERÍODO",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "C155": {
+            "codigo": "C155",
+            "descricao": "DETALHES DOS SALDOS CONTÁBEIS RECUPERADOS COM BASE NAS ECD",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "C157": {
+            "codigo": "C157",
+            "descricao": "TRANSFERÊNCIA DE SALDOS DO PLANO DE CONTAS ANTERIOR",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "C350": {
+            "codigo": "C350",
+            "descricao": "IDENTIFICAÇÃO DA DATA DOS SALDOS DAS CONTAS DE RESULTADO ANTES DO ENCERRAMENTO",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "C355": {
+            "codigo": "C355",
+            "descricao": "DETALHES DOS SALDOS DAS CONTAS DE RESULTADO ANTES DO ENCERRAMENTO",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "C990": {
+            "codigo": "C990",
+            "descricao": "ENCERRAMENTO DO BLOCO C",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "E001": {
+            "codigo": "E001",
+            "descricao": "ABERTURA DO BLOCO E",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "E010": {
+            "codigo": "E010",
+            "descricao": "SALDOS FINAIS RECUPERADOS DA ECF ANTERIOR",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "E015": {
+            "codigo": "E015",
+            "descricao": "com valor maior que zero, não existir pelo menos um registro K155, considerando para cada período K030.DT_INI = 0000.DT_INI (períodos de apuração iniciais) e:",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "E020": {
+            "codigo": "E020",
+            "descricao": "SALDOS FINAIS DAS CONTAS NA PARTE B DO e-LALUR DA ECF IMEDIATAMENTE ANTERIOR",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "E030": {
+            "codigo": "E030",
+            "descricao": "IDENTIFICAÇÃO DO PERÍODO",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "E155": {
+            "codigo": "E155",
+            "descricao": "DETALHES DOS SALDOS CONTÁBEIS CALCULADOS COM BASE NAS ECD",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "E355": {
+            "codigo": "E355",
+            "descricao": "DETALHES DOS SALDOS DAS CONTAS DE RESULTADO ANTES DO ENCERRAMENTO",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "E990": {
+            "codigo": "E990",
+            "descricao": "ENCERRAMENTO DO BLOCO E",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "J001": {
+            "codigo": "J001",
+            "descricao": "ABERTURA DO BLOCO J",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "J050": {
+            "codigo": "J050",
+            "descricao": "PLANO DE CONTAS DO CONTRIBUINTE",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "J051": {
+            "codigo": "J051",
+            "descricao": "PLANO DE CONTAS REFERENCIAL",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "J053": {
+            "codigo": "J053",
+            "descricao": "SUBCONTAS CORRELATAS",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "J100": {
+            "codigo": "J100",
+            "descricao": "CENTRO DE CUSTOS",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "J990": {
+            "codigo": "J990",
+            "descricao": "ENCERRAMENTO DO BLOCO J",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "K001": {
+            "codigo": "K001",
+            "descricao": "ABERTURA DO BLOCO K",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "K030": {
+            "codigo": "K030",
+            "descricao": "IDENTIFICAÇÃO DO PERÍODO",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "K155": {
+            "codigo": "K155",
+            "descricao": "são iguais aos valores calculados do registro E155.)",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "K156": {
+            "codigo": "K156",
+            "descricao": "MAPEAMENTO REFERENCIAL DO SALDO",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "K355": {
+            "codigo": "K355",
+            "descricao": "SALDOS FINAIS DAS CONTA CONTÁBEIS DE RESULTADO ANTES DO ENCERRAMENTO",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "K356": {
+            "codigo": "K356",
+            "descricao": "MAPEAMENTO REFERENCIAL DOS SALDOS FINAIS DAS CONTA CONTÁBEIS DE RESULTADO ANTES DO ENCERRAMENTO",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "K915": {
+            "codigo": "K915",
+            "descricao": "JUSTIFICATIVA PARA DIVERGÊNCIA DE SALDOS CONTÁBEIS DAS CONTAS PATRIMONIAIS RECUPERADOS DA ECD",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "K935": {
+            "codigo": "K935",
+            "descricao": "JUSTIFICATIVA PARA DIVERGÊNCIA DE SALDOS CONTÁBEIS DAS CONTAS DE RESULTADO RECUPERADOS DA ECD",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "K990": {
+            "codigo": "K990",
+            "descricao": "ENCERRAMENTO DO BLOCO K",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "L001": {
+            "codigo": "L001",
+            "descricao": "ABERTURA DO BLOCO L",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "L030": {
+            "codigo": "L030",
+            "descricao": "IDENTIFICAÇÃO DO PERÍODO",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "L100": {
+            "codigo": "L100",
+            "descricao": "BALANÇO PATRIMONIAL",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "L200": {
+            "codigo": "L200",
+            "descricao": "MÉTODO DE AVALIAÇÃO DO ESTOQUE FINAL",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "L210": {
+            "codigo": "L210",
+            "descricao": "INFORMATIVO DE COMPOSIÇÃO DE CUSTOS",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "L300": {
+            "codigo": "L300",
+            "descricao": "DEMONSTRATIVO DO RESULTADO LÍQUIDO NO PERÍODO FISCAL",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "L990": {
+            "codigo": "L990",
+            "descricao": "ENCERRAMENTO DO BLOCO L",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "M001": {
+            "codigo": "M001",
+            "descricao": "ABERTURA DO BLOCO M",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "M010": {
+            "codigo": "M010",
+            "descricao": "IDENTIFICAÇÃO DA CONTA NA PARTE B DO e-LALUR E DO e-LACS",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "M030": {
+            "codigo": "M030",
+            "descricao": "IDENTIFICAÇÃO DO PERÍODO",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "M300": {
+            "codigo": "M300",
+            "descricao": "LANÇAMENTOS DA PARTE A DO e-LALUR",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "M305": {
+            "codigo": "M305",
+            "descricao": "CONTA DA PARTE B DO e-LALUR",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "M310": {
+            "codigo": "M310",
+            "descricao": "CONTAS CONTABEIS RELACIONADAS AO LANÇAMENTO DA PARTE A DO e-LALUR",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "M312": {
+            "codigo": "M312",
+            "descricao": "NÚMEROS DOS LANÇAMENTOS RELACIONADOS À CONTA CONTÁBIL",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "M315": {
+            "codigo": "M315",
+            "descricao": "IDENTIFICAÇÃO DE PROCESSOS JUDICIAIS E ADMINISTRATIVOS REFERENTES AO LANÇAMENTO",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "M350": {
+            "codigo": "M350",
+            "descricao": "LANÇAMENTOS DA PARTE A DO e-LACS",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "M355": {
+            "codigo": "M355",
+            "descricao": "CONTA DA PARTE B DO e-LACS",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "M360": {
+            "codigo": "M360",
+            "descricao": "CONTAS CONTABEIS RELACIONADAS AO LANÇAMENTO DA PARTE A DO e-LACS",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "M362": {
+            "codigo": "M362",
+            "descricao": "NÚMEROS DOS LANÇAMENTOS RELACIONADOS À CONTA CONTÁBIL",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "M365": {
+            "codigo": "M365",
+            "descricao": "IDENTIFICAÇÃO DE PROCESSOS JUDICIAIS E ADMINISTRATIVOS REFERENTES AO LANÇAMENTO",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "M410": {
+            "codigo": "M410",
+            "descricao": "LANÇAMENTOS NA CONTA DA PARTE “B” DO e-LALUR e do e-LACS SEM REFLEXO NA PARTE A",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "M415": {
+            "codigo": "M415",
+            "descricao": "IDENTIFICAÇÃO DE PROCESSOS JUDICIAIS E ADMINISTRATIVOS REFERENTES AO LANÇAMENTO",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "M500": {
+            "codigo": "M500",
+            "descricao": "CONTROLE DE SALDOS DAS CONTAS DA PARTE B DO e-LALUR E DO e-LACS",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "M510": {
+            "codigo": "M510",
+            "descricao": "CONTROLE DE SALDOS DAS CONTAS PADRÃO DA PARTE B DO e-LALUR E DO e-LACS",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "M990": {
+            "codigo": "M990",
+            "descricao": "ENCERRAMENTO DO BLOCO M",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "N001": {
+            "codigo": "N001",
+            "descricao": "ABERTURA DO BLOCO N",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "N030": {
+            "codigo": "N030",
+            "descricao": "IDENTIFICAÇÃO DO PERÍODO",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "N500": {
+            "codigo": "N500",
+            "descricao": "BASE DE CÁLCULO DO IRPJ SOBRE O LUCRO RELA APÓS AS COMPENSAÇÕES DE PREJUÍZOS",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "N600": {
+            "codigo": "N600",
+            "descricao": "DEMONSTRAÇÃO DO LUCRO DA EXPLORAÇÃO",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "N605": {
+            "codigo": "N605",
+            "descricao": "CONTAS CONTÁBEIS UTILIZADAS NA APURAÇÃO DO LUCRO DA EXPLORAÇÃO",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "N610": {
+            "codigo": "N610",
+            "descricao": "CÁLCULO DA ISENÇÃO E REDUÇÃO DO IMPOSTO SOBRE LUCRO REAL",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "N615": {
+            "codigo": "N615",
+            "descricao": "INFORMAÇÕES DA BASE DE CÁLCULO DOS INCENTIVOS FISCAIS",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "N620": {
+            "codigo": "N620",
+            "descricao": "CÁLCULO DO IRPJ MENSAL POR ESTIMATIVA",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "N630": {
+            "codigo": "N630",
+            "descricao": "CÁLCULO DO IRPJ COM BASE NO LUCRO REAL",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "N650": {
+            "codigo": "N650",
+            "descricao": "BASE DE CÁLCULO DA CSLL APÓS AS COMPENSAÇÕES DA BASE DE CÁLCULO NEGATIVA",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "N660": {
+            "codigo": "N660",
+            "descricao": "CÁLCULO DA CSLL MENSAL POR ESTIMATIVA",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "N670": {
+            "codigo": "N670",
+            "descricao": "CÁLCULO DA CSLL COM BASE NO LUCRO REAL",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "N990": {
+            "codigo": "N990",
+            "descricao": "ENCERRAMENTO DO BLOCO N",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "P001": {
+            "codigo": "P001",
+            "descricao": "ABERTURA DO BLOCO P",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "P030": {
+            "codigo": "P030",
+            "descricao": "IDENTIFICAÇÃO DOS PERÍODO E FORMAS DE APURAÇÃO DO IRPJ E DA CSLL DAS EMPRESAS TRIBUTADAS PELO LUCRO PRESUMIDO",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "P100": {
+            "codigo": "P100",
+            "descricao": "BALANÇO PATRIMONIAL",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "P130": {
+            "codigo": "P130",
+            "descricao": "DEMONSTRAÇÃO DAS RECEITAS INCENTIVADAS DO LUCRO PRESUMIDO",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "P150": {
+            "codigo": "P150",
+            "descricao": "DEMONSTRATIVO DO RESULTADO LÍQUIDO NO PERÍODO FISCAL",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "P200": {
+            "codigo": "P200",
+            "descricao": "APURAÇÃO DA BASE DE CÁLCULO DO IRPJ COM BASE NO LUCRO PRESUMIDO",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "P230": {
+            "codigo": "P230",
+            "descricao": "CÁLCULO DA ISENÇÃO E REDUÇÃO DO LUCRO PRESUMIDO",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "P300": {
+            "codigo": "P300",
+            "descricao": "CÁLCULO DO IRPJ COM BASE DO LUCRO PRESUMIDO",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "P400": {
+            "codigo": "P400",
+            "descricao": "APURAÇÃO DA BASE DE CÁLCULO DA CSLL COM BASE DO LUCRO PRESUMIDOREGISTRO P300: CÁLCULO DO IRPJ COM BASE DO LUCRO",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "P500": {
+            "codigo": "P500",
+            "descricao": "CÁLCULO DA CSLL COM BASE DO LUCRO PRESUMIDO",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "P990": {
+            "codigo": "P990",
+            "descricao": "ENCERRAMENTO DO BLOCO P",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "Q001": {
+            "codigo": "Q001",
+            "descricao": "ABERTURA DO BLOCO Q",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "Q100": {
+            "codigo": "Q100",
+            "descricao": "DEMONSTRATIVO DO LIVRO CAIXA",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "Q990": {
+            "codigo": "Q990",
+            "descricao": "ENCERRAMENTO DO BLOCO Q",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "T001": {
+            "codigo": "T001",
+            "descricao": "ABERTURA DO BLOCO T",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "T030": {
+            "codigo": "T030",
+            "descricao": "IDENTIFICAÇÃO DOS PERÍODO E FORMAS DE APURAÇÃO DO IRPJ E DA CSLL DAS EMPRESAS TRIBUTADAS DAS EMPRESAS TRIBUTADAS",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "T120": {
+            "codigo": "T120",
+            "descricao": "APURAÇÃO DA BASE DE CÁLCULO DO IPRJ COM BASE NO LUCRO ARBITRADO",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "T150": {
+            "codigo": "T150",
+            "descricao": "CÁLCULO DO IPRJ COM BASE NO LUCRO ARBITRADO",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "T170": {
+            "codigo": "T170",
+            "descricao": "APURAÇÃO DA BASE DE CÁLCULO DA CSLL COM BASE NO LUCRO ARBITRADO",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "T181": {
+            "codigo": "T181",
+            "descricao": "CÁLCULO DA CSLL COM BASE NO LUCRO ARBITRADO",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "T990": {
+            "codigo": "T990",
+            "descricao": "ENCERRAMENTO DO BLOCO T",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "U001": {
+            "codigo": "U001",
+            "descricao": "ABERTURA DO BLOCO U",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "U030": {
+            "codigo": "U030",
+            "descricao": "IDENTIFICAÇÃO DOS PERÍODO E FORMAS DE APURAÇÃO DO IRPJ E DA CSLL DAS EMPRESAS IMUNES E ISENTAS",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "U100": {
+            "codigo": "U100",
+            "descricao": "BALANÇO PATRIMONIAL",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "U150": {
+            "codigo": "U150",
+            "descricao": "DEMONSTRAÇÃO DO RESULTADO",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "U180": {
+            "codigo": "U180",
+            "descricao": "CÁLCULO DO IRPJ DAS EMPRESAS IMUNES E ISENTAS",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "U182": {
+            "codigo": "U182",
+            "descricao": "CÁLCULO DA CSLL DAS EMPRESAS IMUNES E ISENTAS",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "U990": {
+            "codigo": "U990",
+            "descricao": "ENCERRAMENTO DO BLOCO U",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "V001": {
+            "codigo": "V001",
+            "descricao": "ABERTURA DO BLOCO V",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "V010": {
+            "codigo": "V010",
+            "descricao": "DEREX – INSTITUIÇÃO",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "V020": {
+            "codigo": "V020",
+            "descricao": "DEREX - Responsável pela movimentação",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "V030": {
+            "codigo": "V030",
+            "descricao": "DEREX - Período – Mês",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "V100": {
+            "codigo": "V100",
+            "descricao": "DEMONSTRATIVO DOS RECURSOS EM MOEDA ESTRANGEIRA DECORRENTES DO RECEBIMENTO DE EXPORTAÇÕES",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "V990": {
+            "codigo": "V990",
+            "descricao": "ENCERRAMENTO DO BLOCO V",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "W001": {
+            "codigo": "W001",
+            "descricao": "ABERTURA DO BLOCO W",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "W100": {
+            "codigo": "W100",
+            "descricao": "INFORMAÇÕES SOBRE O GRUPO MULTINACIONAL E A ENTIDADE DECLARANTE - DECLARAÇÃO PAÍS-A-PAÍS",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "W200": {
+            "codigo": "W200",
+            "descricao": "DECLARAÇÃO PAÍS-A-PAÍS",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "W250": {
+            "codigo": "W250",
+            "descricao": "DECLARAÇÃO PAÍS-A-PAÍS - ENTIDADES INTEGRANTES",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "W300": {
+            "codigo": "W300",
+            "descricao": "OBSERVAÇÕES ADICIONAIS - DECLARAÇÃO PAÍS-A-PAÍS",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "W990": {
+            "codigo": "W990",
+            "descricao": "ENCERRAMENTO DO BLOCO W",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "X001": {
+            "codigo": "X001",
+            "descricao": "ABERTURA DO BLOCO X",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "X280": {
+            "codigo": "X280",
+            "descricao": "ATIVIDADES INCENTIVADAS – PJ EM GERAL",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "X292": {
+            "codigo": "X292",
+            "descricao": "OPERAÇÕES COM O EXTERIOR – PESSOA NÃO VINCULADA/NÃO INTERPOSTA/PAÍS SEM TRIBUTAÇÃO FAVORECIDA",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "X340": {
+            "codigo": "X340",
+            "descricao": "IDENTIFICAÇÃO DA PARTICIPAÇÃO NO EXTERIOR",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "X350": {
+            "codigo": "X350",
+            "descricao": "PARTICIPAÇÕES NO EXTERIOR – RESULTADO DO PERÍODO DE APURAÇÃO",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "X351": {
+            "codigo": "X351",
+            "descricao": "DEMONSTRATIVO DE RESULTADOS E DE IMPOSTO PAGO NO EXTERIOR",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "X352": {
+            "codigo": "X352",
+            "descricao": "DEMONSTRATIVO DE RESULTADOS NO EXTERIOR AUFERIDOS POR INTERMÉDIO DE COLIGADAS",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "X353": {
+            "codigo": "X353",
+            "descricao": "DEMONSTRATIVO DE CONSOLIDAÇÃO",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "X354": {
+            "codigo": "X354",
+            "descricao": "DEMONSTRATIVO DE PREJUÍZOS ACUMULADOS",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "X355": {
+            "codigo": "X355",
+            "descricao": "DEMONSTRATIVO DE RENDAS ATIVAS E PASSIVAS",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "X356": {
+            "codigo": "X356",
+            "descricao": "DEMONSTRATIVO DE ESTRUTURA SOCIETÁRIA",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "X357": {
+            "codigo": "X357",
+            "descricao": "INVESTIDORAS DIRETAS",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "X360": {
+            "codigo": "X360",
+            "descricao": "INFORMAÇÕES GERAIS SOBRE PREÇOS DE TRANSFERÊNCIA",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "X365": {
+            "codigo": "X365",
+            "descricao": "INFORMAÇÕES SOBRE AS CONTRAPARTES NAS TRANSAÇÕES CONTROLADAS",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "X366": {
+            "codigo": "X366",
+            "descricao": "ENTIDADES COM AS QUAIS REALIZA TRANSAÇÕES CONTROLADAS",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "X370": {
+            "codigo": "X370",
+            "descricao": "INFORMAÇÕES SOBRE AS TRANSAÇÕES CONTROLADAS",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "X371": {
+            "codigo": "X371",
+            "descricao": "INFORMAÇÕES SOBRE AJUSTES COMPENSATÓRIOS",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "X375": {
+            "codigo": "X375",
+            "descricao": "INFORMAÇÕES RELACIONADAS AOS MÉTODOS",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "X390": {
+            "codigo": "X390",
+            "descricao": "ORIGENS E APLICAÇÕES DE RECURSOS – IMUNES E ISENTAS",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "X400": {
+            "codigo": "X400",
+            "descricao": "COMÉRCIO ELETRÔNICO E TECNOLOGIA DA INFORMAÇÃO – INFORMAÇÕES DAS VENDAS",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "X410": {
+            "codigo": "X410",
+            "descricao": "COMÉRCIO ELETRÔNICO – INFORMAÇÃO DE HOMEPAGE/SERVIDOR",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "X420": {
+            "codigo": "X420",
+            "descricao": "ROYALTIES RECEBIDOS OU PAGOS A BENEFICIÁRIOS DO BRASIL E DO EXTERIOR",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "X430": {
+            "codigo": "X430",
+            "descricao": "RENDIMENTOS RELATIVOS A SERVIÇOS, JUROS E DIVIDENDOS RECEBIDOS DO BRASIL E DO EXTERIOR",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "X450": {
+            "codigo": "X450",
+            "descricao": "PAGAMENTOS OU REMESSAS A TÍTULO DE SERVIÇOS, JUROS E DIVIDENDOS A BENEFICIÁRIOS DO BRASIL E DO EXTERIOR",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "X451": {
+            "codigo": "X451",
+            "descricao": "PAGAMENTOS OU REMESSAS A TÍTULO DE SERVIÇOS, JUROS E DIVIDENDOS A BENEFICIÁRIOS DO BRASIL E DO EXTERIOR – DEMAIS",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "X460": {
+            "codigo": "X460",
+            "descricao": "INOVAÇÃO TECNOLÓGICA E DESENVOLVIMENTO TECNOLÓGICO",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "X470": {
+            "codigo": "X470",
+            "descricao": "CAPACITAÇÃO DE INFORMÁTICA E INCLUSÃO DIGITAL",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "X480": {
+            "codigo": "X480",
+            "descricao": "BENEFÍCIOS FISCAIS – PARTE I",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "X485": {
+            "codigo": "X485",
+            "descricao": "BENEFÍCIOS FISCAIS – PARTE II",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "X490": {
+            "codigo": "X490",
+            "descricao": "PÓLO INDUSTRIAL DE MANAUS E AMAZÔNIA OCIDENTAL",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "X500": {
+            "codigo": "X500",
+            "descricao": "ZONAS DE PROCESSAMENTO DE EXPORTAÇÃO (ZPE)",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "X510": {
+            "codigo": "X510",
+            "descricao": "ÁREAS DE LIVRE COMÉRCIO (ALC)",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "X990": {
+            "codigo": "X990",
+            "descricao": "ENCERRAMENTO DO BLOCO X",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "Y001": {
+            "codigo": "Y001",
+            "descricao": "ABERTURA DO BLOCO Y",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "Y520": {
+            "codigo": "Y520",
+            "descricao": "PAGAMENTOS/RECEBIMENTOS DO EXTERIOR OU DE NÃO RESIDENTES",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "Y570": {
+            "codigo": "Y570",
+            "descricao": "DEMONSTRATIVO DO IMPOSTO DE RENDA E CSLL RETIDOS NA FONTE",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "Y590": {
+            "codigo": "Y590",
+            "descricao": "ATIVOS NO EXTERIOR",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "Y600": {
+            "codigo": "Y600",
+            "descricao": "IDENTIFICAÇÃO E REMUNERAÇÃO DE SÓCIOS, TITULARES, DIRIGENTES E CONSELHEIROS",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "Y612": {
+            "codigo": "Y612",
+            "descricao": "IDENTIFICAÇÃO E RENDIMENTOS DE DIRIGENTES E CONSELHEIROS – IMUNES OU ISENTAS",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "Y620": {
+            "codigo": "Y620",
+            "descricao": "PARTICIPAÇÕES AVALIADAS PELO MÉTODO DE EQUIVALÊNCIA PATRIMONIAL",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "Y630": {
+            "codigo": "Y630",
+            "descricao": "FUNDOS/CLUBES DE INVESTIMENTO",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "Y640": {
+            "codigo": "Y640",
+            "descricao": "PARTICIPAÇÕES EM CONSÓRCIOS DE EMPRESAS",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "Y650": {
+            "codigo": "Y650",
+            "descricao": "PARTICIPANTES DO CONSÓRCIO",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "Y660": {
+            "codigo": "Y660",
+            "descricao": "DADOS DE SUCESSORAS",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "Y672": {
+            "codigo": "Y672",
+            "descricao": "OUTRAS INFORMAÇÕES (LUCRO PRESUMIDO OU LUCRO ARBITRADO)",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "Y680": {
+            "codigo": "Y680",
+            "descricao": "MÊS DAS INFORMAÇÕES DE OPTANTES PELO REFIS (LUCRO REAL, PRESUMIDO E ARBITRADO)",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "Y681": {
+            "codigo": "Y681",
+            "descricao": "INFORMAÇÕES DE OPTANTES PELO REFIS (LUCRO REAL, PRESUMIDO E ARBITRADO)",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "Y682": {
+            "codigo": "Y682",
+            "descricao": "INFORMAÇÕES DE OPTANTES PELO REFIS (IMUNES OU ISENTAS)",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "Y720": {
+            "codigo": "Y720",
+            "descricao": "INFORMAÇÕES DE PERÍODOS ANTERIORES",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "Y730": {
+            "codigo": "Y730",
+            "descricao": "IDENTIFICAÇÃO DOS DONATÁRIOS/DESTINATÁRIOS DE DEDUÇÕES DO IRPJ/CSLL",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "Y750": {
+            "codigo": "Y750",
+            "descricao": "Informações da ECF Calculadas pelo PGE",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "Y800": {
+            "codigo": "Y800",
+            "descricao": "OUTRAS INFORMAÇÕES",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "Y990": {
+            "codigo": "Y990",
+            "descricao": "ENCERRAMENTO DO BLOCO Y",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "9001": {
+            "codigo": "9001",
+            "descricao": "ABERTURA DO BLOCO 9",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "9100": {
+            "codigo": "9100",
+            "descricao": "AVISOS DA ESCRITURAÇÃO",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "9900": {
+            "codigo": "9900",
+            "descricao": "REGISTROS DO ARQUIVO",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "9990": {
+            "codigo": "9990",
+            "descricao": "ENCERRAMENTO DO BLOCO 9",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "9999": {
+            "codigo": "9999",
+            "descricao": "ENCERRAMENTO DO ARQUIVO DIGITAL",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "NOME": {
+            "codigo": "NOME",
+            "descricao": "do Registro Ocorrência",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "ONDE": {
+            "codigo": "ONDE",
+            "descricao": "deve ser apresentada a justificativa do erro ocorrido no K355 (contas de resultado), quando do descumprimento as suas regras: REGRA_COMPATIBILIDADE_K355_E355 ou",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        }
+    }
+}

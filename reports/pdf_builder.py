@@ -150,8 +150,10 @@ class PdfBuilder:
 </style>"""
 
     def _header(self) -> str:
-        return """<h1>DOSSIÊ TÉCNICO — EFD Compliance</h1>
-<p class="subtitle">Validação Expert de SPED EFD ICMS/IPI — Análise Pós-PVA</p>"""
+        tipo = getattr(self.analysis.file_info, 'tipo_arquivo', 'EFD')
+        sub = "SPED Fiscal ICMS/IPI" if tipo == "EFD" else ("Escrituração Contábil Digital" if tipo == "ECD" else "Escrituração Contábil Fiscal")
+        return f"""<h1>DOSSIÊ TÉCNICO — Auditoria {tipo}</h1>
+<p class="subtitle">Validação Expert de {sub} — Análise Pós-PVA</p>"""
 
     def _quadro_resumo(self) -> str:
         info = self.analysis.file_info

@@ -1,15 +1,21 @@
 import os
 from dotenv import load_dotenv
-from supabase import create_client, Client
 
 load_dotenv()
 
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY")
 
-# Só inicializa se tiver as credenciais
+try:
+    from supabase import create_client, Client
+    HAS_SUPABASE = True
+except ImportError:
+    HAS_SUPABASE = False
+    Client = None
+
+# Só inicializa se tiver as credenciais e o pacote instalado
 def get_supabase_client() -> Client | None:
-    if SUPABASE_URL and SUPABASE_KEY:
+    if HAS_SUPABASE and SUPABASE_URL and SUPABASE_KEY:
         try:
             return create_client(SUPABASE_URL, SUPABASE_KEY)
         except Exception as e:

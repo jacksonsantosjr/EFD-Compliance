@@ -99,8 +99,11 @@ class DocxBuilder:
 
     def _add_header(self):
         """Adiciona cabeçalho do dossiê."""
+        tipo = getattr(self.analysis.file_info, 'tipo_arquivo', 'EFD')
+        sub = "SPED Fiscal ICMS/IPI" if tipo == "EFD" else ("Escrituração Contábil Digital" if tipo == "ECD" else "Escrituração Contábil Fiscal")
+        
         # Título
-        title = self.doc.add_heading('DOSSIÊ TÉCNICO — EFD Compliance', level=0)
+        title = self.doc.add_heading(f'DOSSIÊ TÉCNICO — Auditoria {tipo}', level=0)
         title.alignment = WD_ALIGN_PARAGRAPH.CENTER
         for run in title.runs:
             run.font.color.rgb = COLOR_PRIMARY
@@ -108,7 +111,7 @@ class DocxBuilder:
         # Subtítulo
         subtitle = self.doc.add_paragraph()
         subtitle.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        run = subtitle.add_run('Validação Expert de SPED EFD ICMS/IPI — Análise Pós-PVA')
+        run = subtitle.add_run(f'Validação Expert de {sub} — Análise Pós-PVA')
         run.font.size = Pt(12)
         run.font.color.rgb = COLOR_DARK
         run.font.italic = True

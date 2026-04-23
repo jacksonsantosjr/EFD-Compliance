@@ -1,0 +1,515 @@
+{
+    "registros": {
+        "0000": {
+            "codigo": "0000",
+            "descricao": "seja igual a “S” (Sim), verifica se o saldo final do código de aglutinação – “VL_CTA_FIN” (Campo",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "0001": {
+            "codigo": "0001",
+            "descricao": "ABERTURA DO BLOCO 0",
+            "nivel": 1,
+            "ocorrencia": "Um",
+            "campos": []
+        },
+        "0007": {
+            "codigo": "0007",
+            "descricao": "OUTRAS INSCRIÇÕES CADASTRAIS DA PESSOA JURÍDICA",
+            "nivel": 2,
+            "ocorrencia": "Vários",
+            "campos": []
+        },
+        "0020": {
+            "codigo": "0020",
+            "descricao": "ESCRITURAÇÃO CONTÁBIL DESCENTRALIZADA",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "0035": {
+            "codigo": "0035",
+            "descricao": "IDENTIFICAÇÃO DAS SCP",
+            "nivel": 2,
+            "ocorrencia": "Vários",
+            "campos": []
+        },
+        "0150": {
+            "codigo": "0150",
+            "descricao": "TABELA DE CADASTRO DO PARTICIPANTE",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "0180": {
+            "codigo": "0180",
+            "descricao": "IDENTIFICAÇÃO DO RELACIONAMENTO COM O PARTICIPANTE",
+            "nivel": 3,
+            "ocorrencia": "Vários",
+            "campos": []
+        },
+        "0990": {
+            "codigo": "0990",
+            "descricao": "ENCERRAMENTO DO BLOCO 0",
+            "nivel": 1,
+            "ocorrencia": "Um",
+            "campos": []
+        },
+        "C001": {
+            "codigo": "C001",
+            "descricao": "ABERTURA DO BLOCO C",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "C040": {
+            "codigo": "C040",
+            "descricao": "IDENTIFICAÇÃO DA ECD RECUPERADA",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "C050": {
+            "codigo": "C050",
+            "descricao": "PLANO DE CONTAS RECUPERADO",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "C051": {
+            "codigo": "C051",
+            "descricao": "PLANO DE CONTAS REFERENCIAL RECUPERADO",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "C052": {
+            "codigo": "C052",
+            "descricao": "INDICAÇÃO DOS CÓDIGOS DE AGLUTINAÇÃO RECUPERADOS",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "C150": {
+            "codigo": "C150",
+            "descricao": "SALDOS PERIÓDICOS RECUPERADOS – IDENTFICAÇÃO DO PERÍODO",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "C155": {
+            "codigo": "C155",
+            "descricao": "DETALHE DOS SALDOS PERIÓDICOS RECUPERADOS",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "C600": {
+            "codigo": "C600",
+            "descricao": "DEMONSTRAÇÕES CONTÁBEIS RECUPERADAS",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "C650": {
+            "codigo": "C650",
+            "descricao": "DEMONSTRAÇÃO DO RESULTADO DO EXERCÍCIO RECUPERADA",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "C990": {
+            "codigo": "C990",
+            "descricao": "ENCERRAMENTO DO BLOCO C",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "I001": {
+            "codigo": "I001",
+            "descricao": "ABERTURA DO BLOCO I",
+            "nivel": 1,
+            "ocorrencia": "Um",
+            "campos": []
+        },
+        "I010": {
+            "codigo": "I010",
+            "descricao": "IDENTIFICAÇÃO DA ESCRITURAÇÃO CONTÁBIL",
+            "nivel": 2,
+            "ocorrencia": "Um",
+            "campos": []
+        },
+        "I012": {
+            "codigo": "I012",
+            "descricao": "LIVROS AUXILIARES AO DIÁRIO OU LIVRO PRINCIPAL",
+            "nivel": 3,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "I015": {
+            "codigo": "I015",
+            "descricao": "IDENTIFICAÇÃO DAS CONTAS DA ESCRITURAÇÃO RESUMIDA A QUE SE REFERE A",
+            "nivel": 4,
+            "ocorrencia": "Vários",
+            "campos": []
+        },
+        "I020": {
+            "codigo": "I020",
+            "descricao": "CAMPOS ADICIONAIS",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "I030": {
+            "codigo": "I030",
+            "descricao": "TERMO DE ABERTURA",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "I050": {
+            "codigo": "I050",
+            "descricao": "igual a “A” (Analítica). Se a regra não for cumprida, o PGE do Sped Contábil gera um erro.",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "I051": {
+            "codigo": "I051",
+            "descricao": "PLANO DE CONTAS REFERENCIAL",
+            "nivel": 4,
+            "ocorrencia": "Vários",
+            "campos": []
+        },
+        "I052": {
+            "codigo": "I052",
+            "descricao": "–",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "I053": {
+            "codigo": "I053",
+            "descricao": "SUBCONTAS CORRELATAS",
+            "nivel": 4,
+            "ocorrencia": "Vários",
+            "campos": []
+        },
+        "I075": {
+            "codigo": "I075",
+            "descricao": "TABELA DE HISTÓRICO PADRONIZADO",
+            "nivel": 3,
+            "ocorrencia": "vários",
+            "campos": []
+        },
+        "I100": {
+            "codigo": "I100",
+            "descricao": "CENTRO DE CUSTOS",
+            "nivel": 3,
+            "ocorrencia": "Vários",
+            "campos": []
+        },
+        "I150": {
+            "codigo": "I150",
+            "descricao": "e conta) de lançamentos é igual ao valor da partida em moeda funcional, convertido em",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "I155": {
+            "codigo": "I155",
+            "descricao": "DETALHE DOS SALDOS PERIÓDICOS",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "I157": {
+            "codigo": "I157",
+            "descricao": "TRANSFERÊNCIA DE SALDOS DE PLANO DE CONTAS ANTERIOR",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "I200": {
+            "codigo": "I200",
+            "descricao": "LANÇAMENTO CONTÁBIL",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "I250": {
+            "codigo": "I250",
+            "descricao": "PARTIDAS DO LANÇAMENTO",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "I300": {
+            "codigo": "I300",
+            "descricao": "BALANCETES DIÁRIOS – IDENTIFICAÇÃO DA DATA",
+            "nivel": 3,
+            "ocorrencia": "Vários",
+            "campos": []
+        },
+        "I310": {
+            "codigo": "I310",
+            "descricao": "DETALHES DO BALANCETE DIÁRIO (somente para pessoas jurídicas que fazem",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "I350": {
+            "codigo": "I350",
+            "descricao": "e conta (considerando se é crédito ou débito), é igual ao valor do saldo final antes do lançamento",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "I355": {
+            "codigo": "I355",
+            "descricao": "DETALHES DOS SALDOS DAS CONTAS DE RESULTADO ANTES DO",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "I500": {
+            "codigo": "I500",
+            "descricao": "PARÂMETROS DE IMPRESSÃO E VISUALIZAÇÃO DO LIVRO RAZÃO AUXILIAR COM",
+            "nivel": 3,
+            "ocorrencia": "Um",
+            "campos": []
+        },
+        "I510": {
+            "codigo": "I510",
+            "descricao": "foram todos preenchidos, exceto os campos código do centro de custos vinculado ao item",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "I550": {
+            "codigo": "I550",
+            "descricao": "DETALHES DO LIVRO AUXILIAR COM LEIAUTE PARAMETRIZÁVEL",
+            "nivel": 3,
+            "ocorrencia": "Vários",
+            "campos": []
+        },
+        "I555": {
+            "codigo": "I555",
+            "descricao": "TOTAIS NO LIVRO AUXILIAR COM LEIAUTE PARAMETRIZÁVEL",
+            "nivel": 4,
+            "ocorrencia": "Vários",
+            "campos": []
+        },
+        "I990": {
+            "codigo": "I990",
+            "descricao": "ENCERRAMENTO DO BLOCO I",
+            "nivel": 1,
+            "ocorrencia": "Um",
+            "campos": []
+        },
+        "J001": {
+            "codigo": "J001",
+            "descricao": "ABERTURA DO BLOCO J",
+            "nivel": 1,
+            "ocorrencia": "Um",
+            "campos": []
+        },
+        "J005": {
+            "codigo": "J005",
+            "descricao": "DEMONSTRAÇÕES CONTÁBEIS",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "J100": {
+            "codigo": "J100",
+            "descricao": "totalizador. Se a regra não for cumprida, o PGE do Sped Contábil gera um erro.",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "J150": {
+            "codigo": "J150",
+            "descricao": "J150.NU_ORDEM (Campo 02) – são diferentes. Se a regra não for cumprida, o PGE do Sped",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "J210": {
+            "codigo": "J210",
+            "descricao": "DLPA – DEMONSTRAÇÃO DE LUCROS OU PREJUÍZOS ACUMULADOS/DMPL –",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "J215": {
+            "codigo": "J215",
+            "descricao": "FATO CONTÁBIL QUE ALTERA A CONTA LUCROS ACUMULADOS OU A CONTA PREJUÍZOS",
+            "nivel": 4,
+            "ocorrencia": "Vários",
+            "campos": []
+        },
+        "J800": {
+            "codigo": "J800",
+            "descricao": "OUTRAS INFORMAÇÕES",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "J801": {
+            "codigo": "J801",
+            "descricao": "TERMO DE VERIFICAÇÃO PARA FINS DE SUBSTITUIÇÃO DA ECD",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "J900": {
+            "codigo": "J900",
+            "descricao": "TERMO DE ENCERRAMENTO",
+            "nivel": 2,
+            "ocorrencia": "Um",
+            "campos": []
+        },
+        "J930": {
+            "codigo": "J930",
+            "descricao": "SIGNATÁRIOS DA ESCRITURAÇÃO",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "J932": {
+            "codigo": "J932",
+            "descricao": "SIGNATÁRIOS DO TERMO DE VERIFICAÇÃO PARA FINS DE SUSBTITUIÇÃO DA ECD",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "J935": {
+            "codigo": "J935",
+            "descricao": "Identificação dos Auditores Independentes",
+            "nivel": 3,
+            "ocorrencia": "Vários",
+            "campos": []
+        },
+        "J990": {
+            "codigo": "J990",
+            "descricao": "ENCERRAMENTO DO BLOCO J",
+            "nivel": 1,
+            "ocorrencia": "Um",
+            "campos": []
+        },
+        "K001": {
+            "codigo": "K001",
+            "descricao": "ABERTURA DO BLOCO K",
+            "nivel": 1,
+            "ocorrencia": "Um",
+            "campos": []
+        },
+        "K030": {
+            "codigo": "K030",
+            "descricao": "DT_INI (Campo 02) – ou igual ao ano anterior; e verifica se o ano da data final do período da",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "K100": {
+            "codigo": "K100",
+            "descricao": "RELAÇÃO DAS EMPRESAS CONSOLIDADAS",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "K110": {
+            "codigo": "K110",
+            "descricao": "RELAÇÃO DOS EVENTOS SOCIETÁRIOS",
+            "nivel": 4,
+            "ocorrencia": "Vários",
+            "campos": []
+        },
+        "K115": {
+            "codigo": "K115",
+            "descricao": "EMPRESAS PARTICIPANTES DO EVENTO SOCIETÁRIO",
+            "nivel": 5,
+            "ocorrencia": "Vários",
+            "campos": []
+        },
+        "K200": {
+            "codigo": "K200",
+            "descricao": "para as contas dos planos de contas das empresas consolidadas.",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "K210": {
+            "codigo": "K210",
+            "descricao": "MAPEAMENTO PARA PLANOS DE CONTAS DAS EMPRESAS CONSOLIDADAS",
+            "nivel": 3,
+            "ocorrencia": "Vários",
+            "campos": []
+        },
+        "K300": {
+            "codigo": "K300",
+            "descricao": "SALDOS DAS CONTAS CONSOLIDADAS",
+            "nivel": 3,
+            "ocorrencia": "Vários",
+            "campos": []
+        },
+        "K310": {
+            "codigo": "K310",
+            "descricao": "EMPRESAS DETENTORAS DAS PARCELAS DO VALOR ELIMINADO TOTAL",
+            "nivel": 4,
+            "ocorrencia": "Vários",
+            "campos": []
+        },
+        "K315": {
+            "codigo": "K315",
+            "descricao": "é igual a zero, considerando os indicadores de situação do valor eliminado (D – Devedor ou C –",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "K990": {
+            "codigo": "K990",
+            "descricao": "ENCERRAMENTO DO BLOCO K",
+            "nivel": 1,
+            "ocorrencia": "Um",
+            "campos": []
+        },
+        "9001": {
+            "codigo": "9001",
+            "descricao": "ABERTURA DO BLOCO 9",
+            "nivel": 1,
+            "ocorrencia": "Um",
+            "campos": []
+        },
+        "9900": {
+            "codigo": "9900",
+            "descricao": "REGISTROS DO ARQUIVO",
+            "nivel": 2,
+            "ocorrencia": "Vários",
+            "campos": []
+        },
+        "9990": {
+            "codigo": "9990",
+            "descricao": "ENCERRAMENTO DO BLOCO 9",
+            "nivel": 1,
+            "ocorrencia": "Um",
+            "campos": []
+        },
+        "9999": {
+            "codigo": "9999",
+            "descricao": "ENCERRAMENTO DO ARQUIVO DIGITAL",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        },
+        "PARA": {
+            "codigo": "PARA",
+            "descricao": "o mesmo mês. Se a regra não for cumprida, o PGE do Sped Contábil gera um erro.",
+            "nivel": 1,
+            "ocorrencia": "1:1",
+            "campos": []
+        }
+    }
+}

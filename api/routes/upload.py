@@ -6,7 +6,7 @@ import hashlib
 from pathlib import Path
 from typing import List
 
-from fastapi import APIRouter, UploadFile, File, HTTPException
+from fastapi import APIRouter, UploadFile, File, HTTPException, Query
 
 from api.config import UPLOADS_DIR, MAX_FILE_SIZE_BYTES
 from api.models.sped_file import AnalysisResult
@@ -15,11 +15,14 @@ router = APIRouter()
 
 
 @router.post("/upload", response_model=AnalysisResult)
-async def upload_sped_file(files: List[UploadFile] = File(...)):
+async def upload_sped_file(
+    files: List[UploadFile] = File(...),
+    obrigacao: str = Query("efd", description="Tipo de obrigação acessória (efd, ecd, ecf)")
+):
     """
-    Upload e análise de arquivos SPED EFD e/ou XMLs de NF-e.
+    Upload e análise de arquivos SPED (EFD, ECD, ECF) e/ou XMLs de NF-e.
     Obrigatório: 1 arquivo .txt (SPED).
-    Opcional: Múltiplos arquivos .xml (NF-es) para cruzamento (Fase 2).
+    Opcional: Múltiplos arquivos .xml (NF-es) para cruzamento (Fase 2 da EFD).
     """
     sped_file = None
     xml_data_list = []
@@ -60,21 +63,38 @@ async def upload_sped_file(files: List[UploadFile] = File(...)):
         f.write(content)
 
     try:
-        # Parser
-        from parser.sped_parser import parse_sped_file
-        parsed = parse_sped_file(file_path)
+        # ROTEAMENTO DE OBRIGAÇÃO ACESSÓRIA
+        obrigacao = obrigacao.lower()
+        
+        if obrigacao == "efd":
+            from parser.sped_parser import parse_sped_file
+            parsed = parse_sped_file(file_path)
 
-        # Verificar se é um arquivo SPED válido
-        if not parsed.get_registro_unico("0000"):
-            raise HTTPException(
-                status_code=400,
-                detail="Arquivo não reconhecido como SPED EFD ICMS/IPI. Registro 0000 ausente."
-            )
+            if not parsed.get_registro_unico("0000"):
+                raise HTTPException(status_code=400, detail="Arquivo não reconhecido como SPED EFD ICMS/IPI. Registro 0000 ausente.")
 
-        # Validação completa
-        from validators.base_validator import BaseValidator
-        validator = BaseValidator(parsed, xml_data=xml_data_list)
-        result = await validator.validate()
+            from validators.base_validator import BaseValidator
+            validator = BaseValidator(parsed, xml_data=xml_data_list)
+            result = await validator.validate()
+
+        elif obrigacao == "ecd":
+            from parser.ecd_parser import parse_ecd_file
+            from validators.ecd.base_validator_ecd import ECDValidator
+            
+            parsed = parse_ecd_file(file_path)
+            
+            # Validação rápida de Cabeçalho (Bloco 0) para ECD
+            if not parsed.get_registro_unico("0000"):
+                raise HTTPException(status_code=400, detail="Arquivo não reconhecido como ECD. Registro 0000 ausente.")
+                
+            validator = ECDValidator(parsed)
+            result = await validator.validate()
+
+        elif obrigacao == "ecf":
+            raise HTTPException(status_code=501, detail="Validador ECF ainda não implementado (Fase Futura).")
+        
+        else:
+            raise HTTPException(status_code=400, detail=f"Obrigação desconhecida: {obrigacao}")
 
         # Atualizar com nome original do arquivo
         result.filename = sped_file.filename
@@ -92,7 +112,7 @@ async def upload_sped_file(files: List[UploadFile] = File(...)):
                     "filename": result.filename,
                     "file_hash": result.file_hash,
                     "cnpj": result.file_info.cnpj,
-                    "razao_social": result.file_info.nome,
+                    "razao_social": result.file_info.razao_social,
                     "uf": result.file_info.uf,
                     "periodo_ini": dt_ini,
                     "periodo_fin": dt_fin,
