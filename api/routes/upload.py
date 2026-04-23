@@ -91,7 +91,16 @@ async def upload_sped_file(
             result = await validator.validate()
 
         elif obrigacao == "ecf":
-            raise HTTPException(status_code=501, detail="Validador ECF ainda não implementado (Fase Futura).")
+            from parser.ecf_parser import parse_ecf_file
+            from validators.ecf.base_validator_ecf import ECFValidator
+            
+            parsed = parse_ecf_file(file_path)
+            
+            if not parsed.get_registro_unico("0000"):
+                raise HTTPException(status_code=400, detail="Arquivo não reconhecido como ECF. Registro 0000 ausente.")
+                
+            validator = ECFValidator(parsed)
+            result = await validator.validate()
         
         else:
             raise HTTPException(status_code=400, detail=f"Obrigação desconhecida: {obrigacao}")

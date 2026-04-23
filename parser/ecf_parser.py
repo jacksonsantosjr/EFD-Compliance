@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Parser principal da Escrituração Contábil Digital (ECD).
+Parser principal da Escrituração Contábil Fiscal (ECF).
 """
 import hashlib
 from pathlib import Path
@@ -9,8 +9,8 @@ from datetime import datetime, date
 
 from parser.registro import Registro
 
-class EcdFileInfo:
-    """Informações extraídas do registro 0000 da ECD."""
+class EcfFileInfo:
+    """Informações extraídas do registro 0000 da ECF."""
     def __init__(self):
         self.dt_ini: Optional[date] = None
         self.dt_fin: Optional[date] = None
@@ -23,10 +23,10 @@ class EcdFileInfo:
         self.total_linhas: int = 0
 
 
-class EcdParseResult:
-    """Resultado do parsing de um arquivo ECD."""
+class EcfParseResult:
+    """Resultado do parsing de um arquivo ECF."""
     def __init__(self):
-        self.file_info = EcdFileInfo()
+        self.file_info = EcfFileInfo()
         self.file_hash: str = ""
         self.filename: str = ""
         self.registros: Dict[str, List[Registro]] = {}
@@ -41,12 +41,12 @@ class EcdParseResult:
         return regs[0] if regs else None
 
 
-def parse_ecd_file(file_path: str) -> EcdParseResult:
+def parse_ecf_file(file_path: str) -> EcfParseResult:
     """
-    Lê o arquivo TXT da ECD e organiza os registros.
+    Lê o arquivo TXT da ECF e organiza os registros.
     """
     path = Path(file_path)
-    result = EcdParseResult()
+    result = EcfParseResult()
     
     if not path.exists():
         result.erros_parse.append(f"Arquivo não encontrado: {file_path}")
@@ -72,7 +72,7 @@ def parse_ecd_file(file_path: str) -> EcdParseResult:
         if len(fields) < 2:
             continue
             
-        # Posição 1 é o tipo (ex: 0000, I200)
+        # Posição 1 é o tipo (ex: 0000, M300)
         tipo_registro = fields[1]
         
         reg = Registro(line, num_linha)
@@ -81,8 +81,8 @@ def parse_ecd_file(file_path: str) -> EcdParseResult:
             result.registros[tipo_registro] = []
         result.registros[tipo_registro].append(reg)
         
-        # População do cabeçalho da ECD
-        # Layout ECD 0000: |0000|LECD|DT_INI|DT_FIN|NOME|CNPJ|UF|IE|COD_MUN|IM|IND_SIT_ESP|...
+        # População do cabeçalho da ECF
+        # Layout ECF 0000: |0000|LECF|DT_INI|DT_FIN|NOME|CNPJ|UF|IE|COD_MUN|IM|IND_SIT_ESP|...
         if tipo_registro == "0000":
             try:
                 if len(fields) > 4:
@@ -98,6 +98,6 @@ def parse_ecd_file(file_path: str) -> EcdParseResult:
                 if len(fields) > 3 and fields[3]:
                     result.file_info.dt_fin = datetime.strptime(fields[3], "%d%m%Y").date()
             except Exception as e:
-                result.erros_parse.append(f"Erro ao fazer o parse do cabeçalho ECD 0000: {str(e)}")
+                result.erros_parse.append(f"Erro ao fazer o parse do cabeçalho ECF 0000: {str(e)}")
                 
     return result
