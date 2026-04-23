@@ -110,6 +110,17 @@ O **EFD Compliance** evoluiu para um **Hub de Auditoria Integrada**, abrangendo 
 - DashboardPage adaptado para exibir layout roxo/gradiente específico de cruzamento.
 - Ocultação inteligente de abas irrelevantes (Blocos) para focar na auditoria corporativa.
 
+### ✅ FASE 8 — Profundidade e Qualidade ECD (Auditoria Avançada)
+**Status: CONCLUÍDO** | Progresso: 100%
+
+**Etapa 8.1: Auditoria de Saldos e Zeramento** → ✅ **CONCLUÍDO**
+- Detecta **Saldos Invertidos no Ativo** (Regra do "Caixa Dois").
+- Valida se as contas de Resultado possuem saldo final rigorosamente zero.
+
+**Etapa 8.2: Integridade de Mapeamento e Escrita** → ✅ **CONCLUÍDO**
+- Bloqueio de **Cardinalidade 1:N** no registro I051 (evita colapso na recuperação da ECF).
+- Varredura de **Históricos Vagos/Genéricos** no registro I250 (Ex: "Diversos", "Lancto").
+
 ---
 
 ## Próximos Passos (quando retomar)

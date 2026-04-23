@@ -8,6 +8,7 @@ from api.models.finding import Finding, Severity, Category
 
 from parser.ecd_parser import EcdParseResult
 from .math_validator_ecd import MathValidatorECD
+from .quality_validator_ecd import QualityValidatorECD
 
 class ECDValidator:
     """Orquestrador das validações da Escrituração Contábil Digital."""
@@ -34,8 +35,9 @@ class ECDValidator:
             severity=severity_map.get(level, Severity.INFO),
             category=Category.COMPLIANCE if category == "Compliance" else Category.MATH,
             registro=registro,
-            impact="Compromete a integridade contábil do arquivo ECD.",
-            recomendation="Ajuste os valores das partidas dobradas (débitos e créditos)."
+            block=registro[0] if registro else "0",
+            impact="Compromete a integridade contábil e a qualidade da auditoria digital.",
+            recommendation="Verifique a natureza do lançamento e a conformidade com as normas ITG 2000."
         )
         self.findings.append(issue)
         
@@ -50,6 +52,10 @@ class ECDValidator:
         # 1. Validação Matemática (Partidas dobradas)
         math_validator = MathValidatorECD(self)
         math_validator.validate_lancamentos()
+        
+        # 2. Validação de Qualidade e Compliance (Fase 8)
+        quality_validator = QualityValidatorECD(self)
+        quality_validator.validate_all()
         
         # Garantir limite do score
         self.score = max(0.0, min(100.0, self.score))
