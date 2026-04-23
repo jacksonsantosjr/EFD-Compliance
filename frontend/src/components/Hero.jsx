@@ -33,8 +33,8 @@ const Hero = ({ onAccess, isExiting }) => {
           <span className="text-gradient">Hub de Auditoria Integrada</span>
         </h1>
         <p className="hero-subtitle">
-          Plataforma avançada de auditoria pós-validação para ECD e ECF. 
-          Garanta a integridade dos seus dados fiscais com cruzamentos inteligentes e conformidade expert.
+          Plataforma avançada de auditoria pós-validação para EFD, ECD e ECF. 
+          Garanta a integridade dos seus dados fiscais com validações e cruzamentos inteligentes e conformidade nível expert.
         </p>
         <div className="hero-actions">
           <button className="btn btn-primary btn-lg hero-btn" onClick={onAccess}>
