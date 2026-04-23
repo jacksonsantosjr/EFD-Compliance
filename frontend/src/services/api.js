@@ -1,8 +1,14 @@
 const API_BASE = '/api'
 
-export async function uploadSpedFile(file, obrigacao = 'efd') {
+export async function uploadSpedFile(fileOrFiles, obrigacao = 'efd') {
   const formData = new FormData()
-  formData.append('files', file) // Backend (FastAPI) espera a chave 'files'
+  if (Array.isArray(fileOrFiles)) {
+    for (const f of fileOrFiles) {
+      if (f) formData.append('files', f)
+    }
+  } else {
+    formData.append('files', fileOrFiles)
+  }
 
   const response = await fetch(`${API_BASE}/upload?obrigacao=${obrigacao}`, {
     method: 'POST',

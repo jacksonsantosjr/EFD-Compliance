@@ -88,11 +88,21 @@ O **EFD Compliance** evoluiu para um **Hub de Auditoria Integrada**, abrangendo 
 3. **Lazy Loading de Validadores:** Os validadores específicos só são importados em tempo de execução conforme a obrigação selecionada.
 4. **Resiliência Windows:** Implementação de `try-except ImportError` para dependências nativas (Supabase) que exigem compilação C++, garantindo que o sistema rode em qualquer máquina.
 
+### ✅ FASE 6 — Cruzamento ECD × ECF (Malha Fina Integrada)
+**Status: CONCLUÍDO** | Progresso: 100%
+
+**Etapa 6.1: UX e Infraestrutura Dual** → ✅ **CONCLUÍDO**
+- Implementado *Checkbox* no frontend para upload duplo ("Comparar com ECF").
+- Refatoração da rota `/upload` para receber arrays dinâmicos de `.txt` e distinguir arquivos via parser de cabeçalho.
+
+**Etapa 6.2: Motor de Validação Cruzada** → ✅ **CONCLUÍDO**
+- **Plano de Contas (I050 x J050)**: Bloqueia omissões ou trocas de contas entre obrigações.
+- **Saldos Patrimoniais (I155 x K155)**: Compara matematicamente os balancetes para impedir edições "forçadas" no imposto de renda.
+
 ---
 
 ## Próximos Passos (quando retomar)
 
-1. **Cruzamento ECD x ECF** — Desenvolver o importador que lê a ECD validada no banco de dados e cruza com a ECF atual (verificando se o J050/K155 bate).
-2. **Profundidade ECD** — Adicionar validação de Saldos Iniciais vs Finais (I155/I157).
-3. **Teste com arquivos reais** — Validar toda a esteira (EFD, ECD, ECF) com dados de produção anonimizados.
-4. **Dashboard Consolidado** — Visualização de indicadores de "Compliance Tributário Integrado" (malha fina automática).
+1. **Profundidade ECD** — Adicionar validação de Saldos Iniciais vs Finais (I155/I157).
+2. **Teste com arquivos reais** — Validar toda a esteira (EFD, ECD, ECF) com dados de produção anonimizados.
+3. **Dashboard Consolidado** — Visualização de indicadores de "Compliance Tributário Integrado" (malha fina automática).

@@ -5,11 +5,15 @@ import { uploadSpedFile } from '../services/api'
 function UploadPage() {
   const { obrigacao } = useParams()
   const [file, setFile] = useState(null)
+  const [secondFile, setSecondFile] = useState(null)
+  const [isCrossValidation, setIsCrossValidation] = useState(false)
   const [loading, setLoading] = useState(false)
   const [progress, setProgress] = useState(0)
   const [error, setError] = useState(null)
   const [dragging, setDragging] = useState(false)
+  const [draggingSecond, setDraggingSecond] = useState(false)
   const inputRef = useRef()
+  const secondInputRef = useRef()
   const navigate = useNavigate()
 
   // Configuração Dinâmica por Obrigação
@@ -70,42 +74,54 @@ function UploadPage() {
     return () => clearInterval(interval)
   }, [loading])
 
-  const handleDragOver = (e) => {
+  const handleDragOver = (e, isSecond = false) => {
     e.preventDefault()
-    setDragging(true)
+    if (isSecond) setDraggingSecond(true)
+    else setDragging(true)
   }
 
-  const handleDragLeave = () => setDragging(false)
+  const handleDragLeave = (isSecond = false) => {
+    if (isSecond) setDraggingSecond(false)
+    else setDragging(false)
+  }
 
-  const handleDrop = (e) => {
+  const handleDrop = (e, isSecond = false) => {
     e.preventDefault()
-    setDragging(false)
+    if (isSecond) setDraggingSecond(false)
+    else setDragging(false)
+    
     const droppedFile = e.dataTransfer.files[0]
     if (droppedFile && droppedFile.name.endsWith('.txt')) {
-      setFile(droppedFile)
+      if (isSecond) setSecondFile(droppedFile)
+      else setFile(droppedFile)
       setError(null)
     } else {
       setError('Formato inválido. Envie um arquivo .txt.')
     }
   }
 
-  const handleSelect = (e) => {
+  const handleSelect = (e, isSecond = false) => {
     const selected = e.target.files[0]
     if (selected) {
-      setFile(selected)
+      if (isSecond) setSecondFile(selected)
+      else setFile(selected)
       setError(null)
     }
   }
 
   const handleUpload = async () => {
     if (!file) return
+    if (isCrossValidation && !secondFile) {
+      setError('Envie o segundo arquivo para realizar o cruzamento.')
+      return
+    }
+    
     setLoading(true)
     setError(null)
 
     try {
-      // Repassa a obrigação para a API
-      const result = await uploadSpedFile(file, obrigacao)
-      // Armazenar resultado e navegar para o dashboard
+      const filesToUpload = isCrossValidation ? [file, secondFile] : [file]
+      const result = await uploadSpedFile(filesToUpload, obrigacao)
       sessionStorage.setItem('analysisResult', JSON.stringify(result))
       navigate('/dashboard')
     } catch (err) {
@@ -189,6 +205,73 @@ function UploadPage() {
           </>
         )}
       </div>
+
+      {/* Cross-Validation Checkbox */}
+      {(obrigacao === 'ecd' || obrigacao === 'ecf') && (
+        <div className="mt-4 mb-4" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <label style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', fontSize: 'var(--font-size-md)', fontWeight: 'var(--font-weight-medium)' }}>
+            <input 
+              type="checkbox" 
+              checked={isCrossValidation} 
+              onChange={(e) => setIsCrossValidation(e.target.checked)} 
+              style={{ width: '18px', height: '18px', accentColor: currentConfig.themeColor }}
+            />
+            Realizar Cruzamento Integrado (Malha Fina ECD × ECF)
+          </label>
+        </div>
+      )}
+
+      {/* Second Upload Zone for Cross Validation */}
+      {isCrossValidation && (
+        <div
+          className={`upload-zone mt-4 ${draggingSecond ? 'dragging' : ''} ${secondFile ? 'has-file' : ''}`}
+          onDragOver={(e) => handleDragOver(e, true)}
+          onDragLeave={() => handleDragLeave(true)}
+          onDrop={(e) => handleDrop(e, true)}
+          onClick={() => !secondFile && secondInputRef.current?.click()}
+          style={draggingSecond ? { borderColor: currentConfig.themeColor } : {}}
+        >
+          <input
+            ref={secondInputRef}
+            type="file"
+            accept=".txt"
+            onChange={(e) => handleSelect(e, true)}
+            style={{ display: 'none' }}
+            id="sped-second-file-input"
+          />
+
+          {secondFile ? (
+            <>
+              <span className="upload-icon" style={{ color: currentConfig.themeColor }}>✅</span>
+              <div>
+                <div style={{ fontWeight: 'var(--font-weight-semibold)', fontSize: 'var(--font-size-md)' }}>
+                  {secondFile.name}
+                </div>
+                <div style={{ color: 'var(--color-text-tertiary)', fontSize: 'var(--font-size-sm)', marginTop: 'var(--space-1)' }}>
+                  {formatFileSize(secondFile.size)}
+                </div>
+              </div>
+              <button
+                className="btn btn-secondary"
+                onClick={(e) => { e.stopPropagation(); setSecondFile(null) }}
+                style={{ marginTop: 'var(--space-2)' }}
+              >
+                Trocar Segundo Arquivo
+              </button>
+            </>
+          ) : (
+            <>
+              <span className="upload-icon" style={{ color: currentConfig.themeColor }}>📂</span>
+              <div className="upload-text">
+                Arraste o <strong>segundo arquivo</strong> (ECD ou ECF) aqui
+              </div>
+              <div style={{ color: 'var(--color-text-tertiary)', fontSize: 'var(--font-size-sm)' }}>
+                ou clique para selecionar
+              </div>
+            </>
+          )}
+        </div>
+      )}
 
       {/* Error */}
       {error && (
