@@ -15,6 +15,7 @@ from validators.cross_block_validator import CrossBlockValidator
 from validators.semantic_validator import SemanticValidator
 from validators.cadastral_validator import CadastralValidator
 from validators.xml_integrator_validator import XmlIntegratorValidator
+from validators.stock_validator import StockValidator
 from validators.uf_rules import get_uf_rules, has_uf_rules
 from knowledge_base.loader import get_loader
 
@@ -72,7 +73,11 @@ class BaseValidator:
             xml_val = XmlIntegratorValidator(self.parsed, self.xml_data)
             self.findings.extend(xml_val.validate_all())
 
-        # 6. Regras específicas da UF
+        # 6. Auditoria de Estoque — Bloco K/H (Fase 3)
+        stock_val = StockValidator(self.parsed)
+        self.findings.extend(stock_val.validate_all())
+
+        # 7. Regras específicas da UF
         uf = self.parsed.file_info.uf
         if uf:
             uf_rules = get_uf_rules(uf)

@@ -16,10 +16,12 @@ O **EFD Compliance** evoluiu de um validador estrutural básico para um **audito
 2. CrossBlockValidator  → C190×E110, E111×E110, G125×G110, H010×0200
 3. SemanticValidator    → 14 regras CFOP×CST×NCM             ✅ NOVO
 4. CadastralValidator   → Idoneidade CNPJ via 6 APIs         ✅ NOVO
-5. UF Rules (SP)        → Tabela 5.1.1, CIAP, Bloco K, DIFAL
-6. Score (6 faixas)     → Excelente → Inadequado
-7. Relatório PDF/DOCX   → Dossiê Executivo completo
-8. Dashboard React      → Visualização interativa
+5. XmlIntegrator        → Cruzamento XML × SPED              ✅ NOVO
+6. StockValidator       → 15 regras Bloco K/H                ✅ NOVO
+7. UF Rules (SP)        → Tabela 5.1.1, CIAP, Bloco K, DIFAL
+8. Score (6 faixas)     → Excelente → Inadequado
+9. Relatório PDF/DOCX   → Dossiê Executivo completo
+10. Dashboard React     → Visualização interativa
 ```
 
 ---
@@ -74,15 +76,22 @@ O **EFD Compliance** evoluiu de um validador estrutural básico para um **audito
 
 ---
 
-### 🔲 FASE 3 — Auditor de Bloco K/H (Equação de Estoque)
-**Status: PENDENTE**
+### ✅ FASE 3 — Auditor de Bloco K/H (Equação de Estoque)
+**Status: CONCLUÍDO**
 
-**Objetivo:** Validar a consistência entre o Bloco K (Produção/Estoque) e o Bloco H (Inventário), aplicando a equação:
-```
-Estoque Inicial + Entradas - Saídas - Consumo = Estoque Final
-```
+| Componente | Arquivo | Status |
+|-----------|---------|--------|
+| Motor de validação de estoque (15 regras) | `validators/stock_validator.py` | ✅ Criado |
+| Pipeline atualizada | `validators/base_validator.py` | ✅ Modificado |
 
-**Complexidade:** Alta — exige leitura de múltiplos períodos e cruzamento de fichas de estoque.
+**O que faz:**
+- **Grupo 1 (K200):** Detecta estoque negativo, itens sem cadastro 0200, duplicidade de registros
+- **Grupo 2 (K230/K235):** Verifica ordens de produção sem insumos, insumos fantasma, quantidades encerradas zeradas
+- **Grupo 3 (K220):** Identifica movimentações circulares (item para ele mesmo), itens sem cadastro
+- **Grupo 4 (H005/H010 × K200):** Valida soma do inventário, quantidades negativas, itens ausentes do inventário, valores unitários zerados
+- **Grupo 5 (K280):** Detecta correções de estoque referenciando itens sem cadastro e correções bidirecionais no mesmo período
+
+**Complexidade:** Alta — utiliza mapeamento hierárquico de registros e cruzamento K200 × H010.
 
 ---
 
@@ -91,7 +100,7 @@ Estoque Inicial + Entradas - Saídas - Consumo = Estoque Final
 | Métrica | Valor |
 |---------|-------|
 | Testes unitários | 88 (100% passando) |
-| Regras de validação ativas | 14 semânticas + 8 cruzamento + 6 matemáticas + regras SP |
+| Regras de validação ativas | 14 semânticas + 15 estoque + 8 cruzamento + 6 matemáticas + regras SP |
 | APIs de CNPJ integradas | 6 (Round-Robin com cooldown) |
 | Faixas de Score | 6 (Excelente → Inadequado) |
 | Formatos de relatório | PDF + DOCX |
