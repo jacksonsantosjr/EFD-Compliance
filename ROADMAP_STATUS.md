@@ -46,10 +46,24 @@ O **EFD Compliance** evoluiu para um **Hub de Auditoria Integrada**, abrangendo 
 
 **O que faz:**
 - **Hub Inteligente:** Interface visual premium para seleção da obrigação.
-- **Isolamento de Lógica:** EFD, ECD e ECF possuem seus próprios namespaces e validadores, evitando corrupção de regras.
+- **Isolamento de Lógica:** EFD, ECD e ECF possuem seus próprios namespaces e validadores.
 - **Auditoria Contábil (ECD):** Validação matemática do princípio das partidas dobradas (Registro I200 e I250).
-- **Relatórios Customizados:** O dossiê técnico agora adapta títulos e cabeçalhos dinamicamente (ex: "Dossiê de Auditoria Contábil - ECD").
-- **Conhecimento Estruturado:** Base de conhecimento alimentada automaticamente pela ingestão dos Manuais Oficiais da RFB (Leiaute 9 ECD e 12 ECF).
+- **Relatórios Customizados:** Dossiê dinâmico adaptativo por obrigação.
+
+---
+
+### 🔄 FASE 5 — Auditoria ECF (IRPJ / CSLL)
+**Status: EM ANDAMENTO** | Progresso: 33%
+
+**Etapa 5.1: Infraestrutura e Parser ECF** → ✅ **CONCLUÍDO** (Commit `8170a8f`)
+- Parser nativo (`ecf_parser.py`) construído.
+- Orquestrador assíncrono habilitado no endpoint de uploads.
+
+**Etapa 5.2: Validador do Plano de Contas Referencial** → 🔲 PENDENTE
+- Lógica de mapeamento J050/J051 e consistência K155/K355.
+
+**Etapa 5.3: Validador LALUR / LACS** → 🔲 PENDENTE
+- Verificação da Parte A (adições/exclusões) e Parte B (prejuízos).
 
 ---
 
@@ -76,7 +90,8 @@ O **EFD Compliance** evoluiu para um **Hub de Auditoria Integrada**, abrangendo 
 
 ## Próximos Passos (quando retomar)
 
-1. **Fase 5: Auditoria ECF** — Implementar lógica para Blocos M e N (LALUR/LACS) e cruzamentos com a ECD recuperada.
-2. **Profundidade ECD** — Adicionar validação de Saldos Iniciais vs Finais (I155/I157) e Plano de Contas Referencial.
-3. **Teste com arquivos reais** — Validar o batimento de Débito/Crédito com uma ECD de grande porte.
-4. **Dashboard Consolidado** — Visualização de indicadores específicos por tipo de obrigação.
+1. **Fase 5.2: Plano de Contas Referencial (ECF)** — Validar o mapeamento de contas J050/J051 e saldos K155/K355.
+2. **Fase 5.3: LALUR/LACS (ECF)** — Implementar lógica para Blocos M e N.
+3. **Profundidade ECD** — Adicionar validação de Saldos Iniciais vs Finais (I155/I157) e Plano de Contas Referencial.
+4. **Teste com arquivos reais** — Validar o batimento de Débito/Crédito com uma ECD de grande porte.
+5. **Dashboard Consolidado** — Visualização de indicadores específicos por tipo de obrigação.
