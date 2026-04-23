@@ -294,7 +294,8 @@ function UploadPage() {
               padding: 'var(--space-4) var(--space-8)', 
               fontSize: 'var(--font-size-md)',
               backgroundColor: currentConfig.themeColor,
-              borderColor: currentConfig.themeColor 
+              borderColor: currentConfig.themeColor,
+              color: 'var(--color-text-inverse)'
             }}
           >
             {loading ? (
