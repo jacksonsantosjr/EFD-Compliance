@@ -15,7 +15,12 @@ function App() {
     setIsHeroExiting(true)
     setTimeout(() => {
       setShowHero(false)
-    }, 800) // Mesma duração da animação de saída
+    }, 1200) // Ajustado para a nova duração da transição
+  }
+
+  const handleLogout = () => {
+    setIsHeroExiting(false)
+    setShowHero(true)
   }
 
   return (
@@ -23,7 +28,7 @@ function App() {
       {showHero && <Hero onAccess={handleAccess} isExiting={isHeroExiting} />}
       {!showHero && (
         <Routes>
-          <Route element={<Layout />}>
+          <Route element={<Layout onLogout={handleLogout} />}>
             <Route path="/" element={<HubSelection />} />
             <Route path="/upload/:obrigacao" element={<UploadPage />} />
             <Route path="/dashboard" element={<DashboardPage />} />

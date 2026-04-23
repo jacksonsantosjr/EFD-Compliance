@@ -801,7 +801,7 @@ html, body, #root {
   padding: 0 8%;
   overflow: hidden;
   background: #0d1117;
-  transition: transform 0.8s cubic-bezier(0.7, 0, 0.3, 1), opacity 0.8s ease;
+  transition: transform 1.2s cubic-bezier(0.7, 0, 0.3, 1), opacity 1.2s ease;
 }
 
 .hero.exit {
@@ -817,29 +817,29 @@ html, body, #root {
   background-position: center right;
   transform: scale(1.1);
   filter: brightness(0.7);
-  animation: heroBgMove 20s linear infinite alternate;
+  animation: heroBgMove 30s linear infinite alternate;
 }
 
 @keyframes heroBgMove {
   from { transform: scale(1.1) translateX(0); }
-  to { transform: scale(1.1) translateX(2%); }
+  to { transform: scale(1.1) translateX(1%); }
 }
 
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, #0d1117 0%, #0d1117 40%, transparent 100%);
+  background: linear-gradient(90deg, #0d1117 0%, #0d1117 25%, transparent 80%);
 }
 
 .hero-content {
   position: relative;
   z-index: 10;
   max-width: 650px;
-  animation: heroContentIn 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+  animation: heroContentIn 1.5s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 @keyframes heroContentIn {
-  from { opacity: 0; transform: translateX(-30px); }
+  from { opacity: 0; transform: translateX(-50px); }
   to { opacity: 1; transform: translateX(0); }
 }
 
@@ -886,7 +886,7 @@ html, body, #root {
   gap: var(--space-3);
   padding: var(--space-4) var(--space-10) !important;
   font-size: var(--font-size-md) !important;
-  border-radius: var(--radius-full) !important;
+  border-radius: var(--radius-lg) !important;
   box-shadow: 0 10px 25px rgba(47, 143, 221, 0.3);
   transition: all 0.3s ease;
 }

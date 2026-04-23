@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import { Outlet, NavLink, useLocation } from 'react-router-dom'
+import { LogOut } from 'lucide-react'
 
-function Layout() {
+function Layout({ onLogout }) {
   const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light')
   const location = useLocation()
 
@@ -65,14 +66,22 @@ function Layout() {
         </div>
       </aside>
 
-      {/* Main */}
+      {/* Main Area */}
       <main className="main-area">
         <header className="header">
           <h1 className="header-title">{getPageTitle()}</h1>
           <div className="header-actions">
-            <span style={{ fontSize: 'var(--font-size-xs)', color: 'var(--color-text-tertiary)' }}>
+            <span style={{ fontSize: 'var(--font-size-xs)', color: 'var(--color-text-tertiary)', marginRight: 'var(--space-4)' }}>
               v1.0.0
             </span>
+            <button 
+              className="btn-icon" 
+              onClick={onLogout}
+              title="Sair para a página inicial"
+              style={{ color: 'var(--color-text-secondary)', background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center' }}
+            >
+              <LogOut size={18} />
+            </button>
           </div>
         </header>
 
