@@ -70,6 +70,14 @@ class SemanticValidator:
 
             for regra in REGRAS_CFOP_CST:
                 if self._match_cfop_cst_rule(regra, cfop, cst, vl_icms, vl_bc, aliq):
+                    
+                    # SEM-007: Verificar se o NCM está devidamente informado no 0200
+                    # Só gera achado se o item tiver NCM ausente/inválido
+                    if regra.get("check") == "origem_importacao_verificar":
+                        itens_com_ncm_invalido = self._check_ncm_for_c100(c100_pai, cst)
+                        if not itens_com_ncm_invalido:
+                            continue  # NCM está OK, não gerar achado
+                    
                     sev = Severity.CRITICAL if regra["severity"] == "critical" else Severity.WARNING
                     
                     # Montar descrição com identificação do documento
@@ -78,6 +86,14 @@ class SemanticValidator:
                         doc_info += f" | Chave: {chv_nfe}"
                     if cod_part:
                         doc_info += f" | Participante: {cod_part}"
+                    
+                    # Descrição especial para SEM-007 com itens sem NCM
+                    descr_extra = ""
+                    if regra.get("check") == "origem_importacao_verificar" and 'itens_com_ncm_invalido' in dir():
+                        itens_str = ", ".join(itens_com_ncm_invalido[:5])
+                        if len(itens_com_ncm_invalido) > 5:
+                            itens_str += f" e mais {len(itens_com_ncm_invalido) - 5}"
+                        descr_extra = f"\nItens com NCM ausente/inválido: {itens_str}"
                     
                     self.findings.append(Finding(
                         block="C",
@@ -90,6 +106,7 @@ class SemanticValidator:
                             f"{doc_info}\n"
                             f"Dados encontrados no C190: CFOP: {cfop} | CST: {cst} | "
                             f"VL_BC_ICMS: R$ {vl_bc:,.2f} | ALIQ: {aliq}% | VL_ICMS: R$ {vl_icms:,.2f}"
+                            f"{descr_extra}"
                         ),
                         legal_reference=regra.get("legal_ref", ""),
                         recommendation="Verifique a combinação CFOP × CST e corrija a escrituração do documento fiscal."
@@ -218,6 +235,51 @@ class SemanticValidator:
                 result_map[c170.numero_linha] = pai
 
         return result_map
+
+    def _check_ncm_for_c100(self, c100_pai, cst_importacao) -> list:
+        """
+        Verifica se os itens (C170) do C100 pai que possuem o CST de importação 
+        estão com NCM válido no registro 0200.
+        Retorna uma lista com os códigos dos itens que estão sem NCM válido.
+        Se a lista for vazia, significa que todos os itens estão com NCM devidamente preenchido.
+        """
+        if not c100_pai:
+            return ["Item desconhecido (C100 ausente)"]
+            
+        c170_list = self.parsed.get_registros("C170")
+        reg_0200 = self.parsed.get_registros("0200")
+        
+        # Mapear 0200 por COD_ITEM para busca rápida
+        ncm_map = {r.get_campo("COD_ITEM"): r.get_campo("COD_NCM") for r in reg_0200}
+        
+        # Para encontrar os C170 deste C100, verificamos os registros que estão 
+        # entre a linha deste C100 e a linha do próximo C100.
+        c100_list = sorted(self.parsed.get_registros("C100"), key=lambda r: r.numero_linha)
+        
+        linha_inicio = c100_pai.numero_linha
+        linha_fim = float('inf')
+        
+        for c100 in c100_list:
+            if c100.numero_linha > linha_inicio:
+                linha_fim = c100.numero_linha
+                break
+                
+        itens_invalidos = []
+        
+        for c170 in c170_list:
+            if linha_inicio < c170.numero_linha < linha_fim:
+                cst_item = c170.get_campo("CST_ICMS")
+                
+                # Verificamos apenas os itens que têm o mesmo CST do C190 que disparou a regra
+                if cst_item == cst_importacao:
+                    cod_item = c170.get_campo("COD_ITEM")
+                    ncm = ncm_map.get(cod_item, "")
+                    
+                    # Consideramos NCM inválido se vazio, cheio de zeros ou apenas números repetidos 0 ou 9
+                    if not ncm or str(ncm).strip() in ["", "00000000", "99999999"]:
+                        itens_invalidos.append(cod_item)
+                        
+        return itens_invalidos
 
     # ═══════════════════════════════════════════════════════════════════════
     # GRUPO 2: Regras CFOP × NCM aplicadas no C170 (item a item)
