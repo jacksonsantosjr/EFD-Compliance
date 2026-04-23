@@ -53,14 +53,15 @@ O **EFD Compliance** evoluiu para um **Hub de Auditoria Integrada**, abrangendo 
 ---
 
 ### 🔄 FASE 5 — Auditoria ECF (IRPJ / CSLL)
-**Status: EM ANDAMENTO** | Progresso: 33%
+**Status: EM ANDAMENTO** | Progresso: 66%
 
 **Etapa 5.1: Infraestrutura e Parser ECF** → ✅ **CONCLUÍDO** (Commit `8170a8f`)
 - Parser nativo (`ecf_parser.py`) construído.
 - Orquestrador assíncrono habilitado no endpoint de uploads.
 
-**Etapa 5.2: Validador do Plano de Contas Referencial** → 🔲 PENDENTE
-- Lógica de mapeamento J050/J051 e consistência K155/K355.
+**Etapa 5.2: Validador do Plano de Contas Referencial** → ✅ **CONCLUÍDO**
+- Verificação se as contas analíticas (J050) possuem mapeamento (J051).
+- Regra matemática verificando K155 (Saldos Patrimoniais) e K355 (Resultado).
 
 **Etapa 5.3: Validador LALUR / LACS** → 🔲 PENDENTE
 - Verificação da Parte A (adições/exclusões) e Parte B (prejuízos).

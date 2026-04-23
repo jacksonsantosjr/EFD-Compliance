@@ -7,6 +7,7 @@ from api.models.sped_file import AnalysisResult, SpedFileInfo
 from api.models.finding import Finding, Severity, Category
 
 from parser.ecf_parser import EcfParseResult
+from validators.ecf.referencial_validator_ecf import ReferencialValidatorECF
 
 class ECFValidator:
     """Orquestrador das validações da Escrituração Contábil Fiscal (ECF)."""
@@ -46,7 +47,11 @@ class ECFValidator:
     async def validate(self) -> AnalysisResult:
         """Executa todas as esteiras de validação da ECF."""
         
-        # Etapas futuras (LALUR/LACS e Referencial) serão chamadas aqui
+        # Etapa 5.2: Validação do Plano de Contas Referencial (Blocos J e K)
+        ref_validator = ReferencialValidatorECF(self)
+        ref_validator.validate_all()
+        
+        # Etapas futuras (LALUR/LACS) serão chamadas aqui
         
         # Garantir limite do score
         self.score = max(0.0, min(100.0, self.score))
