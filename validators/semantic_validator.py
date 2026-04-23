@@ -43,10 +43,15 @@ class SemanticValidator:
     # ═══════════════════════════════════════════════════════════════════════
 
     def _validate_c190_cfop_cst(self):
-        """Aplica regras do Grupo 1 sobre os registros C190."""
+        """Aplica regras do Grupo 1 sobre os registros C190, identificando o C100 pai."""
+        c100_list = self.parsed.get_registros("C100")
         c190_list = self.parsed.get_registros("C190")
 
-        for c190 in c190_list:
+        # Construir mapa: para cada C190, identificar o C100 pai pela ordem hierárquica
+        # No SPED, C190 aparece sempre abaixo do seu C100 pai
+        c190_to_c100 = self._build_c190_to_c100_map()
+
+        for idx, c190 in enumerate(c190_list):
             cfop = c190.get_campo("CFOP")
             cst = c190.get_campo("CST_ICMS")
             vl_icms = c190.get_campo_decimal("VL_ICMS")
@@ -57,9 +62,23 @@ class SemanticValidator:
             if not cfop or not cst:
                 continue
 
+            # Identificar documento pai
+            c100_pai = c190_to_c100.get(c190.numero_linha)
+            num_doc = c100_pai.get_campo("NUM_DOC") if c100_pai else "N/D"
+            cod_part = c100_pai.get_campo("COD_PART") if c100_pai else ""
+            chv_nfe = c100_pai.get_campo("CHV_NFE") if c100_pai else ""
+
             for regra in REGRAS_CFOP_CST:
                 if self._match_cfop_cst_rule(regra, cfop, cst, vl_icms, vl_bc, aliq):
                     sev = Severity.CRITICAL if regra["severity"] == "critical" else Severity.WARNING
+                    
+                    # Montar descrição com identificação do documento
+                    doc_info = f"Documento Fiscal Nº {num_doc}"
+                    if chv_nfe:
+                        doc_info += f" | Chave: {chv_nfe}"
+                    if cod_part:
+                        doc_info += f" | Participante: {cod_part}"
+                    
                     self.findings.append(Finding(
                         block="C",
                         register="C190",
@@ -68,9 +87,9 @@ class SemanticValidator:
                         title=f"{regra['title']} (CFOP {cfop} / CST {cst})",
                         description=(
                             f"{regra['description']}\n\n"
-                            f"Dados encontrados no C190:\n"
-                            f"  CFOP: {cfop} | CST: {cst}\n"
-                            f"  VL_BC_ICMS: R$ {vl_bc:,.2f} | ALIQ: {aliq}% | VL_ICMS: R$ {vl_icms:,.2f}"
+                            f"{doc_info}\n"
+                            f"Dados encontrados no C190: CFOP: {cfop} | CST: {cst} | "
+                            f"VL_BC_ICMS: R$ {vl_bc:,.2f} | ALIQ: {aliq}% | VL_ICMS: R$ {vl_icms:,.2f}"
                         ),
                         legal_reference=regra.get("legal_ref", ""),
                         recommendation="Verifique a combinação CFOP × CST e corrija a escrituração do documento fiscal."
@@ -145,6 +164,61 @@ class SemanticValidator:
             return True
         return False
 
+    def _build_c190_to_c100_map(self) -> Dict:
+        """
+        Constrói um mapa de numero_linha do C190 -> registro C100 pai.
+        No SPED, a hierarquia é por ordem de linhas:
+        cada C190 pertence ao C100 mais recente antes dele.
+        """
+        c100_list = self.parsed.get_registros("C100")
+        c190_list = self.parsed.get_registros("C190")
+
+        if not c100_list or not c190_list:
+            return {}
+
+        # Ordenar C100 por numero_linha para busca eficiente
+        c100_sorted = sorted(c100_list, key=lambda r: r.numero_linha)
+        result_map = {}
+
+        for c190 in c190_list:
+            # Encontrar o C100 pai: é o último C100 cuja linha vem antes do C190
+            pai = None
+            for c100 in c100_sorted:
+                if c100.numero_linha < c190.numero_linha:
+                    pai = c100
+                else:
+                    break
+            if pai:
+                result_map[c190.numero_linha] = pai
+
+        return result_map
+
+    def _build_c170_to_c100_map(self) -> Dict:
+        """
+        Constrói um mapa de numero_linha do C170 -> registro C100 pai.
+        Mesma lógica hierárquica do C190.
+        """
+        c100_list = self.parsed.get_registros("C100")
+        c170_list = self.parsed.get_registros("C170")
+
+        if not c100_list or not c170_list:
+            return {}
+
+        c100_sorted = sorted(c100_list, key=lambda r: r.numero_linha)
+        result_map = {}
+
+        for c170 in c170_list:
+            pai = None
+            for c100 in c100_sorted:
+                if c100.numero_linha < c170.numero_linha:
+                    pai = c100
+                else:
+                    break
+            if pai:
+                result_map[c170.numero_linha] = pai
+
+        return result_map
+
     # ═══════════════════════════════════════════════════════════════════════
     # GRUPO 2: Regras CFOP × NCM aplicadas no C170 (item a item)
     # ═══════════════════════════════════════════════════════════════════════
@@ -154,6 +228,9 @@ class SemanticValidator:
         c170_list = self.parsed.get_registros("C170")
         if not c170_list:
             return
+
+        # Construir mapa C170 → C100 pai
+        c170_to_c100 = self._build_c170_to_c100_map()
 
         # Controle para não duplicar alertas por regra+cfop+ncm
         alertas_emitidos: Set[str] = set()
@@ -165,6 +242,10 @@ class SemanticValidator:
 
             if not cfop or not ncm:
                 continue
+
+            # Identificar documento pai
+            c100_pai = c170_to_c100.get(c170.numero_linha)
+            num_doc = c100_pai.get_campo("NUM_DOC") if c100_pai else "N/D"
 
             for regra in REGRAS_CFOP_NCM:
                 chave = f"{regra['code']}_{cfop}_{ncm}"
@@ -194,6 +275,7 @@ class SemanticValidator:
                         title=f"{regra['title']} (CFOP {cfop} / NCM {ncm})",
                         description=(
                             f"{regra['description']}\n\n"
+                            f"Documento Fiscal Nº {num_doc}\n"
                             f"Item: {cod_item} | CFOP: {cfop} | NCM: {ncm}"
                         ),
                         legal_reference=regra.get("legal_ref", ""),
@@ -210,6 +292,9 @@ class SemanticValidator:
         if not c170_list:
             return
 
+        # Construir mapa C170 → C100 pai
+        c170_to_c100 = self._build_c170_to_c100_map()
+
         # Controle: consolidar por CST×CFOP para não gerar 500 findings do mesmo tipo
         alertas_consolidados: Dict[str, dict] = {}
 
@@ -223,6 +308,10 @@ class SemanticValidator:
 
             if not cst:
                 continue
+
+            # Identificar documento pai
+            c100_pai = c170_to_c100.get(c170.numero_linha)
+            num_doc = c100_pai.get_campo("NUM_DOC") if c100_pai else "N/D"
 
             for regra in REGRAS_CST_VALORES:
                 check = regra.get("check", "")
@@ -259,14 +348,24 @@ class SemanticValidator:
                             "cfop": cfop or "N/A",
                             "qtd_itens": 0,
                             "vl_icms_total": Decimal("0"),
+                            "docs_envolvidos": set(),
                         }
                     alertas_consolidados[chave]["qtd_itens"] += 1
                     alertas_consolidados[chave]["vl_icms_total"] += vl_icms
+                    alertas_consolidados[chave]["docs_envolvidos"].add(num_doc)
 
         # Gerar findings consolidados
         for chave, dados in alertas_consolidados.items():
             regra = dados["regra"]
             sev = Severity.CRITICAL if regra["severity"] == "critical" else Severity.WARNING
+            
+            # Listar documentos envolvidos (limitar a 10 para não poluir)
+            docs = sorted(dados["docs_envolvidos"])
+            if len(docs) > 10:
+                docs_str = ", ".join(docs[:10]) + f" e mais {len(docs) - 10}"
+            else:
+                docs_str = ", ".join(docs) if docs else "N/D"
+            
             self.findings.append(Finding(
                 block="C",
                 register="C170",
@@ -275,6 +374,7 @@ class SemanticValidator:
                 title=f"{regra['title']} (CST {dados['cst']} / CFOP {dados['cfop']})",
                 description=(
                     f"{regra['description']}\n\n"
+                    f"Documentos Fiscais Nº: {docs_str}\n"
                     f"Encontrados {dados['qtd_itens']} item(ns) com esta inconsistência.\n"
                     f"Valor total de ICMS envolvido: R$ {dados['vl_icms_total']:,.2f}"
                 ),

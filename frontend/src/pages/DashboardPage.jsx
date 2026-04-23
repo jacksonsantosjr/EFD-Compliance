@@ -227,11 +227,11 @@ function DashboardPage() {
       >
         <div style={{ maxHeight: '60vh', overflowY: 'auto', paddingRight: 'var(--space-2)' }}>
           {modalData.block && findings
-            .filter(f => f.code.startsWith(modalData.block) || (f.code.startsWith('[') && f.code.substring(1).startsWith(modalData.block)))
+            .filter(f => f.block === modalData.block || f.block.startsWith(modalData.block + '×') || f.block.endsWith('×' + modalData.block))
             .map(finding => (
               <FindingCard key={finding.id} finding={finding} />
           ))}
-          {modalData.block && findings.filter(f => f.code.startsWith(modalData.block) || (f.code.startsWith('[') && f.code.substring(1).startsWith(modalData.block))).length === 0 && (
+          {modalData.block && findings.filter(f => f.block === modalData.block || f.block.startsWith(modalData.block + '×') || f.block.endsWith('×' + modalData.block)).length === 0 && (
             <p style={{ textAlign: 'center', color: 'var(--color-text-tertiary)', marginTop: 'var(--space-4)' }}>Nenhum achado encontrado para este bloco específico.</p>
           )}
         </div>

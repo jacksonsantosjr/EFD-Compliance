@@ -14,6 +14,7 @@ from validators.math_validator import MathValidator
 from validators.cross_block_validator import CrossBlockValidator
 from validators.semantic_validator import SemanticValidator
 from validators.cadastral_validator import CadastralValidator
+from validators.xml_integrator_validator import XmlIntegratorValidator
 from validators.uf_rules import get_uf_rules, has_uf_rules
 from knowledge_base.loader import get_loader
 
@@ -39,8 +40,9 @@ class BaseValidator:
     Coordena Math, CrossBlock e UF Rules, e calcula o score final.
     """
 
-    def __init__(self, parsed: SpedParseResult):
+    def __init__(self, parsed: SpedParseResult, xml_data: List = None):
         self.parsed = parsed
+        self.xml_data = xml_data or []
         self.findings: List[Finding] = []
         self.block_summaries: Dict[str, BlockSummary] = {}
 
@@ -65,7 +67,12 @@ class BaseValidator:
         cadastral_findings = await cadastral_val.validate_async()
         self.findings.extend(cadastral_findings)
 
-        # 5. Regras específicas da UF
+        # 5. Integração XML x EFD (Fase 2)
+        if self.xml_data:
+            xml_val = XmlIntegratorValidator(self.parsed, self.xml_data)
+            self.findings.extend(xml_val.validate_all())
+
+        # 6. Regras específicas da UF
         uf = self.parsed.file_info.uf
         if uf:
             uf_rules = get_uf_rules(uf)

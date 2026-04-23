@@ -15,20 +15,34 @@ router = APIRouter()
 
 
 @router.post("/upload", response_model=AnalysisResult)
-async def upload_sped_file(file: UploadFile = File(...)):
+async def upload_sped_file(files: List[UploadFile] = File(...)):
     """
-    Upload e análise de um arquivo SPED EFD ICMS/IPI.
-    Recebe o arquivo .txt validado pelo PVA, processa e retorna o resultado completo.
+    Upload e análise de arquivos SPED EFD e/ou XMLs de NF-e.
+    Obrigatório: 1 arquivo .txt (SPED).
+    Opcional: Múltiplos arquivos .xml (NF-es) para cruzamento (Fase 2).
     """
-    # Validar tipo de arquivo
-    if not file.filename.endswith(".txt"):
+    sped_file = None
+    xml_data_list = []
+    
+    # Separar arquivos por tipo
+    for file in files:
+        if file.filename.endswith(".txt"):
+            sped_file = file
+        elif file.filename.endswith(".xml"):
+            xml_content = await file.read()
+            from parser.xml_parser import parse_nfe_xml
+            nfe_data = parse_nfe_xml(xml_content)
+            if nfe_data:
+                xml_data_list.append(nfe_data)
+        
+    if not sped_file:
         raise HTTPException(
             status_code=400,
-            detail="Formato inválido. Envie um arquivo .txt do SPED EFD."
+            detail="Nenhum arquivo SPED (.txt) encontrado no upload."
         )
 
-    # Ler conteúdo
-    content = await file.read()
+    # Ler conteúdo do SPED
+    content = await sped_file.read()
 
     # Validar tamanho
     if len(content) > MAX_FILE_SIZE_BYTES:
@@ -40,8 +54,8 @@ async def upload_sped_file(file: UploadFile = File(...)):
     # Calcular hash do arquivo
     file_hash = hashlib.sha256(content).hexdigest()
 
-    # Salvar arquivo
-    file_path = UPLOADS_DIR / f"{file_hash}_{file.filename}"
+    # Salvar arquivo SPED
+    file_path = UPLOADS_DIR / f"{file_hash}_{sped_file.filename}"
     with open(file_path, "wb") as f:
         f.write(content)
 
@@ -59,11 +73,11 @@ async def upload_sped_file(file: UploadFile = File(...)):
 
         # Validação completa
         from validators.base_validator import BaseValidator
-        validator = BaseValidator(parsed)
+        validator = BaseValidator(parsed, xml_data=xml_data_list)
         result = await validator.validate()
 
         # Atualizar com nome original do arquivo
-        result.filename = file.filename
+        result.filename = sped_file.filename
         result.file_hash = file_hash
 
         # Salvar no Supabase (se configurado)
