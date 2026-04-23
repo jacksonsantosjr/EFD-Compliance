@@ -2,7 +2,7 @@ const API_BASE = '/api'
 
 export async function uploadSpedFile(file) {
   const formData = new FormData()
-  formData.append('file', file)
+  formData.append('files', file) // Backend (FastAPI) espera a chave 'files'
 
   const response = await fetch(`${API_BASE}/upload`, {
     method: 'POST',
@@ -11,7 +11,18 @@ export async function uploadSpedFile(file) {
 
   if (!response.ok) {
     const error = await response.json()
-    throw new Error(error.detail || 'Erro ao processar o arquivo.')
+    let errorMsg = 'Erro ao processar o arquivo.'
+    if (error.detail) {
+      if (Array.isArray(error.detail)) {
+        // Formata erro de validação do FastAPI
+        errorMsg = error.detail.map(e => `${e.loc.join('.')}: ${e.msg}`).join(', ')
+      } else if (typeof error.detail === 'string') {
+        errorMsg = error.detail
+      } else {
+        errorMsg = JSON.stringify(error.detail)
+      }
+    }
+    throw new Error(errorMsg)
   }
 
   return response.json()
@@ -30,7 +41,17 @@ export async function uploadMultipleFiles(files) {
 
   if (!response.ok) {
     const error = await response.json()
-    throw new Error(error.detail || 'Erro ao processar os arquivos.')
+    let errorMsg = 'Erro ao processar os arquivos.'
+    if (error.detail) {
+      if (Array.isArray(error.detail)) {
+        errorMsg = error.detail.map(e => `${e.loc.join('.')}: ${e.msg}`).join(', ')
+      } else if (typeof error.detail === 'string') {
+        errorMsg = error.detail
+      } else {
+        errorMsg = JSON.stringify(error.detail)
+      }
+    }
+    throw new Error(errorMsg)
   }
 
   return response.json()
