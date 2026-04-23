@@ -58,12 +58,7 @@ function Layout({ onLogout }) {
           </NavLink>
         </nav>
 
-        <div style={{ borderTop: '1px solid var(--color-border)', paddingTop: 'var(--space-4)' }}>
-          <div className="nav-item" onClick={toggleTheme}>
-            <span className="nav-icon">{theme === 'light' ? '🌙' : '☀️'}</span>
-            {theme === 'light' ? 'Modo Escuro' : 'Modo Claro'}
-          </div>
-        </div>
+        {/* Logout removido daqui, mantendo apenas navegação */}
       </aside>
 
       {/* Main Area */}
@@ -74,11 +69,20 @@ function Layout({ onLogout }) {
             <span style={{ fontSize: 'var(--font-size-xs)', color: 'var(--color-text-tertiary)', marginRight: 'var(--space-4)' }}>
               v1.0.0
             </span>
+            
+            {/* Seletor de Tema */}
             <button 
-              className="btn-icon" 
+              className="theme-toggle" 
+              onClick={toggleTheme}
+              title={theme === 'light' ? 'Ativar Modo Escuro' : 'Ativar Modo Claro'}
+            >
+              {theme === 'light' ? '🌙' : '☀️'}
+            </button>
+
+            <button 
+              className="btn-logout" 
               onClick={onLogout}
               title="Sair para a página inicial"
-              style={{ color: 'var(--color-text-secondary)', background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center' }}
             >
               <LogOut size={18} />
             </button>
