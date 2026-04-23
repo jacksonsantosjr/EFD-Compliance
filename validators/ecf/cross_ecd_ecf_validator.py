@@ -19,7 +19,7 @@ class CrossEcdEcfValidator:
 
     def add_issue(self, code: str, title: str, description: str, 
                   level: str, category: str, 
-                  registro: str, details: str = None):
+                  registro: str, expected_value: str = None, actual_value: str = None):
         
         severity_map = {
             "error": Severity.CRITICAL,
@@ -34,8 +34,11 @@ class CrossEcdEcfValidator:
             severity=severity_map.get(level, Severity.INFO),
             category=Category.COMPLIANCE if category == "Compliance" else Category.MATH,
             registro=registro,
+            block=registro[0] if registro else "0", # Fallback para bloco
+            expected_value=expected_value,
+            actual_value=actual_value,
             impact="Risco alto de autuação via Malha Fina Eletrônica (Divergência Contábil/Fiscal).",
-            recomendation="Retifique a obrigação divergente ou justifique por meio de lançamento extemporâneo/ajuste."
+            recommendation="Retifique a obrigação divergente ou justifique por meio de lançamento extemporâneo/ajuste."
         )
         self.findings.append(issue)
         
@@ -118,7 +121,9 @@ class CrossEcdEcfValidator:
                         description=f"A conta {cod} possui saldo final de R$ {saldo_ecd['valor']:.2f} ({saldo_ecd['ind']}) na ECD, mas está ausente na movimentação (K155) da ECF.",
                         level="error",
                         category="Matemática",
-                        registro="K155"
+                        registro="K155",
+                        expected_value=f"{saldo_ecd['valor']:.2f}",
+                        actual_value="0.00"
                     )
                 else:
                     if abs(saldo_ecd["valor"] - saldo_ecf["valor"]) > 0.05 or saldo_ecd["ind"] != saldo_ecf["ind"]:
@@ -128,7 +133,9 @@ class CrossEcdEcfValidator:
                             description=f"A conta {cod} terminou a ECD com R$ {saldo_ecd['valor']:.2f} ({saldo_ecd['ind']}), mas a ECF declara R$ {saldo_ecf['valor']:.2f} ({saldo_ecf['ind']}).",
                             level="error",
                             category="Matemática",
-                            registro="K155"
+                            registro="K155",
+                            expected_value=f"{saldo_ecd['valor']:.2f}",
+                            actual_value=f"{saldo_ecf['valor']:.2f}"
                         )
 
     async def validate(self) -> AnalysisResult:

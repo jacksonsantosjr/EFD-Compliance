@@ -84,20 +84,36 @@ function DashboardPage() {
     return dateStr
   }
 
+  const isCross = info.tipo_arquivo === 'CRUZAMENTO_ECD_ECF'
+
+  const totalDivergencia = findings.reduce((acc, f) => {
+    if (f.expected_value && f.actual_value) {
+      const exp = parseFloat(f.expected_value) || 0
+      const act = parseFloat(f.actual_value) || 0
+      return acc + Math.abs(exp - act)
+    }
+    return acc
+  }, 0)
+
+  const materialidade = (result.score < 70) ? 'Alta' : (result.score < 90 ? 'Média' : 'Baixa')
+
   return (
     <div>
       {/* Cabeçalho do Contribuinte */}
-      <div className="card mb-6">
+      <div className="card mb-6" style={isCross ? { borderTop: '4px solid #6C5CE7', background: 'linear-gradient(to right, #f8f9ff, #ffffff)' } : {}}>
         <div className="card-body" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 'var(--space-4)' }}>
           <div>
-            <h2 style={{ fontWeight: 'var(--font-weight-bold)', fontSize: 'var(--font-size-lg)' }}>
-              {info.razao_social}
-            </h2>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <h2 style={{ fontWeight: 'var(--font-weight-bold)', fontSize: 'var(--font-size-lg)' }}>
+                {info.razao_social}
+              </h2>
+              {isCross && <span className="badge badge-primary" style={{ backgroundColor: '#6C5CE7' }}>Malha Fina Integrada</span>}
+            </div>
             <div style={{ color: 'var(--color-text-secondary)', fontSize: 'var(--font-size-sm)', marginTop: 'var(--space-1)' }}>
-              CNPJ: {formatCnpj(info.cnpj)} &nbsp;|&nbsp; IE: {info.ie} &nbsp;|&nbsp; UF: {info.uf}
+              CNPJ: {formatCnpj(info.cnpj)} &nbsp;|&nbsp; UF: {info.uf}
             </div>
             <div style={{ color: 'var(--color-text-tertiary)', fontSize: 'var(--font-size-xs)', marginTop: 'var(--space-1)' }}>
-              Período: {formatDate(info.periodo_ini)} a {formatDate(info.periodo_fin)} &nbsp;|&nbsp; Perfil {info.perfil} &nbsp;|&nbsp; Layout v{info.cod_ver}
+              Período: {formatDate(info.periodo_ini)} a {formatDate(info.periodo_fin)} &nbsp;|&nbsp; {isCross ? 'Cruzamento ECD × ECF' : `Perfil ${info.perfil} | Layout v${info.cod_ver}`}
             </div>
           </div>
         </div>
@@ -108,7 +124,7 @@ function DashboardPage() {
         <div className="card">
           <div className="card-body text-center">
             <h3 style={{ fontWeight: 'var(--font-weight-semibold)', marginBottom: 'var(--space-4)', color: 'var(--color-text-secondary)' }}>
-              Score de Conformidade
+              {isCross ? 'Índice de Saúde Fiscal (Malha)' : 'Score de Conformidade'}
             </h3>
             <ScoreGauge score={result.score || 0} />
           </div>
@@ -117,45 +133,74 @@ function DashboardPage() {
         <div className="card">
           <div className="card-body">
             <h3 style={{ fontWeight: 'var(--font-weight-semibold)', marginBottom: 'var(--space-4)', color: 'var(--color-text-secondary)' }}>
-              Resumo
+              {isCross ? 'Métricas de Cruzamento' : 'Resumo'}
             </h3>
-            <div className="stats-grid">
-              <div className="stat-card stat-critical">
-                <div className="stat-value">{totalCritical}</div>
-                <div className="stat-label">Críticos</div>
+            {isCross ? (
+              <div className="stats-grid">
+                <div className="stat-card" style={{ borderLeft: '4px solid #6C5CE7' }}>
+                  <div className="stat-value" style={{ color: '#6C5CE7', fontSize: 'var(--font-size-lg)' }}>
+                    R$ {totalDivergencia.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                  </div>
+                  <div className="stat-label">Divergência Total</div>
+                </div>
+                <div className="stat-card stat-critical">
+                  <div className="stat-value">{findings.length}</div>
+                  <div className="stat-label">Inconsistências</div>
+                </div>
+                <div className="stat-card" style={{ borderLeft: `4px solid ${materialidade === 'Alta' ? 'var(--color-text-error)' : 'var(--color-primary)'}` }}>
+                  <div className="stat-value" style={{ color: materialidade === 'Alta' ? 'var(--color-text-error)' : 'inherit' }}>{materialidade}</div>
+                  <div className="stat-label">Materialidade</div>
+                </div>
+                <div className="stat-card stat-success">
+                  <div className="stat-value">{result.total_registros?.toLocaleString('pt-BR')}</div>
+                  <div className="stat-label">Registros Analisados</div>
+                </div>
               </div>
-              <div className="stat-card stat-warning">
-                <div className="stat-value">{totalWarning}</div>
-                <div className="stat-label">Atenção</div>
+            ) : (
+              <div className="stats-grid">
+                <div className="stat-card stat-critical">
+                  <div className="stat-value">{totalCritical}</div>
+                  <div className="stat-label">Críticos</div>
+                </div>
+                <div className="stat-card stat-warning">
+                  <div className="stat-value">{totalWarning}</div>
+                  <div className="stat-label">Atenção</div>
+                </div>
+                <div className="stat-card stat-info">
+                  <div className="stat-value">{totalInfo}</div>
+                  <div className="stat-label">Informativos</div>
+                </div>
+                <div className="stat-card stat-success">
+                  <div className="stat-value">{result.total_registros?.toLocaleString('pt-BR')}</div>
+                  <div className="stat-label">Registros</div>
+                </div>
               </div>
-              <div className="stat-card stat-info">
-                <div className="stat-value">{totalInfo}</div>
-                <div className="stat-label">Informativos</div>
-              </div>
-              <div className="stat-card stat-success">
-                <div className="stat-value">{result.total_registros?.toLocaleString('pt-BR')}</div>
-                <div className="stat-label">Registros</div>
-              </div>
-            </div>
+            )}
           </div>
         </div>
       </div>
 
       {/* Tabs */}
       <div style={{ display: 'flex', gap: 'var(--space-1)', marginBottom: 'var(--space-4)', alignItems: 'center' }}>
-        {[
-          { key: 'overview', label: '📊 Blocos', id: 'tab-blocks' },
-          { key: 'findings', label: '🔍 Achados', id: 'tab-findings' },
-        ].map(tab => (
-          <button
-            key={tab.key}
-            id={tab.id}
-            className={`btn ${activeTab === tab.key ? 'btn-primary' : 'btn-secondary'}`}
-            onClick={() => setActiveTab(tab.key)}
-          >
-            {tab.label}
+        {isCross ? (
+          <button className="btn btn-primary" id="tab-findings">
+            🔍 Achados de Cruzamento
           </button>
-        ))}
+        ) : (
+          [
+            { key: 'overview', label: '📊 Blocos', id: 'tab-blocks' },
+            { key: 'findings', label: '🔍 Achados', id: 'tab-findings' },
+          ].map(tab => (
+            <button
+              key={tab.key}
+              id={tab.id}
+              className={`btn ${activeTab === tab.key ? 'btn-primary' : 'btn-secondary'}`}
+              onClick={() => setActiveTab(tab.key)}
+            >
+              {tab.label}
+            </button>
+          ))
+        )}
 
         <button
           className="btn btn-secondary"
@@ -171,7 +216,7 @@ function DashboardPage() {
       </div>
 
       {/* Tab: Blocos */}
-      {activeTab === 'overview' && (
+      {!isCross && activeTab === 'overview' && (
         <div className="blocks-grid">
           {Object.entries(blockSummaries)
             .sort(([a], [b]) => a.localeCompare(b))
@@ -183,26 +228,28 @@ function DashboardPage() {
       )}
 
       {/* Tab: Achados */}
-      {activeTab === 'findings' && (
+      {(isCross || activeTab === 'findings') && (
         <div>
-          {/* Filtro */}
-          <div style={{ display: 'flex', gap: 'var(--space-2)', marginBottom: 'var(--space-4)' }}>
-            {[
-              { key: 'all', label: `Todos (${findings.length})` },
-              { key: 'critical', label: `❌ Críticos (${totalCritical})` },
-              { key: 'warning', label: `⚠️ Atenção (${totalWarning})` },
-              { key: 'info', label: `ℹ️ Info (${totalInfo})` },
-            ].map(f => (
-              <button
-                key={f.key}
-                className={`btn ${severityFilter === f.key ? 'btn-primary' : 'btn-secondary'}`}
-                onClick={() => setSeverityFilter(f.key)}
-                style={{ fontSize: 'var(--font-size-sm)' }}
-              >
-                {f.label}
-              </button>
-            ))}
-          </div>
+          {/* Filtro (Oculto em Cruzamento para simplificar) */}
+          {!isCross && (
+            <div style={{ display: 'flex', gap: 'var(--space-2)', marginBottom: 'var(--space-4)' }}>
+              {[
+                { key: 'all', label: `Todos (${findings.length})` },
+                { key: 'critical', label: `❌ Críticos (${totalCritical})` },
+                { key: 'warning', label: `⚠️ Atenção (${totalWarning})` },
+                { key: 'info', label: `ℹ️ Info (${totalInfo})` },
+              ].map(f => (
+                <button
+                  key={f.key}
+                  className={`btn ${severityFilter === f.key ? 'btn-primary' : 'btn-secondary'}`}
+                  onClick={() => setSeverityFilter(f.key)}
+                  style={{ fontSize: 'var(--font-size-sm)' }}
+                >
+                  {f.label}
+                </button>
+              ))}
+            </div>
+          )}
 
           {/* Lista */}
           {filteredFindings.length === 0 ? (
