@@ -32,7 +32,7 @@ function HubSelection() {
     <div className="hub-container">
       <div className="hub-header">
         <h1 className="hub-title">
-          Hub de Auditoria Integrada
+          Hub de Auditoria Pós-Validação Integrada
         </h1>
         <p className="hub-subtitle">
           Selecione a obrigação acessória para iniciar o processo de validação, cruzamento e geração do dossiê executivo.

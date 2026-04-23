@@ -682,11 +682,8 @@ html, body, #root {
 .hub-title {
   font-size: var(--font-size-3xl);
   font-weight: var(--font-weight-bold);
-  background: linear-gradient(90deg, #58a6e8, #6C5CE7, #b28dff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-shadow: 0 2px 10px rgba(108, 92, 231, 0.2);
+  color: var(--color-bg-accent);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .hub-subtitle {
