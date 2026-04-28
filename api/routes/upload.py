@@ -10,7 +10,7 @@ from fastapi import APIRouter, UploadFile, File, HTTPException, Query, Security
 
 from api.config import UPLOADS_DIR, MAX_FILE_SIZE_BYTES
 from api.models.sped_file import AnalysisResult
-from api.auth import get_current_user
+from api.auth import get_current_user, log_audit_event
 
 router = APIRouter()
 
@@ -162,6 +162,15 @@ async def upload_sped_file(
                     "user_id": current_user.id
                 }
                 supabase.table("sped_analyses").insert(payload).execute()
+                
+                # Registrar evento de auditoria
+                await log_audit_event(
+                    user_id=current_user.id,
+                    action="upload_sped",
+                    target_id=result.id,
+                    details={"filename": result.filename, "obrigacao": obrigacao}
+                )
+                
                 print(f"Análise salva no Supabase (ID: {result.id})")
             except Exception as db_err:
                 print(f"Erro ao salvar no Supabase: {db_err}")

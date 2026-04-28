@@ -27,3 +27,19 @@ async def get_current_user(auth: HTTPAuthorizationCredentials = Security(securit
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Não foi possível validar as credenciais.",
         )
+
+async def log_audit_event(user_id: str, action: str, target_id: str = None, details: dict = None):
+    """
+    Registra um evento de auditoria no Supabase.
+    """
+    try:
+        payload = {
+            "user_id": user_id,
+            "action": action,
+            "target_id": target_id,
+            "details": details
+        }
+        supabase.table("audit_events").insert(payload).execute()
+    except Exception as e:
+        # Falha no log não deve travar a aplicação, mas deve ser registrada no console
+        print(f"ERRO CRÍTICO: Falha ao registrar log de auditoria: {e}")
