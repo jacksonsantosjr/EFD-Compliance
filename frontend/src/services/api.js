@@ -1,4 +1,11 @@
+import { supabase } from './supabase'
+
 const API_BASE = '/api'
+
+async function getAuthHeaders() {
+  const { data: { session } } = await supabase.auth.getSession()
+  return session ? { 'Authorization': `Bearer ${session.access_token}` } : {}
+}
 
 export async function uploadSpedFile(fileOrFiles, obrigacao = 'efd') {
   const formData = new FormData()
@@ -10,8 +17,10 @@ export async function uploadSpedFile(fileOrFiles, obrigacao = 'efd') {
     formData.append('files', fileOrFiles)
   }
 
+  const authHeaders = await getAuthHeaders()
   const response = await fetch(`${API_BASE}/upload?obrigacao=${obrigacao}`, {
     method: 'POST',
+    headers: { ...authHeaders },
     body: formData,
   })
 
@@ -40,8 +49,10 @@ export async function uploadMultipleFiles(files) {
     formData.append('files', file)
   }
 
+  const authHeaders = await getAuthHeaders()
   const response = await fetch(`${API_BASE}/upload/compare`, {
     method: 'POST',
+    headers: { ...authHeaders },
     body: formData,
   })
 
@@ -64,7 +75,10 @@ export async function uploadMultipleFiles(files) {
 }
 
 export async function exportReport(analysisId, format, fileName = null) {
-  const response = await fetch(`${API_BASE}/export/${analysisId}/${format}`)
+  const authHeaders = await getAuthHeaders()
+  const response = await fetch(`${API_BASE}/export/${analysisId}/${format}`, {
+    headers: { ...authHeaders }
+  })
   if (!response.ok) {
     let errorMsg = 'Erro ao gerar relatório.'
     try {

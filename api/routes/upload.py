@@ -6,10 +6,11 @@ import hashlib
 from pathlib import Path
 from typing import List
 
-from fastapi import APIRouter, UploadFile, File, HTTPException, Query
+from fastapi import APIRouter, UploadFile, File, HTTPException, Query, Security
 
 from api.config import UPLOADS_DIR, MAX_FILE_SIZE_BYTES
 from api.models.sped_file import AnalysisResult
+from api.auth import get_current_user
 
 router = APIRouter()
 
@@ -17,7 +18,8 @@ router = APIRouter()
 @router.post("/upload", response_model=AnalysisResult)
 async def upload_sped_file(
     files: List[UploadFile] = File(...),
-    obrigacao: str = Query("efd", description="Tipo de obrigação acessória (efd, ecd, ecf)")
+    obrigacao: str = Query("efd", description="Tipo de obrigação acessória (efd, ecd, ecf)"),
+    current_user = Security(get_current_user)
 ):
     """
     Upload e análise de arquivos SPED (EFD, ECD, ECF) e/ou XMLs de NF-e.
@@ -156,7 +158,8 @@ async def upload_sped_file(
                     "periodo_fin": dt_fin,
                     "score": result.score,
                     "total_registros": result.total_registros,
-                    "result_json": result.model_dump(mode="json")
+                    "result_json": result.model_dump(mode="json"),
+                    "user_id": current_user.id
                 }
                 supabase.table("sped_analyses").insert(payload).execute()
                 print(f"Análise salva no Supabase (ID: {result.id})")

@@ -1,45 +1,48 @@
-# -*- coding: utf-8 -*-
-"""
-Rotas de consulta de resultados de análise.
-"""
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Security
+from api.auth import get_current_user
+from database.client import supabase
 
 router = APIRouter()
 
-
 @router.get("/analysis/{analysis_id}")
-async def get_analysis(analysis_id: str):
+async def get_analysis(analysis_id: str, current_user = Security(get_current_user)):
     """
-    Retorna o resultado completo de uma análise pelo ID.
+    Retorna o resultado completo de uma análise pelo ID (apenas se pertencer ao usuário).
     """
-    # TODO: Buscar do banco de dados (Task 4.3)
-    raise HTTPException(
-        status_code=404,
-        detail=f"Análise {analysis_id} não encontrada."
-    )
-
+    try:
+        # O RLS do banco cuidará para que o usuário só veja o que é dele
+        response = supabase.table("sped_analyses")\
+            .select("*")\
+            .eq("id", analysis_id)\
+            .eq("user_id", current_user.id)\
+            .single()\
+            .execute()
+        
+        if not response.data:
+            raise HTTPException(status_code=404, detail="Análise não encontrada.")
+            
+        return response.data
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 @router.get("/analyses")
-async def list_analyses(limit: int = 20, offset: int = 0):
+async def list_analyses(limit: int = 20, offset: int = 0, current_user = Security(get_current_user)):
     """
-    Lista o histórico das últimas análises realizadas.
+    Lista o histórico das últimas análises realizadas pelo usuário logado.
     """
-    # TODO: Buscar do Supabase/SQLite (Task 4.6)
-    return {
-        "analyses": [],
-        "total": 0,
-        "limit": limit,
-        "offset": offset
-    }
-
-
-@router.get("/comparison/{comparison_id}")
-async def get_comparison(comparison_id: str):
-    """
-    Retorna o resultado de uma comparação entre períodos.
-    """
-    # TODO: Buscar do banco de dados (Task 4.4)
-    raise HTTPException(
-        status_code=404,
-        detail=f"Comparação {comparison_id} não encontrada."
-    )
+    try:
+        response = supabase.table("sped_analyses")\
+            .select("id, filename, cnpj, razao_social, uf, periodo_ini, periodo_fin, score, created_at")\
+            .eq("user_id", current_user.id)\
+            .order("created_at", desc=True)\
+            .range(offset, offset + limit - 1)\
+            .execute()
+            
+        return {
+            "analyses": response.data,
+            "total": len(response.data), # Simplificado para o exemplo
+            "limit": limit,
+            "offset": offset
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
