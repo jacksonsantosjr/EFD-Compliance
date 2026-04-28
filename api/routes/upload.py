@@ -51,7 +51,7 @@ async def upload_sped_file(
         if len(content) > MAX_FILE_SIZE_BYTES:
             raise HTTPException(status_code=413, detail=f"Arquivo excede o limite de {MAX_FILE_SIZE_BYTES // (1024*1024)}MB.")
         f_hash = hashlib.sha256(content).hexdigest()
-        f_path = UPLOADS_DIR / f"{f_hash}_{s_file.filename}"
+        f_path = UPLOADS_DIR / f"{f_hash}_{Path(s_file.filename).name}"
         with open(f_path, "wb") as f:
             f.write(content)
         saved_files.append({"path": f_path, "hash": f_hash, "filename": s_file.filename})
@@ -201,7 +201,7 @@ async def upload_multiple_files(files: List[UploadFile] = File(...)):
 
         content = await file.read()
         file_hash = hashlib.sha256(content).hexdigest()
-        file_path = UPLOADS_DIR / f"{file_hash}_{file.filename}"
+        file_path = UPLOADS_DIR / f"{file_hash}_{Path(file.filename).name}"
         with open(file_path, "wb") as f:
             f.write(content)
 
