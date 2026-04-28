@@ -28,10 +28,14 @@ const noStorage = {
   removeItem: () => {},
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+// Fallback para strings vazias caso as variáveis de ambiente falhem no build do Vercel
+const safeUrl = supabaseUrl || 'https://placeholder.supabase.co'
+const safeKey = supabaseAnonKey || 'placeholder-key'
+
+export const supabase = createClient(safeUrl, safeKey, {
   auth: {
     storage: noStorage,
-    autoRefreshToken: false, // Opcional: evita refresh se a aba for mantida aberta por muito tempo sem atividade
+    autoRefreshToken: false,
     persistSession: false
   }
 })
