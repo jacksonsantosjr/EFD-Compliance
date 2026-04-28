@@ -1,21 +1,10 @@
 import React from 'react';
-import { ArrowRight, ShieldCheck, LogOut } from 'lucide-react';
+import { ArrowRight, ShieldCheck } from 'lucide-react';
 import { heroImageBase64 } from '../assets/hero_image';
 
 const Hero = ({ onAccess, isExiting }) => {
   return (
     <section className={`hero ${isExiting ? 'exit' : ''}`}>
-      {/* Botão Sair na Hero */}
-      <div className="hero-top-actions">
-        <button 
-          className="btn-logout" 
-          onClick={() => window.close()} 
-          title="Sair da plataforma"
-          style={{ color: 'rgba(255, 255, 255, 0.6)', marginTop: 'var(--space-6)', marginRight: '8%' }}
-        >
-          <LogOut size={22} />
-        </button>
-      </div>
 
       <div 
         className="hero-background" 
