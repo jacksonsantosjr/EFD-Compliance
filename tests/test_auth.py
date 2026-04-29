@@ -27,3 +27,17 @@ def test_invalid_token_returns_401():
     headers = {"Authorization": "Bearer token-invalido-123"}
     response = client.get("/api/analyses", headers=headers)
     assert response.status_code == 401
+
+def test_export_requires_auth():
+    """
+    Valida que a rota de exportação exige autenticação (403).
+    """
+    response = client.get("/api/export/123/pdf")
+    assert response.status_code == 403
+
+def test_compare_requires_auth():
+    """
+    Valida que a rota de comparação exige autenticação (403).
+    """
+    response = client.post("/api/upload/compare")
+    assert response.status_code == 403
