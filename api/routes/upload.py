@@ -8,9 +8,10 @@ from typing import List
 
 from fastapi import APIRouter, UploadFile, File, HTTPException, Query, Security
 
-from api.config import UPLOADS_DIR, MAX_FILE_SIZE_BYTES
+from api.config import UPLOADS_DIR, MAX_FILE_SIZE_BYTES, SUPABASE_BUCKET_NAME
 from api.models.sped_file import AnalysisResult
 from api.auth import get_current_user, log_audit_event
+from database.client import supabase
 
 router = APIRouter()
 
@@ -47,11 +48,37 @@ async def upload_sped_file(
         content = await s_file.read()
         if len(content) > MAX_FILE_SIZE_BYTES:
             raise HTTPException(status_code=413, detail="Arquivo excede o limite permitido.")
+        
         f_hash = hashlib.sha256(content).hexdigest()
-        f_path = UPLOADS_DIR / f"{f_hash}_{Path(s_file.filename).name}"
-        with open(f_path, "wb") as f:
-            f.write(content)
-        saved_files.append({"path": f_path, "hash": f_hash, "filename": s_file.filename})
+        clean_name = Path(s_file.filename).name
+        storage_path = f"{current_user.id}/{f_hash}_{clean_name}"
+        
+        # 1. Persistência em Nuvem (Supabase Storage) - Stateless
+        if supabase:
+            try:
+                # Tenta upload (ignora se já existir)
+                supabase.storage.from_(SUPABASE_BUCKET_NAME).upload(
+                    path=storage_path,
+                    file=content,
+                    file_options={"content-type": "text/plain", "x-upsert": "true"}
+                )
+            except Exception as e:
+                # Se falhar o upload (ex: bucket inexistente), registramos mas continuamos 
+                # o processamento local para não interromper o usuário
+                print(f"Aviso Supabase Storage: {e}")
+
+        # 2. Cache Local Temporário (necessário para o parser atual que exige Path)
+        f_path = UPLOADS_DIR / f"{f_hash}_{clean_name}"
+        if not f_path.exists():
+            with open(f_path, "wb") as f:
+                f.write(content)
+        
+        saved_files.append({
+            "path": f_path, 
+            "hash": f_hash, 
+            "filename": s_file.filename,
+            "storage_path": storage_path
+        })
 
     try:
         obrigacao = obrigacao.lower()
@@ -148,9 +175,23 @@ async def upload_multiple_files(
         for file in files:
             content = await file.read()
             f_hash = hashlib.sha256(content).hexdigest()
-            f_path = UPLOADS_DIR / f"{f_hash}_{Path(file.filename).name}"
-            with open(f_path, "wb") as f:
-                f.write(content)
+            clean_name = Path(file.filename).name
+            storage_path = f"{current_user.id}/compare/{f_hash}_{clean_name}"
+            
+            # Upload para Storage
+            if supabase:
+                try:
+                    supabase.storage.from_(SUPABASE_BUCKET_NAME).upload(
+                        path=storage_path,
+                        file=content,
+                        file_options={"content-type": "text/plain", "x-upsert": "true"}
+                    )
+                except: pass
+
+            f_path = UPLOADS_DIR / f"{f_hash}_{clean_name}"
+            if not f_path.exists():
+                with open(f_path, "wb") as f:
+                    f.write(content)
 
             from parser.sped_parser import parse_sped_file
             from validators.base_validator import BaseValidator

@@ -3,6 +3,7 @@
 Builder de dossiê PDF — gera relatório técnico em PDF.
 Utiliza HTML como intermediário e WeasyPrint para converter.
 """
+import html
 from pathlib import Path
 from datetime import datetime
 from decimal import Decimal
@@ -152,8 +153,8 @@ class PdfBuilder:
     def _header(self) -> str:
         tipo = getattr(self.analysis.file_info, 'tipo_arquivo', 'EFD')
         sub = "SPED Fiscal ICMS/IPI" if tipo == "EFD" else ("Escrituração Contábil Digital" if tipo == "ECD" else "Escrituração Contábil Fiscal")
-        return f"""<h1>DOSSIÊ TÉCNICO — Auditoria {tipo}</h1>
-<p class="subtitle">Validação Expert de {sub} — Análise Pós-PVA</p>"""
+        return f"""<h1>DOSSIÊ TÉCNICO — Auditoria {html.escape(str(tipo))}</h1>
+<p class="subtitle">Validação Expert de {html.escape(str(sub))} — Análise Pós-PVA</p>"""
 
     def _quadro_resumo(self) -> str:
         info = self.analysis.file_info
@@ -163,14 +164,14 @@ class PdfBuilder:
 
         return f"""<h2>1. Dados do Contribuinte</h2>
 <table>
-    <tr><th style="width:30%">Razão Social</th><td>{info.razao_social}</td></tr>
-    <tr><th>CNPJ</th><td>{cnpj}</td></tr>
-    <tr><th>Inscrição Estadual</th><td>{info.ie}</td></tr>
-    <tr><th>UF</th><td>{info.uf}</td></tr>
-    <tr><th>Período</th><td>{periodo_ini} a {periodo_fin}</td></tr>
-    <tr><th>Perfil</th><td>Perfil {info.perfil}</td></tr>
-    <tr><th>Versão Layout</th><td>{info.cod_ver}</td></tr>
-    <tr><th>Arquivo</th><td style="word-break: break-all; font-size: 8pt; color: #666;">{self.analysis.filename}</td></tr>
+    <tr><th style="width:30%">Razão Social</th><td>{html.escape(str(info.razao_social))}</td></tr>
+    <tr><th>CNPJ</th><td>{html.escape(str(cnpj))}</td></tr>
+    <tr><th>Inscrição Estadual</th><td>{html.escape(str(info.ie))}</td></tr>
+    <tr><th>UF</th><td>{html.escape(str(info.uf))}</td></tr>
+    <tr><th>Período</th><td>{html.escape(str(periodo_ini))} a {html.escape(str(periodo_fin))}</td></tr>
+    <tr><th>Perfil</th><td>Perfil {html.escape(str(info.perfil))}</td></tr>
+    <tr><th>Versão Layout</th><td>{html.escape(str(info.cod_ver))}</td></tr>
+    <tr><th>Arquivo</th><td style="word-break: break-all; font-size: 8pt; color: #666;">{html.escape(str(self.analysis.filename))}</td></tr>
 </table>"""
 
     def _score_section(self) -> str:
@@ -200,7 +201,7 @@ class PdfBuilder:
 
         return f"""<h2>2. Score de Conformidade</h2>
 <div class="score-box">
-    <div class="score-value {cls}">{score:.1f}% — {label}</div>
+    <div class="score-value {cls}">{score:.1f}% — {html.escape(str(label))}</div>
     <div class="totals">
         ❌ {tc} Críticos &nbsp;&nbsp; ⚠️ {tw} Atenção &nbsp;&nbsp; ℹ️ {ti} Informativos
     </div>
@@ -210,7 +211,7 @@ class PdfBuilder:
         rows = ""
         for code, s in sorted(self.analysis.block_summaries.items()):
             icon = STATUS_ICONS.get(s.status, "")
-            rows += f"<tr><td>{code}</td><td>{s.block_name}</td><td>{s.total_records}</td><td>{s.total_findings}</td><td>{icon}</td></tr>\n"
+            rows += f"<tr><td>{html.escape(str(code))}</td><td>{html.escape(str(s.block_name))}</td><td>{s.total_records}</td><td>{s.total_findings}</td><td>{icon}</td></tr>\n"
 
         return f"""<h2>3. Visão por Bloco</h2>
 <table>
@@ -237,13 +238,13 @@ class PdfBuilder:
                 css_class = f"finding-{severity.value}"
                 values = ""
                 if f.expected_value or f.actual_value:
-                    values = f'<p><strong>Esperado:</strong> {f.expected_value or "N/D"} | <strong>Encontrado:</strong> {f.actual_value or "N/D"}</p>'
-                ref = f'<p class="finding-ref">📖 {f.legal_reference}</p>' if f.legal_reference else ""
-                rec = f'<p class="finding-rec">💡 {f.recommendation}</p>' if f.recommendation else ""
+                    values = f'<p><strong>Esperado:</strong> {html.escape(str(f.expected_value or "N/D"))} | <strong>Encontrado:</strong> {html.escape(str(f.actual_value or "N/D"))}</p>'
+                ref = f'<p class="finding-ref">📖 {html.escape(str(f.legal_reference))}</p>' if f.legal_reference else ""
+                rec = f'<p class="finding-rec">💡 {html.escape(str(f.recommendation))}</p>' if f.recommendation else ""
 
                 html += f"""<div class="finding {css_class}">
-    <p class="finding-title">{f.title} <span class="finding-code">[{f.code}]</span></p>
-    <p>{f.description}</p>
+    <p class="finding-title">{html.escape(str(f.title))} <span class="finding-code">[{html.escape(str(f.code))}]</span></p>
+    <p>{html.escape(str(f.description))}</p>
     {values}{ref}{rec}
 </div>\n"""
 
@@ -261,14 +262,14 @@ class PdfBuilder:
             html += '<h3>Ações Imediatas (Críticas)</h3>\n<ol>\n'
             for f in critical:
                 rec = f.recommendation or "Verificar e corrigir."
-                html += f'<li class="action-item"><strong>[{f.code}]</strong> {rec}</li>\n'
+                html += f'<li class="action-item"><strong>[{html.escape(str(f.code))}]</strong> {html.escape(str(rec))}</li>\n'
             html += '</ol>\n'
 
         if warnings:
             html += '<h3>Ações Recomendadas</h3>\n<ol>\n'
             for f in warnings:
                 rec = f.recommendation or "Analisar."
-                html += f'<li class="action-item"><strong>[{f.code}]</strong> {rec}</li>\n'
+                html += f'<li class="action-item"><strong>[{html.escape(str(f.code))}]</strong> {html.escape(str(rec))}</li>\n'
             html += '</ol>\n'
 
         return html
@@ -276,8 +277,8 @@ class PdfBuilder:
     def _footer(self) -> str:
         now = datetime.now().strftime("%d/%m/%Y %H:%M")
         return f"""<div class="footer">
-    Dossiê gerado por EFD Compliance v{self.analysis.validator_version}<br>
-    Data: {now} | Hash: {self.analysis.file_hash[:16]}...
+    Dossiê gerado por EFD Compliance v{html.escape(str(self.analysis.validator_version))}<br>
+    Data: {html.escape(str(now))} | Hash: {html.escape(str(self.analysis.file_hash[:16]))}...
 </div>"""
 
     @staticmethod

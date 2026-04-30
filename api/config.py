@@ -27,6 +27,7 @@ API_CORS_ORIGINS = os.getenv("API_CORS_ORIGINS", "http://localhost:5173").split(
 # Supabase (configuração posterior)
 SUPABASE_URL = os.getenv("SUPABASE_URL", "")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY", "")
+SUPABASE_BUCKET_NAME = os.getenv("SUPABASE_BUCKET_NAME", "sped-uploads")
 
 # SQLite fallback
 SQLITE_DB_PATH = BASE_DIR / "database" / "efd_compliance.db"
