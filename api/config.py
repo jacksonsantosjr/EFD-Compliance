@@ -9,14 +9,22 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Diretórios — BASE_DIR aponta para a raiz do projeto (efd-compliance/)
+# Diretórios — Uso de /tmp para compatibilidade com Vercel/Serverless
+import tempfile
 BASE_DIR = Path(__file__).resolve().parent.parent
 KNOWLEDGE_BASE_DIR = BASE_DIR / "knowledge_base"
-UPLOADS_DIR = BASE_DIR / "uploads"
-REPORTS_OUTPUT_DIR = BASE_DIR / "reports" / "output"
 
-# Criar diretórios de saída se não existirem
-UPLOADS_DIR.mkdir(exist_ok=True)
+# Em produção (Vercel), apenas /tmp é gravável
+IS_VERCEL = os.getenv("VERCEL", "0") == "1"
+if IS_VERCEL:
+    UPLOADS_DIR = Path("/tmp") / "uploads"
+    REPORTS_OUTPUT_DIR = Path("/tmp") / "reports"
+else:
+    UPLOADS_DIR = BASE_DIR / "uploads"
+    REPORTS_OUTPUT_DIR = BASE_DIR / "reports" / "output"
+
+# Criar diretórios se não existirem
+UPLOADS_DIR.mkdir(parents=True, exist_ok=True)
 REPORTS_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 # API
