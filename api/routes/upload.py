@@ -25,62 +25,61 @@ async def upload_sped_file(
     """
     Upload e análise de arquivos SPED (EFD, ECD, ECF) e/ou XMLs de NF-e.
     """
-    sped_files = []
-    xml_data_list = []
-    
-    for file in files:
-        if file.filename.endswith(".txt"):
-            sped_files.append(file)
-        elif file.filename.endswith(".xml"):
-            xml_content = await file.read()
-            from parser.xml_parser import parse_nfe_xml
-            nfe_data = parse_nfe_xml(xml_content)
-            if nfe_data:
-                xml_data_list.append(nfe_data)
-        
-    if not sped_files:
-        raise HTTPException(
-            status_code=400, detail="Nenhum arquivo SPED (.txt) encontrado no upload."
-        )
-
-    saved_files = []
-    for s_file in sped_files:
-        content = await s_file.read()
-        if len(content) > MAX_FILE_SIZE_BYTES:
-            raise HTTPException(status_code=413, detail="Arquivo excede o limite permitido.")
-        
-        f_hash = hashlib.sha256(content).hexdigest()
-        clean_name = Path(s_file.filename).name
-        storage_path = f"{current_user.id}/{f_hash}_{clean_name}"
-        
-        # 1. Persistência em Nuvem (Supabase Storage) - Stateless
-        if supabase:
-            try:
-                # Tenta upload (ignora se já existir)
-                supabase.storage.from_(SUPABASE_BUCKET_NAME).upload(
-                    path=storage_path,
-                    file=content,
-                    file_options={"content-type": "text/plain", "x-upsert": "true"}
-                )
-            except Exception as e:
-                # Se falhar o upload (ex: bucket inexistente), registramos mas continuamos 
-                # o processamento local para não interromper o usuário
-                print(f"Aviso Supabase Storage: {e}")
-
-        # 2. Cache Local Temporário (necessário para o parser atual que exige Path)
-        f_path = UPLOADS_DIR / f"{f_hash}_{clean_name}"
-        if not f_path.exists():
-            with open(f_path, "wb") as f:
-                f.write(content)
-        
-        saved_files.append({
-            "path": f_path, 
-            "hash": f_hash, 
-            "filename": s_file.filename,
-            "storage_path": storage_path
-        })
-
     try:
+        sped_files = []
+        xml_data_list = []
+        
+        for file in files:
+            if file.filename.endswith(".txt"):
+                sped_files.append(file)
+            elif file.filename.endswith(".xml"):
+                xml_content = await file.read()
+                from parser.xml_parser import parse_nfe_xml
+                nfe_data = parse_nfe_xml(xml_content)
+                if nfe_data:
+                    xml_data_list.append(nfe_data)
+            
+        if not sped_files:
+            raise HTTPException(
+                status_code=400, detail="Nenhum arquivo SPED (.txt) encontrado no upload."
+            )
+
+        saved_files = []
+        for s_file in sped_files:
+            content = await s_file.read()
+            if len(content) > MAX_FILE_SIZE_BYTES:
+                raise HTTPException(status_code=413, detail="Arquivo excede o limite permitido.")
+            
+            f_hash = hashlib.sha256(content).hexdigest()
+            clean_name = Path(s_file.filename).name
+            
+            # 1. Persistência em Nuvem (Supabase Storage) - Blindado
+            storage_path = None
+            if supabase:
+                try:
+                    user_id = str(getattr(current_user, "id", "anon"))
+                    storage_path = f"{user_id}/{f_hash}_{clean_name}"
+                    supabase.storage.from_(SUPABASE_BUCKET_NAME).upload(
+                        path=storage_path,
+                        file=content,
+                        file_options={"contentType": "text/plain", "upsert": True}
+                    )
+                except Exception as e:
+                    print(f"Aviso Supabase Storage: {e}")
+
+            # 2. Cache Local Temporário (Fallback para análise)
+            f_path = UPLOADS_DIR / f"{f_hash}_{clean_name}"
+            if not f_path.exists():
+                with open(f_path, "wb") as f:
+                    f.write(content)
+            
+            saved_files.append({
+                "path": f_path, 
+                "hash": f_hash, 
+                "filename": s_file.filename,
+                "storage_path": storage_path
+            })
+
         obrigacao = obrigacao.lower()
         
         if len(saved_files) == 1:
