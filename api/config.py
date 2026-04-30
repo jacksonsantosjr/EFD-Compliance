@@ -9,22 +9,14 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Diretórios — Uso de /tmp para compatibilidade com Vercel/Serverless
-import tempfile
+# Diretórios — BASE_DIR aponta para a raiz do projeto (efd-compliance/)
 BASE_DIR = Path(__file__).resolve().parent.parent
 KNOWLEDGE_BASE_DIR = BASE_DIR / "knowledge_base"
+UPLOADS_DIR = BASE_DIR / "uploads"
+REPORTS_OUTPUT_DIR = BASE_DIR / "reports" / "output"
 
-# Em produção (Vercel), apenas /tmp é gravável
-IS_VERCEL = os.getenv("VERCEL", "0") == "1"
-if IS_VERCEL:
-    UPLOADS_DIR = Path("/tmp") / "uploads"
-    REPORTS_OUTPUT_DIR = Path("/tmp") / "reports"
-else:
-    UPLOADS_DIR = BASE_DIR / "uploads"
-    REPORTS_OUTPUT_DIR = BASE_DIR / "reports" / "output"
-
-# Criar diretórios se não existirem
-UPLOADS_DIR.mkdir(parents=True, exist_ok=True)
+# Criar diretórios de saída se não existirem
+UPLOADS_DIR.mkdir(exist_ok=True)
 REPORTS_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 # API
@@ -35,7 +27,6 @@ API_CORS_ORIGINS = os.getenv("API_CORS_ORIGINS", "http://localhost:5173").split(
 # Supabase (configuração posterior)
 SUPABASE_URL = os.getenv("SUPABASE_URL", "")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY", "")
-SUPABASE_BUCKET_NAME = os.getenv("SUPABASE_BUCKET_NAME", "sped-uploads")
 
 # SQLite fallback
 SQLITE_DB_PATH = BASE_DIR / "database" / "efd_compliance.db"
